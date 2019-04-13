@@ -18,3 +18,6 @@
 
 (defvar javascript-fmt-tool 'web-beautify
   "The formatter to format a JavaScript file. Possible values are `web-beautify' and `prettier'.")
+
+(defvar javascript-lsp-linter t
+  "Use when non-nill, and together with lsp as backend, then use lsp linter ")

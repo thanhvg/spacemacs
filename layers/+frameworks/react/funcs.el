@@ -28,7 +28,10 @@
 (defun spacemacs//react-setup-lsp ()
   "Setup lsp backend."
   (if (configuration-layer/layer-used-p 'lsp)
-      (lsp)
+      (progn
+        (when (not javascript-lsp-linter)
+          (setq-local lsp-prefer-flymake :none))
+        (lsp))
     (message "`lsp' layer is not installed, please add `lsp' layer to your dotfile.")))
 
 (defun spacemacs//react-setup-lsp-company ()
