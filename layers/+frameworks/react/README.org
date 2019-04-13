@@ -45,6 +45,9 @@ If your project do not use a custom =.eslintrc= file I strongly advice you to
 try out this one by Airbnb:
 [[https://github.com/airbnb/javascript/blob/master/linters/.eslintrc][.eslintrc]]
 
+When lsp set as backend if you don't want lsp as linter set variable
+=javascript-lsp-linter= to nil in Javascript layer
+
 React layer uses the same formatter defined in javascript layer. Options are
 =web-beautify= and =prettier=.
 To use automatic code formatting you need to install ~js-beautify~ or ~prettier~

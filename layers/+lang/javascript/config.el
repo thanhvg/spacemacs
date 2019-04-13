@@ -21,3 +21,6 @@
 
 (defvar javascript-import-tool nil
   "The import backend to import modules. Possible values are `import-js' and `nil' to disable.")
+
+(defvar javascript-lsp-linter t
+  "Use when non-nill, and together with lsp as backend, then use lsp linter ")
