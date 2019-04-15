@@ -24,6 +24,8 @@
     (`tern (spacemacs//javascript-setup-tern-company))
     (`lsp (spacemacs//javascript-setup-lsp-company))))
 
+(defun spacemacs//javascript-setup-next-error-fn ()
+  (setq-local next-error-function nil))
 
 ;; lsp
 
