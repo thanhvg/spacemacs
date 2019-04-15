@@ -23,6 +23,8 @@
     (`tern (spacemacs/tern-setup-tern-company 'rjsx-mode))
     (`lsp (spacemacs//react-setup-lsp-company))))
 
+(defun spacemacs//react-setup-next-error-fn ()
+  (setq-local next-error-function nil))
 
 ;; LSP
 (defun spacemacs//react-setup-lsp ()
