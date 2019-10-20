@@ -292,7 +292,6 @@ in the window where the Symbol Highlight Transient State was closed."
 (defun spacemacs/symbol-overlay ()
   "Start symbol-overlay-transient-state."
   (interactive)
-  (symbol-overlay-put)
   (spacemacs/symbol-overlay-transient-state/body))
 
 (defun spacemacs//symbol-overlay-doc ()
