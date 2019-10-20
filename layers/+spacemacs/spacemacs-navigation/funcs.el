@@ -203,7 +203,6 @@ If the universal prefix argument is used then kill also the window."
 (defun spacemacs/symbol-overlay ()
   "Start symbol-overlay-transient-state."
   (interactive)
-  (symbol-overlay-put)
   (spacemacs/symbol-overlay-transient-state/body))
 
 (defun spacemacs//symbol-overlay-doc ()
