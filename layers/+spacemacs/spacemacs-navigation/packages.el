@@ -403,9 +403,9 @@
     (progn
       (setq spacemacs--symbol-overlay-transient-state-doc "
 %s
- [_n_] next   [_N_/_p_] prev      [_d_] def           [_f_/_b_] switch [_t_] scope
- [_e_] echo   [_o_]^^   unoverlay [_O_] unoverlay all [_c_]^^   copy   [_z_] center
- [_s_] search [_r_]^^   replace   [_R_] rename        ^^^^             [_q_] quit")
+ [_n_] next   [_N_/_p_] prev    [_<_/_>_] first/last    [_d_]^^   def    [_t_] scope
+ [_e_] echo   [_o_]^^   toggle  [_O_]^^   unoverlay all [_f_/_b_] switch [_z_] center
+ [_s_] search [_r_]^^   replace [_R_]^^   rename        [_c_]^^   copy   [_q_] quit")
 
       ;; since we are creating our own maps,
       ;; prevent the default keymap from getting created
@@ -437,6 +437,8 @@
         ("s" symbol-overlay-isearch-literally)
         ("t" symbol-overlay-toggle-in-scope)
         ("z" recenter-top-bottom)
+        ("<" symbol-overlay-jump-first)
+        (">" symbol-overlay-jump-last)
         ("q" nil :exit t)))))
 
 (defun spacemacs-navigation/init-winum ()
