@@ -15,7 +15,9 @@
         auto-highlight-symbol
         bookmark
         helm
-        helm-ag
+        (helm-ag :location (recipe
+                            :fetcher github
+                            :repo "kiennq/emacs-helm-ag"))
         helm-descbinds
         helm-flx
         (helm-ls-git :require git)
