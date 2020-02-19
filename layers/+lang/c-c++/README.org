@@ -493,9 +493,11 @@ A ~[ccls]~ or ~[cquery]~ suffix indicates that the binding is for the indicated 
 
 | Key binding | Description                                                   |
 |-------------+---------------------------------------------------------------|
-| ~SPC m g a~ | open matching file                                            |
+| ~SPC m TAB~   | open/switch to matching file                                  |
+|             | (e.g. switch between .cpp and .h)                             |
+| ~SPC m g a~   | open matching file                                            |
 |             | (e.g. switch between .cpp and .h, requires a project to work) |
-| ~SPC m g A~ | open matching file in another window                          |
+| ~SPC m g A~   | open matching file in another window                          |
 |             | (e.g. switch between .cpp and .h, requires a project to work) |
 
 *** Refactor

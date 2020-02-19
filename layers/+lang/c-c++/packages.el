@@ -69,6 +69,7 @@
         (spacemacs/declare-prefix-for-mode mode "mg" "goto")
         (spacemacs/declare-prefix-for-mode mode "mp" "project")
         (spacemacs/set-leader-keys-for-major-mode mode
+          "TAB" 'ff-find-other-file
           "ga" 'projectile-find-other-file
           "gA" 'projectile-find-other-file-other-window)))))
 
