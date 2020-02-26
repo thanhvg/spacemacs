@@ -14,8 +14,8 @@
 
 (defun spacemacs//js-backend ()
   "Returns selected backend."
-  (if javascript-backend
-      javascript-backend
+  (if js-backend
+      js-backend
     (cond
      ((configuration-layer/layer-used-p 'lsp) 'lsp)
      (t 'tern))))
@@ -31,7 +31,7 @@
   "Conditionally setup company based on backend."
   (pcase (spacemacs//js-backend)
     (`tern (spacemacs//js-setup-tern-company))
-    (`tide (spacemacs//tide-setup-company 'js2-mode))
+    (`tide (spacemacs//tide-setup-company 'js-mode))
     (`lsp (spacemacs//js-setup-lsp-company))))
 
 (defun spacemacs//js-setup-dap ()
@@ -47,7 +47,7 @@
   "Setup lsp backend."
   (if (configuration-layer/layer-used-p 'lsp)
       (progn
-        (when (not javascript-lsp-linter)
+        (when (not js-lsp-linter)
           (setq-local lsp-diagnostic-package :none))
         (lsp))
     (message (concat "`lsp' layer is not installed, "
@@ -114,13 +114,13 @@
     (set (make-local-variable 'flycheck-javascript-eslint-executable) found)))
 
 (defun spacemacs/js-format ()
-  "Call formatting tool specified in `javascript-fmt-tool'."
+  "Call formatting tool specified in `js-fmt-tool'."
   (interactive)
   (cond
-   ((eq javascript-fmt-tool 'prettier)
+   ((eq js-fmt-tool 'prettier)
     (call-interactively 'prettier-js))
-   ((eq javascript-fmt-tool 'web-beautify)
+   ((eq js-fmt-tool 'web-beautify)
     (call-interactively 'web-beautify-js))
-   (t (error (concat "%s isn't valid javascript-fmt-tool value."
+   (t (error (concat "%s isn't valid js-fmt-tool value."
                      " It should be 'web-beutify or 'prettier.")
-                     (symbol-name javascript-fmt-tool)))))
+             (symbol-name js-fmt-tool)))))

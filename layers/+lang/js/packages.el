@@ -2,8 +2,8 @@
 ;;
 ;; Copyright (c) 2012-2020 Sylvain Benner & Contributors
 ;;
-;; Author: Sylvain Benner <sylvain.benner@gmail.com>
-;; URL: https://github.com/syl20bnr/spacemacs
+;; Author: Thanh Vuong <thanhvg@gmail.com>
+;; URL: https://github.com/thanhvg
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -28,23 +28,15 @@
 (defun js/post-init-add-node-modules-path ()
   (spacemacs/add-to-hooks #'add-node-modules-path '(css-mode-hook
                                                     js-mode-hook)))
-
 (defun js/post-init-company ()
-  (add-hook 'js2-mode-local-vars-hook #'spacemacs//javascript-setup-company))
-
-(defun js/post-init-counsel-gtags ()
-  (spacemacs/counsel-gtags-define-keys-for-mode 'js-mode))
-
-(defun js/pre-init-dap-mode ()
-  (add-to-list 'spacemacs--dap-supported-modes 'js-mode)
-  (add-hook 'js-mode-local-vars-hook #'spacemacs//javascript-setup-dap))
+  (add-hook 'js-mode-local-vars-hook #'spacemacs//js-setup-company))
 
 (defun js/post-init-evil-matchit ()
-  (add-hook `js2-mode-hook `turn-on-evil-matchit-mode))
+  (add-hook `js-mode-hook `turn-on-evil-matchit-mode))
 
 (defun js/post-init-flycheck ()
   (spacemacs/enable-flycheck 'js-mode)
-  (add-hook 'js-mode-hook #'spacemacs//javascript-setup-checkers 'append))
+  (add-hook 'js-mode-hook #'spacemacs//js-setup-checkers 'append))
 
 (defun js/pre-init-import-js ()
   (when (eq javascript-import-tool 'import-js)
@@ -61,10 +53,10 @@
     ;; :mode (("\\.m?js\\'"  . js2-mode))
     :init
     (progn
-      (add-hook 'js-mode-local-vars-hook #'spacemacs//javascript-setup-backend)
+      (add-hook 'js-mode-local-vars-hook #'spacemacs//js-setup-backend)
       ;; (add-hook 'js-mode-local-vars-hook #'spacemacs//javascript-setup-next-error-fn)
       ;; safe values for backend to be used in directory file variables
-      (dolist (value '(lsp tern))
+      (dolist (value '(lsp tern tide))
         (add-to-list 'safe-local-variable-values
                      (cons 'js-backend value))))
     :config
@@ -79,7 +71,7 @@
 
 
 (defun js/init-nodejs-repl ()
-  (when (eq javascript-repl 'nodejs)
+  (when (eq js-repl 'nodejs)
     (use-package nodejs-repl
       :defer nil
       :init
@@ -128,11 +120,11 @@
 ;;     :post-config (add-to-list 'org-babel-load-languages '(js . t))))
 
 (defun js/pre-init-prettier-js ()
-  (when (eq javascript-fmt-tool 'prettier)
+  (when (eq js-fmt-tool 'prettier)
     (add-to-list 'spacemacs--prettier-modes 'js-mode)))
 
 (defun js/init-skewer-mode ()
-  (when (eq javascript-repl 'skewer)
+  (when (eq js-repl 'skewer)
     (use-package skewer-mode
       :defer t
       :init
@@ -166,6 +158,6 @@
   (add-to-list 'tide-managed-modes 'js-mode))
 
 (defun js/pre-init-web-beautify ()
-  (when (eq javascript-fmt-tool 'web-beautify)
+  (when (eq js-fmt-tool 'web-beautify)
     (add-to-list 'spacemacs--web-beautify-modes
                  (cons 'js-mode 'web-beautify-js))))
