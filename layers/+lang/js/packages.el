@@ -42,7 +42,7 @@
   (when (eq javascript-import-tool 'import-js)
     (add-to-list 'spacemacs--import-js-modes (cons 'js-mode 'js-mode-hook))))
 
-(defun js/init-js-doc ()
+(defun js/post-init-js-doc ()
   (use-package js-doc
     :defer t
     :init (spacemacs/js-doc-set-key-bindings 'js-mode)))
@@ -70,7 +70,7 @@
       )))
 
 
-(defun js/init-nodejs-repl ()
+(defun js/post-init-nodejs-repl ()
   (when (eq js-repl 'nodejs)
     (use-package nodejs-repl
       :defer nil
@@ -123,7 +123,7 @@
   (when (eq js-fmt-tool 'prettier)
     (add-to-list 'spacemacs--prettier-modes 'js-mode)))
 
-(defun js/init-skewer-mode ()
+(defun js/post-init-skewer-mode ()
   (when (eq js-repl 'skewer)
     (use-package skewer-mode
       :defer t
