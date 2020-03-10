@@ -172,10 +172,10 @@
 (defun spacemacs//c-c++-setup-lsp-flycheck ()
   "Setup LSP syntax checking."
   (when (or (spacemacs/enable-flycheck 'c-mode)
-            (spacemacs/enable-flycheck 'c++-mode))
-    (require 'lsp-ui-flycheck)
-    (lsp-ui-flycheck-enable nil)
-    (flycheck-mode)))
+            (spacemacs/enable-flycheck 'c++-mode)))
+    ;; (require 'lsp-ui-flycheck)
+    ;; (lsp-ui-flycheck-enable nil)
+    (flycheck-mode))
 
 
 ;; rtags
