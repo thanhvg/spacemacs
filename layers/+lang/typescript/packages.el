@@ -21,6 +21,7 @@
         import-js
         web-mode
         tide
+        ts-comint
         yasnippet
         ))
 
@@ -116,6 +117,24 @@
         (spacemacs/set-leader-keys-for-major-mode 'typescript-mode
           "="  'spacemacs/typescript-format
           "p" 'spacemacs/typescript-open-region-in-playground)))))
+
+(defun typescript/init-ts-comint ()
+    (use-package ts-comint
+      :init
+      (spacemacs/register-repl 'ts-comnit
+                               'run-ts
+                               "ts-comnit")
+      :config
+      (spacemacs/declare-prefix-for-mode 'typescript-mode "ms" "tsun-repl")
+      (spacemacs/set-leader-keys-for-major-mode 'typescript-mode
+        "'" 'run-ts
+        "ss" 'run-ts
+        "si" 'switch-to-ts
+        "sb" 'ts-send-buffer
+        "sB" 'ts-send-buffer-and-go
+        "se" 'ts-send-last-sexp
+        "sE" 'ts-send-last-sexp-and-go
+        "sl" 'ts-load-file-and-go)))
 
 (defun typescript/pre-init-import-js ()
   (if (eq javascript-import-tool 'import-js)
