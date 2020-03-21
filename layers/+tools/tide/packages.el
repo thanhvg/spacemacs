@@ -10,7 +10,11 @@
 ;;; License: GPLv3
 
 (defconst tide-packages
-  '(tide)
+  '(
+    (tide :location (recipe
+                    :fetcher github
+                    :repo "thanhvg/tide"))
+    )
   "The list of Lisp packages required by the tide layer.")
 
 (defun tide/init-tide ()
