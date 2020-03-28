@@ -42,6 +42,7 @@
       (add-hook 'shell-mode-local-vars-hook #'spacemacs/ggtags-mode-enable)
       (add-hook 'tcl-mode-local-vars-hook #'spacemacs/ggtags-mode-enable)
       (add-hook 'vhdl-mode-local-vars-hook #'spacemacs/ggtags-mode-enable)
+      (add-hook 'ggtags-mode-hook #'spacemacs/ggtags-set-jump-handler)
       (spacemacs|add-toggle ggtags-mode
         :status ggtags-mode
         :on (ggtags-mode nil)
@@ -99,6 +100,23 @@
         (define-key ggtags-mode-map (kbd "C-x 4 .") 'helm-gtags-find-tag-other-window)
         (define-key ggtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
         (define-key ggtags-mode-map (kbd "M-*") 'helm-gtags-pop-stack))
+
+      (spacemacs/set-leader-keys-for-minor-mode 'ggtags-mode
+        "gC" 'helm-gtags-create-tags
+        "gd" 'helm-gtags-find-tag
+        "gD" 'helm-gtags-find-tag-other-window
+        "gf" 'helm-gtags-select-path
+        "gG" 'helm-gtags-dwim-other-window
+        "gi" 'helm-gtags-tags-in-this-function
+        "gl" 'helm-gtags-parse-file
+        "gn" 'helm-gtags-next-history
+        "gp" 'helm-gtags-previous-history
+        "gr" 'helm-gtags-find-rtag
+        "gR" 'helm-gtags-resume
+        "gs" 'helm-gtags-select
+        "gS" 'helm-gtags-show-stack
+        "gy" 'helm-gtags-find-symbol
+        "gu" 'helm-gtags-update-tags)
       (spacemacs|diminish ggtags-mode " 🅶" " [g]"))))
 
 (defun gtags/init-helm-gtags ()

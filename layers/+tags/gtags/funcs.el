@@ -61,14 +61,15 @@ Otherwise does nothing."
     (helm-gtags-dwim)))
 
 (defun spacemacs/helm-gtags-maybe-dwim ()
-  "Runs `helm-gtags-dwim' if `gtags-enable-by-default' is on.
-Otherwise does nothing."
+  "helm-gtags-dwim in same window"
   (interactive)
-  (when gtags-enable-by-default
-    (call-interactively 'helm-gtags-dwim)))
+  (call-interactively 'helm-gtags-dwim))
 
 (defun spacemacs/helm-gtags-define-keys-for-mode (mode)
-  "Define key bindings for the specific MODE."
+  "Define key bindings for the specific MODE.
+
+Only in force if `gtags-enable-by-default' is t.
+Otherwise does nothing."
   ;; The functionality of `helm-gtags-mode' is pretty much entirely superseded
   ;; by `ggtags-mode', so we don't add this hook
   ;; (let ((hook (intern (format "%S-hook" mode))))
@@ -78,26 +79,30 @@ Otherwise does nothing."
   ;; Some modes have more sophisticated jump handlers that go to the beginning
   ;; It might be possible to add `helm-gtags-dwim' instead to the default
   ;; handlers, if it does a reasonable job in ALL modes.
-  (let ((jumpl (intern (format "spacemacs-jump-handlers-%S" mode))))
-    (when (boundp jumpl)
-      (add-to-list jumpl 'spacemacs/helm-gtags-maybe-dwim 'append)))
+  (when gtags-enable-by-default
+    (let ((jumpl (intern (format "spacemacs-jump-handlers-%S" mode))))
+      (when (boundp jumpl)
+        (add-to-list jumpl 'spacemacs/helm-gtags-maybe-dwim 'append)))
 
-  (spacemacs/set-leader-keys-for-major-mode mode
-    "gC" 'helm-gtags-create-tags
-    "gd" 'helm-gtags-find-tag
-    "gD" 'helm-gtags-find-tag-other-window
-    "gf" 'helm-gtags-select-path
-    "gG" 'helm-gtags-dwim-other-window
-    "gi" 'helm-gtags-tags-in-this-function
-    "gl" 'helm-gtags-parse-file
-    "gn" 'helm-gtags-next-history
-    "gp" 'helm-gtags-previous-history
-    "gr" 'helm-gtags-find-rtag
-    "gR" 'helm-gtags-resume
-    "gs" 'helm-gtags-select
-    "gS" 'helm-gtags-show-stack
-    "gy" 'helm-gtags-find-symbol
-    "gu" 'helm-gtags-update-tags))
+    (spacemacs/set-leader-keys-for-major-mode mode
+      "gC" 'helm-gtags-create-tags
+      "gd" 'helm-gtags-find-tag
+      "gD" 'helm-gtags-find-tag-other-window
+      "gf" 'helm-gtags-select-path
+      "gG" 'helm-gtags-dwim-other-window
+      "gi" 'helm-gtags-tags-in-this-function
+      "gl" 'helm-gtags-parse-file
+      "gn" 'helm-gtags-next-history
+      "gp" 'helm-gtags-previous-history
+      "gr" 'helm-gtags-find-rtag
+      "gR" 'helm-gtags-resume
+      "gs" 'helm-gtags-select
+      "gS" 'helm-gtags-show-stack
+      "gy" 'helm-gtags-find-symbol
+      "gu" 'helm-gtags-update-tags)))
+
+(defun spacemacs/ggtags-set-jump-handler ()
+  (add-to-list 'spacemacs-jump-handlers 'spacemacs/helm-gtags-maybe-dwim))
 
 (defun spacemacs/ggtags-mode-enable ()
   "Enable ggtags and eldoc mode.
