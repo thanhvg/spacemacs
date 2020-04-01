@@ -54,11 +54,6 @@ Must be called by a layer using tide."
   (tide-hl-identifier-mode +1)
   (tide-setup))
 
-(defun spacemacs//tide--list-to-string (list)
-  "Convert LIST to string."
-  (cl-reduce (lambda (x y) (concat x " " (symbol-name y)))
-             (cdr list)
-             :initial-value (format "%s" (car list) )))
 
 (defun spacemacs//tide-setup-company (&rest modes)
   "Setup tide company for MODES.
