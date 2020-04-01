@@ -45,11 +45,6 @@ Must be called by a layer using tide."
   (tide-hl-identifier-mode +1)
   (tide-setup))
 
-(defun spacemacs//tide--list-to-string (list)
-  "Convert LIST to string."
-  (cl-reduce (lambda (x y) (concat x " " (symbol-name y)))
-             (cdr list)
-             :initial-value (format "%s" (car list) )))
 
 (defun spacemacs//tide-setup-company (&rest modes)
   "Setup tide company for MODES.
@@ -66,11 +61,11 @@ Must be called by a layer using tide."
   (eldoc-mode))
 
 (defun spacemacs//tide-setup-jump-handle ()
-  "Loop through `tide-managed-modes' and set jump handlers for these modes."
-  (dolist (mode tide-managed-modes)
-    (add-to-list
-     (intern (format "spacemacs-jump-handlers-%S" mode))
-     '(tide-jump-to-definition :async t))))
+  "Set tide as top jump handle."
+  (add-to-list 'spacemacs-jump-handlers '(tide-jump-to-definition :async t)))
+  ;; (setq spacemacs-jump-handlers
+  ;;       (append '((tide-jump-to-definition :async t))
+  ;;               spacemacs-default-jump-handlers)))
 
 (defun spacemacs//tide-create-jsconfig-file ()
   "Create a jsconfig file at project root."

@@ -24,4 +24,4 @@
     :config
     (spacemacs//tide-setup-prefix)
     (spacemacs//tide-setup-bindings)
-    (spacemacs//tide-setup-jump-handle)))
+    (add-hook 'tide-mode-hook #'spacemacs//tide-setup-jump-handle)))
