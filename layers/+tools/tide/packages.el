@@ -31,4 +31,14 @@
     :commands (typescript/jump-to-type-def)
     :config
     (spacemacs//tide-setup-bindings)
-    (add-hook 'tide-mode-hook #'spacemacs//tide-setup-jump-handle)))
+    (add-hook 'tide-mode-hook #'spacemacs//tide-setup-jump-handle)
+    :init
+    (evilified-state-evilify tide-project-errors-mode tide-project-errors-mode-map
+      (kbd "C-k") 'tide-find-previous-error
+      (kbd "C-j") 'tide-find-next-error
+      (kbd "C-l") 'tide-goto-error)
+    (evilified-state-evilify tide-references-mode tide-references-mode-map 
+      (kbd "C-k") 'tide-find-previous-reference
+      (kbd "C-j") 'tide-find-next-reference
+      (kbd "C-l") 'tide-goto-reference)))
+
