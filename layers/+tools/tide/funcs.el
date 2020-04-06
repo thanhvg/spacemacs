@@ -31,7 +31,7 @@
     "g" "goto"
     "ge" #'tide-project-errors
     "gb" #'tide-jump-back
-    "gg" #'tide-jump-to-definition
+    "gd" #'tide-jump-to-definition
     "gt" #'spacemacs/typescript-jump-to-type-def
     "gr" #'tide-references
     "h" "help"
@@ -39,6 +39,7 @@
     "r" "refactor"
     "ri" #'tide-organize-imports
     "rr" #'tide-rename-symbol
+    "rR" #'tide-refactor
     "rf" #'tide-rename-file
     "rR" #'tide-refactor
     "S" "server"
