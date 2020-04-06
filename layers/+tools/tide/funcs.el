@@ -24,13 +24,15 @@
   (spacemacs/set-leader-keys-for-minor-mode 'tide-mode
     "Ee" #'tide-fix
     "Ed" #'tide-add-tslint-disable-next-line
+    "Ep" #'tide-project-errors
     "gb" #'tide-jump-back
-    "gg" #'tide-jump-to-definition
+    "gd" #'tide-jump-to-definition
     "gt" #'spacemacs/typescript-jump-to-type-def
     "gr" #'tide-references
     "hh" #'tide-documentation-at-point
     "ri" #'tide-organize-imports
     "rr" #'tide-rename-symbol
+    "rR" #'tide-refactor
     "rf" #'tide-rename-file
     "Sr" #'tide-restart-server
     "Sj" #'spacemacs//tide-create-jsconfig-file))
@@ -38,10 +40,6 @@
 (defun spacemacs//tide-setup ()
   "Setup tide backend.
 Must be called by a layer using tide."
-  (evilified-state-evilify tide-references-mode tide-references-mode-map
-    (kbd "C-k") 'tide-find-previous-reference
-    (kbd "C-j") 'tide-find-next-reference
-    (kbd "C-l") 'tide-goto-reference)
   (tide-hl-identifier-mode +1)
   (tide-setup))
 
