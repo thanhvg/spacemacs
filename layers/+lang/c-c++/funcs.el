@@ -30,7 +30,8 @@
     ('lsp-clangd (spacemacs//c-c++-setup-lsp-clangd))
     ('lsp-ccls (spacemacs//c-c++-setup-lsp-ccls))
     ('rtags (spacemacs//c-c++-setup-rtags))
-    ('ycmd (spacemacs//c-c++-setup-ycmd))))
+    ('ycmd (spacemacs//c-c++-setup-ycmd))
+    ('dumb (spacemacs//c-c++-setup-dumb))))
 
 (defun spacemacs//c-c++-setup-company ()
   "Conditionally setup C/C++ company integration based on backend."
@@ -288,7 +289,10 @@
   (interactive)
   (call-interactively (if (spacemacs/c-c++-use-rtags t)
                           'rtags-imenu 'idomenu)))
-
+
+;; dumb
+(defun spacemacs//c-c++-setup-dumb ()
+  (symbol-overlay-mode 1))
 
 ;; ycmd
 
