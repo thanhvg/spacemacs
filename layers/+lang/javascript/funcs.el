@@ -152,3 +152,16 @@
 
 (defun spacemacs/javascript-fmt-before-save-hook ()
   (add-hook 'before-save-hook 'spacemacs/javascript-format t t))
+
+
+;; Speed
+(defun spacemacs//javascript-on-evil-insert-enter-insert ()
+  (setq js2-idle-timer-delay 5))
+
+(defun spacemacs//javascript-on-evil-insert-exit-insert ()
+  (setq js2-idle-timer-delay 0.3))
+
+(defun spacemacs//javascipt-add-hooks-evil-insert ()
+  (add-hook 'evil-insert-state-entry-hook #'spacemacs//javascript-on-evil-insert-enter-insert 0 t)
+  (add-hook 'evil-insert-state-exit-hook #'spacemacs//javascript-on-evil-insert-exit-insert 0 t))
+
