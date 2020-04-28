@@ -123,6 +123,8 @@
                      (cons 'javascript-backend value))))
     :config
     (progn
+      (when javascript-delay-parser
+          (add-hook 'js2-mode-hook #'spacemacs//javascipt-add-hooks-evil-insert))
       (when javascript-fmt-on-save
         (add-hook 'js2-mode-local-vars-hook 'spacemacs/javascript-fmt-before-save-hook))
       ;; prefixes

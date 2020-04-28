@@ -46,3 +46,8 @@ If `nil' then `tern' is the default backend unless `lsp' layer is used.")
   "If the backend is `lsp', and this variable is non-nil, then
 use lsp as the linter, otherwise let flycheck choose the best
 linter that's available.")
+
+(defvar javascript-delay-parser nil
+  "If non-nil, will set `js2-idle-timer-delay' to 5 seconds on
+insert mode and 0.3 seconds on other evil mode, this may prevent
+some features relied on js2 AST from working properly.")
