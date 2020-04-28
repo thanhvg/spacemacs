@@ -9,7 +9,7 @@
 ;;
 ;;; License: GPLv3
 
-(configuration-layer/declare-layer-dependencies '(json node prettier tern web-beautify))
+(configuration-layer/declare-layer-dependencies '(json node prettier web-beautify))
 
 (when (and (boundp 'javascript-backend)
            (eq javascript-backend 'lsp))
