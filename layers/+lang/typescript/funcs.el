@@ -153,5 +153,5 @@
   (pcase typescript-backend
     ('lsp (spacemacs/set-leader-keys-for-major-mode mode
             "==" 'spacemacs/typescript-format))
-    ('tide (spacemacs/set-leader-keys-for-major-mode mode
-             "=" 'spacemacs/typescript-format))))
+    (_ (spacemacs/set-leader-keys-for-major-mode mode
+         "==" 'spacemacs/typescript-format))))
