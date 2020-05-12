@@ -54,17 +54,22 @@
   (add-hook 'typescript-tsx-mode-hook #'spacemacs/typescript-emmet-mode))
 
 (defun typescript/set-tide-linter ()
-  (pcase typescript-linter
-    ('tslint (flycheck-add-mode 'typescript-tide 'typescript-tsx-mode)
+  (with-eval-after-load 'tide
+    (with-eval-after-load 'flycheck
+      (cond ((eq typescript-linter 'tslint)
+             (flycheck-add-mode 'typescript-tide 'typescript-tsx-mode)
              (flycheck-add-mode 'typescript-tslint 'typescript-tsx-mode))
-    ('eslint (flycheck-add-mode 'javascript-eslint 'typescript-tsx-mode)
+            ((eq typescript-linter 'eslint)
+             (flycheck-add-mode 'javascript-eslint 'typescript-tsx-mode)
              (flycheck-add-mode 'javascript-eslint 'typescript-mode)
-             (add-to-list 'flycheck-disabled-checkers 'typescript-tslint)
              (flycheck-add-mode 'tsx-tide 'typescript-tsx-mode)
+             (add-to-list 'flycheck-disabled-checkers 'typescript-tslint)
+             (flycheck-disable-checker 'typescript-tslint)
              (flycheck-add-next-checker 'typescript-tide 'javascript-eslint 'append)
              (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append))
-    (_ (message
-        "Invalid typescript-layer configuration, no such linter: %s" typescript-linter))))
+            (t
+             (message
+              "Invalid typescript-layer configuration, no such linter: %s" typescript-linter))))))
 
 (defun typescript/set-lsp-linter ()
   (pcase typescript-linter
