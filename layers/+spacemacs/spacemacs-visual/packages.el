@@ -77,7 +77,11 @@
   (use-package nerd-icons
     :defer t))
 
-(defun spacemacs-visual/init-popup ())
+(defun spacemacs-visual/init-popup ()
+  (use-package popup
+    :config
+    (define-key popup-menu-keymap (kbd "C-j") 'popup-next)
+    (define-key popup-menu-keymap (kbd "C-k") 'popup-previous)))
 
 (defun spacemacs-visual/init-posframe ()
   (use-package posframe :defer t))
