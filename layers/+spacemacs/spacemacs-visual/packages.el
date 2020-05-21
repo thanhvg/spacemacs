@@ -87,7 +87,11 @@
     ;; mode can be explicitly defined using hl-todo-activate-in-modes variable
     (global-hl-todo-mode 1)))
 
-(defun spacemacs-visual/init-popup ())
+(defun spacemacs-visual/init-popup ()
+  (use-package popup
+    :config
+    (define-key popup-menu-keymap (kbd "C-j") 'popup-next)
+    (define-key popup-menu-keymap (kbd "C-k") 'popup-previous)))
 
 (defun spacemacs-visual/init-popwin ()
   (use-package popwin
