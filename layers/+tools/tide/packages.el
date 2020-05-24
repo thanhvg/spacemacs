@@ -22,7 +22,8 @@
 
 
 (defconst tide-packages
-  '(tide)
+'(tide
+  popwin)
   "The list of Lisp packages required by the tide layer.")
 
 (defun tide/init-tide ()
@@ -42,3 +43,7 @@
       (kbd "C-j") 'tide-find-next-reference
       (kbd "C-l") 'tide-goto-reference)))
 
+
+(defun lsp/post-init-popwin ()
+  (push '("*tide-documentation*" :dedicated t :position bottom :stick t :noselect t :height 0.3)
+        popwin:special-display-config))
