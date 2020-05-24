@@ -44,6 +44,6 @@
       (kbd "C-l") 'tide-goto-reference)))
 
 
-(defun lsp/post-init-popwin ()
+(defun tide/post-init-popwin ()
   (push '("*tide-documentation*" :dedicated t :position bottom :stick t :noselect t :height 0.3)
         popwin:special-display-config))
