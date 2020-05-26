@@ -23,6 +23,9 @@
 
 (defconst tide-packages
 '(tide
+  (helm-tide-nav :location (recipe
+                            :fetcher github
+                            :repo "thanhvg/helm-tide-nav"))
   popwin)
   "The list of Lisp packages required by the tide layer.")
 
@@ -38,11 +41,14 @@
       (kbd "C-k") 'tide-find-previous-error
       (kbd "C-j") 'tide-find-next-error
       (kbd "C-l") 'tide-goto-error)
-    (evilified-state-evilify tide-references-mode tide-references-mode-map 
+    (evilified-state-evilify tide-references-mode tide-references-mode-map
       (kbd "C-k") 'tide-find-previous-reference
       (kbd "C-j") 'tide-find-next-reference
       (kbd "C-l") 'tide-goto-reference)))
 
+(defun tide/init-helm-tide-nav ()
+  (use-package helm-tide-nav
+    :defer t))
 
 (defun tide/post-init-popwin ()
   (push '("*tide-documentation*" :dedicated t :position bottom :stick t :noselect t :height 0.3)
