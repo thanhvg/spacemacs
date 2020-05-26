@@ -31,8 +31,9 @@
     "g" "goto"
     "ge" #'tide-project-errors
     "gb" #'tide-jump-back
-    "n" #'tide-nav
+    "n" #'helm-tide-nav
     "gd" #'tide-jump-to-definition
+    "gi" #'tide-jump-to-implementation
     "gt" #'spacemacs/typescript-jump-to-type-def
     "gr" #'tide-references
     "h" "help"
