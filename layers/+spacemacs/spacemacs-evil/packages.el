@@ -82,9 +82,15 @@
   (use-package evil-args
     :defer t
     :init
-    ;; bind evil-args text objects
-    (define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
-    (define-key evil-outer-text-objects-map "a" 'evil-outer-arg)))
+    (progn
+      ;; bind evil-args text objects
+      (define-key evil-normal-state-map "gzl" 'evil-forward-arg)
+      (define-key evil-normal-state-map "gzh" 'evil-backward-arg)
+      (define-key evil-motion-state-map "gzl" 'evil-forward-arg)
+      (define-key evil-motion-state-map "gzh" 'evil-backward-arg)
+      (define-key evil-normal-state-map "gzk" 'evil-jump-out-args)
+      (define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
+      (define-key evil-outer-text-objects-map "a" 'evil-outer-arg))))
 
 (defun spacemacs-evil/init-evil-cleverparens ()
   (use-package evil-cleverparens
