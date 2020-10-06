@@ -362,6 +362,8 @@
         (kbd "p") 'vterm-yank
         (kbd "u") 'vterm-undo)
       (add-hook 'vterm-mode-hook 'spacemacs/disable-hl-line-mode)
+      (add-hook 'vterm-mode-hook (lambda () (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")))
+
       (with-eval-after-load 'centered-cursor-mode
         (add-hook 'vterm-mode-hook 'spacemacs//inhibit-global-centered-cursor-mode)))))
 
