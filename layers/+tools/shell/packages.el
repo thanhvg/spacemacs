@@ -355,13 +355,21 @@
       (define-key vterm-mode-map (kbd "M-/") 'vterm-send-tab)
       (when spacemacs-vterm-history-file-location
         (spacemacs//vterm-bind-m-r vterm-mode-map))
-      (evil-define-key 'insert vterm-mode-map (kbd "C-y") 'vterm-yank)
-      (evil-define-key 'insert vterm-mode-map (kbd "C-o") 'evil-execute-in-normal-state)
+
+      (evil-define-key 'insert vterm-mode-map
+        (kbd "C-y") 'vterm-yank
+        (kbd "C-j") 'vterm-send-down
+        (kbd "C-k") 'vterm-send-up
+        (kbd "C-o") 'evil-execute-in-normal-state)
+
       (evil-define-key 'normal vterm-mode-map
         [escape] 'vterm-send-escape
         [return] 'vterm-send-return
         (kbd "p") 'vterm-yank
-        (kbd "u") 'vterm-undo)
+        (kbd "u") 'vterm-undo
+        (kbd "C-j") 'vterm-send-down
+        (kbd "C-k") 'vterm-send-up)
+
       (add-hook 'vterm-mode-hook 'spacemacs/disable-hl-line-mode)
       (add-hook 'vterm-mode-hook (lambda () (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")))
 
