@@ -31,7 +31,6 @@
     "g" "goto"
     "ge" #'tide-project-errors
     "gb" #'tide-jump-back
-    "n" #'helm-tide-nav
     "gd" #'tide-jump-to-definition
     "gi" #'tide-jump-to-implementation
     "gt" #'spacemacs/typescript-jump-to-type-def
@@ -46,7 +45,14 @@
     "rf" #'tide-rename-file
     "S" "server"
     "Sr" #'tide-restart-server
-    "Sj" #'spacemacs//tide-create-jsconfig-file))
+    "Sj" #'spacemacs//tide-create-jsconfig-file)
+  (cond
+   ((configuration-layer/layer-used-p 'helm)
+    (spacemacs/set-leader-keys-for-minor-mode 'tide-mode
+      "gs" #'helm-tide-nav))
+   ((configuration-layer/layer-used-p 'ivy)
+    (spacemacs/set-leader-keys-for-minor-mode 'tide-mode
+      "gs" #'counsel-tide-nav))))
 
 (defun spacemacs//tide-setup ()
   "Setup tide backend.
