@@ -22,11 +22,18 @@
 
 
 (defconst tide-packages
-'(tide
-  (helm-tide-nav :location (recipe
-                            :fetcher github
-                            :repo "thanhvg/helm-tide-nav"))
-  popwin)
+  '(tide
+    (helm-tide-nav
+     :requires helm
+     :location (recipe
+                :fetcher github
+                :repo "thanhvg/helm-tide-nav"))
+    (counsel-tide-nav
+     :requires ivy
+     :location (recipe
+                :fetcher github
+                :repo "thanhvg/counsel-tide-nav"))
+    popwin)
   "The list of Lisp packages required by the tide layer.")
 
 (defun tide/init-tide ()
@@ -48,6 +55,10 @@
 
 (defun tide/init-helm-tide-nav ()
   (use-package helm-tide-nav
+    :defer t))
+
+(defun tide/init-counsel-tide-nav ()
+  (use-package counsel-tide-nav
     :defer t))
 
 (defun tide/post-init-popwin ()
