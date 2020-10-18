@@ -90,3 +90,9 @@ Must be called by a layer using tide."
             (with-temp-file jsconfig-file
               (insert tide-jsconfig-content))))
       (message "Project not found"))))
+
+(defun spacemacs//tide-advice-add-quit-window (buffer)
+  "Bind q to `quit-window' for evil local buffer."
+  (with-current-buffer buffer
+    (evil-define-key 'normal 'local (kbd "q") #'quit-window)
+    buffer))
