@@ -51,7 +51,9 @@
     (evilified-state-evilify tide-references-mode tide-references-mode-map
       (kbd "C-k") 'tide-find-previous-reference
       (kbd "C-j") 'tide-find-next-reference
-      (kbd "C-l") 'tide-goto-reference)))
+      (kbd "C-l") 'tide-goto-reference)
+    ;; advice tide doc evil mode use q to `quit-window'
+    (advice-add 'tide-make-help-buffer :filter-return 'spacemacs//tide-advice-add-quit-window)))
 
 (defun tide/init-helm-tide-nav ()
   (use-package helm-tide-nav
