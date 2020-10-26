@@ -35,7 +35,36 @@
       (which-key-add-keymap-based-replacements evil-motion-state-map
         "gr"  "evil-mc")
       (add-hook 'prog-mode-hook 'turn-on-evil-mc-mode)
-      (add-hook 'text-mode-hook 'turn-on-evil-mc-mode))
+      (add-hook 'text-mode-hook 'turn-on-evil-mc-mode)
+      (setq evil-mc-cursors-map
+        (let ((map (make-sparse-keymap)))
+          (define-key map (kbd "m") 'evil-mc-make-all-cursors)
+          (define-key map (kbd "u") 'evil-mc-undo-last-added-cursor)
+          (define-key map (kbd "q") 'evil-mc-undo-all-cursors)
+          (define-key map (kbd "s") 'evil-mc-pause-cursors)
+          (define-key map (kbd "r") 'evil-mc-resume-cursors)
+          (define-key map (kbd "f") 'evil-mc-make-and-goto-first-cursor)
+          (define-key map (kbd "l") 'evil-mc-make-and-goto-last-cursor)
+          (define-key map (kbd "h") 'evil-mc-make-cursor-here)
+          (define-key map (kbd "j") 'evil-mc-make-cursor-move-next-line)
+          (define-key map (kbd "k") 'evil-mc-make-cursor-move-prev-line)
+          (define-key map (kbd "N") 'evil-mc-skip-and-goto-next-cursor)
+          (define-key map (kbd "P") 'evil-mc-skip-and-goto-prev-cursor)
+          (define-key map (kbd "n") 'evil-mc-skip-and-goto-next-match)
+          (define-key map (kbd "p") 'evil-mc-skip-and-goto-prev-match)
+          (define-key map (kbd "I") 'evil-mc-make-cursor-in-visual-selection-beg)
+          (define-key map (kbd "A") 'evil-mc-make-cursor-in-visual-selection-end)
+          map))
+      (setq evil-mc-key-map
+            (let ((map (make-sparse-keymap)))
+              (evil-define-key* '(normal visual) map
+                                (kbd "gz") evil-mc-cursors-map
+                                (kbd "M-n") 'evil-mc-make-and-goto-next-cursor
+                                (kbd "M-p") 'evil-mc-make-and-goto-prev-cursor
+                                (kbd "C-n") 'evil-mc-make-and-goto-next-match
+                                (kbd "C-t") 'evil-mc-skip-and-goto-next-match
+                                (kbd "C-p") 'evil-mc-make-and-goto-prev-match)
+              map)))
     :config
     (progn
       (add-hook 'magit-mode-hook 'turn-off-evil-mc-mode)
