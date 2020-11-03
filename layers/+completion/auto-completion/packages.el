@@ -32,8 +32,9 @@
         (company-quickhelp :toggle auto-completion-enable-help-tooltip)
         (company-statistics :toggle auto-completion-enable-sort-by-usage)
         counsel
-        (fuzzy :toggle (not (eq auto-completion-front-end 'company)))
-        (helm-company :requires helm :toggle (eq auto-completion-front-end 'company))
+        (eacl :requires ivy)
+        fuzzy
+        (helm-company :requires helm)
         (helm-c-yasnippet :requires helm)
         hippie-exp
         (ivy-yasnippet :requires ivy)
@@ -140,6 +141,13 @@
   (spacemacs|use-package-add-hook company
     :post-config
     (define-key company-active-map (kbd "C-/") 'counsel-company)))
+
+(defun auto-completion/init-eacl ()
+  (use-package eacl
+    :defer t
+    :init
+    (global-set-key (kbd "C-c n") 'eacl-complete-line)
+    (global-set-key (kbd "C-c m") 'eacl-complete-multiline)))
 
 (defun auto-completion/init-fuzzy ()
   (use-package fuzzy :defer t))
