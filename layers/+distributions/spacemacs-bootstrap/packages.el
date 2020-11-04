@@ -317,6 +317,9 @@
     (kbd "C-k") 'comint-previous-input
     (kbd "C-j") 'comint-next-input)
 
+  (define-key evil-normal-state-map "gl" 'spacemacs/duplicate-current-line-or-region)
+  ;; (define-key evil-visual-state-map "gl" 'spacemacs/duplicate-current-line-or-region)
+
   ;; ignore repeat
   (evil-declare-ignore-repeat 'spacemacs/next-error)
   (evil-declare-ignore-repeat 'spacemacs/previous-error))
