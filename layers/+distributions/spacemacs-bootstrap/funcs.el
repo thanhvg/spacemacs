@@ -329,3 +329,35 @@ column."
    (or column
        (unless selective-display
          (1+ (current-column))))))
+
+
+;; duplicate lines and region
+;; https://rejeep.github.io/emacs/elisp/2010/03/11/duplicate-current-line-or-region-in-emacs.html
+(defun spacemacs/duplicate-current-line-or-region (arg)
+  "Duplicates the current line or region ARG times.
+If there's no region, the current line will be duplicated. However, if
+there's a region, all lines that region covers will be duplicated."
+  (interactive "p")
+  (let (beg end (should-go t) (origin (point)))
+    (if (and mark-active (> (point) (mark)))
+        (exchange-point-and-mark))
+    (setq beg (line-beginning-position))
+    (when mark-active
+      (exchange-point-and-mark))
+    (setq end (line-end-position))
+    ;; handle bug in evil-visual-line that will take one line too many
+    ;; (point) inside evil-visual-line returns end of line
+    (when (and (evil-visual-state-p)
+               (eq evil-visual-selection 'line))
+      (setq should-go t)
+      (save-excursion
+        (goto-char (1- (region-end)))
+        (setq end (line-end-position))))
+    (let ((region (buffer-substring-no-properties beg end)))
+      (dotimes (i arg)
+        (goto-char end)
+        (newline)
+        (insert region)
+        (setq end (point)))
+      (if should-go (goto-char (+ origin (* (length region) arg) arg))
+        (move-to-column 0)))))
