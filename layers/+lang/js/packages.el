@@ -22,7 +22,6 @@
         prettier-js
         skewer-mode
         tern
-        tide
         web-beautify))
 
 (defun js/post-init-add-node-modules-path ()
@@ -153,9 +152,6 @@
 
 (defun js/post-init-tern ()
   (add-to-list 'tern--key-bindings-modes 'js-mode))
-
-(defun js/post-init-tide ()
-  (add-to-list 'tide-managed-modes 'js-mode))
 
 (defun js/pre-init-web-beautify ()
   (when (eq js-fmt-tool 'web-beautify)
