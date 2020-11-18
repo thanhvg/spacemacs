@@ -44,3 +44,6 @@ see `spacemacs-useless-buffers-regexp'.")
 
 (defvar spacemacs--git-blame-ts-full-hint-toggle nil
   "Display git blame transient state documentation.")
+
+(defvar git-enable-forge nil
+  "If non nil `forge' plugin is enabled.")
