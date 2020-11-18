@@ -27,9 +27,7 @@
     emojify
     evil-collection
     evil-surround
-    ;; forge requires a C compiler on Windows so we disable
-    ;; it by default on Windows.
-    (forge :toggle (not (spacemacs/system-is-mswindows)))
+    (forge :toggle git-enable-forge)
     ;; include the old git{attributes,config,ignore}-mode
     git-modes
     gitignore-templates
