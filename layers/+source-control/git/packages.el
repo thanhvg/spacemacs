@@ -25,9 +25,7 @@
       '(
         evil-collection
         fill-column-indicator
-        ;; forge requires a C compiler on Windows so we disable
-        ;; it by default on Windows.
-        (forge :toggle (not (spacemacs/system-is-mswindows)))
+        (forge :toggle git-enable-forge)
         gitattributes-mode
         gitconfig-mode
         gitignore-mode
