@@ -25,7 +25,10 @@
 (defconst gtags-packages
   '(
     ggtags
-    (counsel-gtags :requires ivy)
+    (counsel-gtags :requires ivy
+                   :location (recipe
+                              :fetcher github
+                              :repo "thanhvg/emacs-counsel-gtags"))
     (helm-gtags :requires helm)
     ))
 
