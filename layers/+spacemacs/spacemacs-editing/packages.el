@@ -25,7 +25,7 @@
       '(aggressive-indent
         avy
         (clean-aindent-mode :toggle dotspacemacs-use-clean-aindent-mode)
-        dired-quick-sort
+        (dired-quick-sort :toggle (null (configuration-layer/layer-used-p 'ranger)))
         drag-stuff
         editorconfig
         eval-sexp-fu
