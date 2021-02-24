@@ -392,23 +392,28 @@ Will work on both org-mode and any mode that accepts plain html."
       "xu" (spacemacs|org-emphasize spacemacs/org-underline ?_)
       "xv" (spacemacs|org-emphasize spacemacs/org-verbatim ?=))
 
-    ;; Add global evil-leader mappings. Used to access org-agenda
-    ;; functionalities – and a few others commands – from any other mode.
-    (spacemacs/declare-prefix
-      "ao"  "org"
-      "aof" "feeds"
-      "aoC" (org-clocks-prefix))
-    ;; org-agenda
-    (when (configuration-layer/layer-used-p 'ivy)
-      (spacemacs/set-leader-keys "ao/" 'org-occur-in-agenda-files))
-    (spacemacs/set-leader-keys
-      "ao#" 'org-agenda-list-stuck-projects
-      "aoa" 'org-agenda-list
-      "aoo" 'org-agenda
-      "aoc" 'org-capture
-      "aoe" 'org-store-agenda-views
-      "aofi" 'org-feed-goto-inbox
-      "aofu" 'org-feed-update-all
+      (spacemacs/set-root-leader-keys-for-mode 'org-mode nil
+        "nb" 'org-narrow-to-block
+        "ns" 'org-narrow-to-subtree
+        "ne" 'org-narrow-to-element)
+
+      ;; Add global evil-leader mappings. Used to access org-agenda
+      ;; functionalities – and a few others commands – from any other mode.
+      (spacemacs/declare-prefix
+        "ao"  "org"
+        "aof" "feeds"
+        "aoC" (org-clocks-prefix))
+      ;; org-agenda
+      (when (configuration-layer/layer-used-p 'ivy)
+        (spacemacs/set-leader-keys "ao/" 'org-occur-in-agenda-files))
+      (spacemacs/set-leader-keys
+        "ao#" 'org-agenda-list-stuck-projects
+        "aoa" 'org-agenda-list
+        "aoo" 'org-agenda
+        "aoc" 'org-capture
+        "aoe" 'org-store-agenda-views
+        "aofi" 'org-feed-goto-inbox
+        "aofu" 'org-feed-update-all
 
       ;; Clock
       ;; These keybindings should match those under the "mC" prefix (above)
