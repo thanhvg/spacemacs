@@ -393,43 +393,47 @@ Will work on both org-mode and any mode that accepts plain html."
       "xu" (spacemacs|org-emphasize spacemacs/org-underline ?_)
       "xv" (spacemacs|org-emphasize spacemacs/org-verbatim ?=))
 
-    ;; Add global evil-leader mappings. Used to access org-agenda
-    ;; functionalities – and a few others commands – from any other mode.
-    (spacemacs/declare-prefix
-      "ao"  "org"
-      "aof" "feeds"
-      "aoC" (org-clocks-prefix))
-    ;; org-agenda
-    (unless (when-let* ((pkg (configuration-layer/get-package 'helm-org-rifle)))
-              ;; TODO: `configuration-layer/package-used-p' doesn't check
-              ;; :toggle status.  When it is fixed, we can use it again.
-              (cfgl-package-used-p pkg))
-      (spacemacs/set-leader-keys "ao/" 'org-occur-in-agenda-files))
-    (spacemacs/set-leader-keys
-      "ao#" 'org-agenda-list-stuck-projects
-      "aoa" 'org-agenda-list
-      "aoo" 'org-agenda
-      "aoc" 'org-capture
-      "aoe" 'org-store-agenda-views
-      "aofi" 'org-feed-goto-inbox
-      "aofu" 'org-feed-update-all
+      (spacemacs/set-root-leader-keys-for-mode 'org-mode nil
+        "nb" 'org-narrow-to-block
+        "ns" 'org-narrow-to-subtree
+        "ne" 'org-narrow-to-element)
 
-      ;; Clock
-      ;; These keybindings should match those under the "mC" prefix (above)
-      "aoCc" 'org-clock-cancel
-      "aoCg" 'org-clock-goto
-      "aoCi" 'org-clock-in
-      "aoCI" 'org-clock-in-last
-      "aoCj" 'spacemacs/org-clock-jump-to-current-clock
-      "aoCo" 'org-clock-out
-      "aoCr" 'org-resolve-clocks
+      ;; Add global evil-leader mappings. Used to access org-agenda
+      ;; functionalities – and a few others commands – from any other mode.
+      (spacemacs/declare-prefix
+        "ao"  "org"
+        "aof" "feeds"
+        "aoC" (org-clocks-prefix))
+      ;; org-agenda
+      (unless (when-let ((pkg (configuration-layer/get-package 'helm-org-rifle)))
+                ;; TODO: `configuration-layer/package-used-p' doesn't check
+                ;; :toggle status.  When it is fixed, we can use it again.
+                (cfgl-package-used-p pkg))
+        (spacemacs/set-leader-keys "ao/" 'org-occur-in-agenda-files))
+      (spacemacs/set-leader-keys
+        "ao#" 'org-agenda-list-stuck-projects
+        "aoa" 'org-agenda-list
+        "aoo" 'org-agenda
+        "aoc" 'org-capture
+        "aoe" 'org-store-agenda-views
+        "aofi" 'org-feed-goto-inbox
+        "aofu" 'org-feed-update-all
+        ;; Clock
+        ;; These keybindings should match those under the "mC" prefix (above)
+        "aoCc" 'org-clock-cancel
+        "aoCg" 'org-clock-goto
+        "aoCi" 'org-clock-in
+        "aoCI" 'org-clock-in-last
+        "aoCj" 'spacemacs/org-clock-jump-to-current-clock
+        "aoCo" 'org-clock-out
+        "aoCr" 'org-resolve-clocks
 
-      "aol" 'org-store-link
-      "aom" 'org-tags-view
-      "aos" 'org-search-view
-      "aot" 'org-todo-list
-      ;; SPC C- capture/colors
-      "Cc" 'org-capture)
+        "aol" 'org-store-link
+        "aom" 'org-tags-view
+        "aos" 'org-search-view
+        "aot" 'org-todo-list
+        ;; SPC C- capture/colors
+        "Cc" 'org-capture)
 
     (define-key global-map "\C-cl" 'org-store-link)
     (define-key global-map "\C-ca" 'org-agenda)
