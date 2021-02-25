@@ -53,9 +53,14 @@
           lsp-imenu-index-function #'lsp-imenu-create-categorized-index)
     ;; If you find something else should be ignored, you could also set them here
     :config
+    ;; problem with bind-map for evil key these two bind to "SPC" must go
+    ;; first before spacemacs/lsp-bind-upstream-keys which binds to SPC m
+    (spacemacs/lps-bind-breadcrumb)
+    (spacemacs/lps-bind-breadcrumb-narrow)
     (if lsp-use-upstream-bindings
         (spacemacs/lsp-bind-upstream-keys)
       (spacemacs/lsp-bind-keys))
+    (setq lsp-prefer-capf t)
     ;; This sets the lsp indentation for all modes derived from web-mode.
     (add-to-list 'lsp--formatting-indent-alist '(web-mode . web-mode-markup-indent-offset))
     (add-hook 'lsp-after-open-hook (lambda ()
