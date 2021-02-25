@@ -348,3 +348,50 @@ EXTRA is an additional parameter that's passed to the LSP function"
 (defun spacemacs/lsp-avy-goto-symbol ()
   (interactive)
   (spacemacs//lsp-avy-document-symbol nil))
+
+(defmacro spacemacs||define-lsp-breadcrumb (func key)
+  (let ((func-name (intern (format "%s-%s" func key))))
+    `(defun ,func-name ()
+       ,(format "Call (`lsp-breadcrumb-go-to-symbol' %s)." key)
+       (interactive)
+       (lsp-breadcrumb-go-to-symbol ,key))))
+
+(dotimes (i 9)
+  (eval `(spacemacs||define-lsp-breadcrumb spacemacs/lsp-breadcrumb-goto ,i)))
+
+(defun spacemacs/lps-bind-breadcrumb ()
+  (spacemacs/set-root-leader-keys-for-mode 'lsp-mode t
+    "j1" 'spacemacs/lsp-breadcrumb-goto-1
+    "j2" 'spacemacs/lsp-breadcrumb-goto-2
+    "j3" 'spacemacs/lsp-breadcrumb-goto-3
+    "j4" 'spacemacs/lsp-breadcrumb-goto-4
+    "j5" 'spacemacs/lsp-breadcrumb-goto-5
+    "j6" 'spacemacs/lsp-breadcrumb-goto-6
+    "j7" 'spacemacs/lsp-breadcrumb-goto-7
+    "j8" 'spacemacs/lsp-breadcrumb-goto-8
+    "j9" 'spacemacs/lsp-breadcrumb-goto-9))
+
+(defmacro spacemacs||define-lsp-breadcrumb-narrow (func key)
+  (let ((func-name (intern (format "%s-%s" func key))))
+    `(defun ,func-name ()
+       ,(format "Call (`lsp-breadcrumb-narrow-to-symbol' %s)." key)
+       (interactive)
+       (lsp-breadcrumb-narrow-to-symbol ,key))))
+
+(dotimes (i 9)
+  (eval `(spacemacs||define-lsp-breadcrumb-narrow spacemacs/lsp-breadcrumb-narrow ,i)))
+
+(defun spacemacs/lps-bind-breadcrumb-narrow ()
+  (spacemacs/set-root-leader-keys-for-mode 'lsp-mode t
+    "n1" 'spacemacs/lsp-breadcrumb-narrow-1
+    "n2" 'spacemacs/lsp-breadcrumb-narrow-2
+    "n3" 'spacemacs/lsp-breadcrumb-narrow-3
+    "n4" 'spacemacs/lsp-breadcrumb-narrow-4
+    "n5" 'spacemacs/lsp-breadcrumb-narrow-5
+    "n6" 'spacemacs/lsp-breadcrumb-narrow-6
+    "n7" 'spacemacs/lsp-breadcrumb-narrow-7
+    "n8" 'spacemacs/lsp-breadcrumb-narrow-8
+    "n9" 'spacemacs/lsp-breadcrumb-narrow-9))
+
+;; (which-key-add-keymap-based-replacements spacemacs-root-lsp-mode-map
+;;   "j2" "_")

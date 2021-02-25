@@ -36,6 +36,10 @@
     :defer t
     :config
     (progn
+      ;; problem with bind-map for evil key these two bind to "SPC" must go
+      ;; first before spacemacs/lsp-bind-upstream-keys which binds to SPC m
+      (spacemacs/lps-bind-breadcrumb)
+      (spacemacs/lps-bind-breadcrumb-narrow)
       (if lsp-use-upstream-bindings
           (spacemacs/lsp-bind-upstream-keys)
         (spacemacs/lsp-bind-keys))
