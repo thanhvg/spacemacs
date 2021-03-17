@@ -55,6 +55,10 @@
       (setq lsp-prefer-capf t)
       ;; This sets the lsp indentation for all modes derived from web-mode.
       (add-to-list 'lsp--formatting-indent-alist '(web-mode . web-mode-markup-indent-offset))
+      (setq lsp-keep-workspace-alive nil)
+      ;; deal with mutli-root lsp servers (java)
+      ;; https://emacs-lsp.github.io/lsp-mode/page/faq/
+      (advice-add 'lsp :before (lambda (&rest _args) (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
       (add-hook 'lsp-after-open-hook (lambda ()
                                        "Setup xref jump handler"
                                        (spacemacs//setup-lsp-jump-handler))))))
