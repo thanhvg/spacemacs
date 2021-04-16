@@ -71,163 +71,164 @@
                  spacemacs-jump-handlers-cider-repl-mode))
       (add-to-list x '(spacemacs/clj-find-var :async t)))
 
-    ;; TODO: having this work for cider-macroexpansion-mode would be nice,
-    ;;       but the problem is that it uses clojure-mode as its major-mode
-    (let ((cider--key-binding-prefixes
-           '(("m=e" . "edn")
-             ("md" . "debug")
-             ("mdv" . "inspect values")
-             ("me" . "evaluation")
-             ("men" . "namespace")
-             ("mep" . "pretty print")
-             ("mm" . "manage repls")
-             ("mml" . "link session")
-             ("mmS" . "sibling sessions")
-             ("mmq" . "quit/restart")
-             ("mp" . "profile")
-             ("ms" . "send to repl")
-             ("msc" . "connect external repl")
-             ("msj" . "jack-in")
-             ("msq" . "quit/restart repl")
-             ("mt" . "test")))
-          (cider--key-binding-non-lsp-prefixes
-           '(("m=" . "format")
-             ("mg" . "goto") ;; no lsp
-             ("mh" . "documentation")
-             ("mT" . "toggle"))))
-      (spacemacs|forall-clojure-modes m
-                                      (mapc (lambda (x) (spacemacs/declare-prefix-for-mode
-                                                          m (car x) (cdr x)))
-                                            cider--key-binding-prefixes)
-                                      (unless (eq clojure-backend 'lsp)
-                                        (mapc (lambda (x) (spacemacs/declare-prefix-for-mode
-                                                            m (car x) (cdr x)))
-                                              cider--key-binding-non-lsp-prefixes)
-                                        (spacemacs/set-leader-keys-for-major-mode m
-                                          "hh" 'cider-doc
-                                          "=r" 'cider-format-region
-                                          "ge" 'cider-jump-to-compilation-error
-                                          "gr" 'cider-find-resource
-                                          "gs" 'cider-browse-spec
-                                          "gS" 'cider-browse-spec-all))
-                                      (spacemacs/set-leader-keys-for-major-mode m
-                                        ;; shortcuts
-                                        "'"  'sesman-start
-                                        ;; help / documentation
-                                        "ha" 'cider-apropos
-                                        "hc" 'cider-cheatsheet
-                                        "hd" 'cider-clojuredocs
-                                        "hj" 'cider-javadoc
-                                        "hn" 'cider-browse-ns
-                                        "hN" 'cider-browse-ns-all
-                                        "hs" 'cider-browse-spec
-                                        "hS" 'cider-browse-spec-all
-                                        ;; evaluate in source code buffer
-                                        "e;" 'cider-eval-defun-to-comment
-                                        "e$" 'spacemacs/cider-eval-sexp-end-of-line
-                                        "e(" 'cider-eval-list-at-point
-                                        "eb" 'cider-eval-buffer
-                                        "ee" 'cider-eval-last-sexp
-                                        "ef" 'cider-eval-defun-at-point
-                                        "ei" 'cider-interrupt
-                                        "el" 'spacemacs/cider-eval-sexp-end-of-line
-                                        "em" 'cider-macroexpand-1
-                                        "eM" 'cider-macroexpand-all
-                                        "ena" 'cider-ns-reload-all
-                                        "enn" 'cider-eval-ns-form
-                                        "enr" 'cider-ns-refresh
-                                        "enl" 'cider-ns-reload  ;; SPC u for cider-ns-reload-all
-                                        "ep;" 'cider-pprint-eval-defun-to-comment
-                                        "ep:" 'cider-pprint-eval-last-sexp-to-comment
-                                        "epf" 'cider-pprint-eval-defun-at-point
-                                        "epe" 'cider-pprint-eval-last-sexp
-                                        "er" 'cider-eval-region
-                                        "eu" 'cider-undef
-                                        "ev" 'cider-eval-sexp-at-point
-                                        "eV" 'cider-eval-sexp-up-to-point
-                                        "ew" 'cider-eval-last-sexp-and-replace
-                                        ;; format code style
-                                        "==" 'cider-format-buffer
-                                        "=eb" 'cider-format-edn-buffer
-                                        "=ee" 'cider-format-edn-last-sexp
-                                        "=er" 'cider-format-edn-region
-                                        "=f" 'cider-format-defun
-                                        ;; goto
-                                        "gb" 'cider-pop-back
-                                        "gc" 'cider-classpath
-                                        "gg" 'spacemacs/clj-find-var
-                                        "gn" 'cider-find-ns
-                                        ;; manage cider connections / sesman
-                                        "mb" 'sesman-browser
-                                        "mi" 'sesman-info
-                                        "mg" 'sesman-goto
-                                        "mlb" 'sesman-link-with-buffer
-                                        "mld" 'sesman-link-with-directory
-                                        "mlu" 'sesman-unlink
-                                        "mqq" 'sesman-quit
-                                        "mqr" 'sesman-restart
-                                        "mlp" 'sesman-link-with-project
-                                        "mSj" 'cider-connect-sibling-clj
-                                        "mSs" 'cider-connect-sibling-cljs
-                                        "ms" 'sesman-start
-                                        ;; send code - spacemacs convention
-                                        "sa" (if (eq m 'cider-repl-mode)
-                                                 'cider-switch-to-last-clojure-buffer
-                                               'cider-switch-to-repl-buffer)
-                                        "sb" 'cider-load-buffer
-                                        "sB" 'spacemacs/cider-send-buffer-in-repl-and-focus
-                                        "scj" 'cider-connect-clj
-                                        "scm" 'cider-connect-clj&cljs
-                                        "scs" 'cider-connect-cljs
-                                        "se" 'spacemacs/cider-send-last-sexp-to-repl
-                                        "sE" 'spacemacs/cider-send-last-sexp-to-repl-focus
-                                        "sf" 'spacemacs/cider-send-function-to-repl
-                                        "sF" 'spacemacs/cider-send-function-to-repl-focus
-                                        "si" 'sesman-start
-                                        "sjj" 'cider-jack-in-clj
-                                        "sjm" 'cider-jack-in-clj&cljs
-                                        "sjs" 'cider-jack-in-cljs
-                                        "sl" 'spacemacs/cider-find-and-clear-repl-buffer
-                                        "sL" 'cider-find-and-clear-repl-output
-                                        "sn" 'spacemacs/cider-send-ns-form-to-repl
-                                        "sN" 'spacemacs/cider-send-ns-form-to-repl-focus
-                                        "so" 'cider-repl-switch-to-other
-                                        "sqq" 'cider-quit
-                                        "sqr" 'cider-restart
-                                        "sqn" 'cider-ns-reload
-                                        "sqN" 'cider-ns-reload-all
-                                        "sr" 'spacemacs/cider-send-region-to-repl
-                                        "sR" 'spacemacs/cider-send-region-to-repl-focus
-                                        "su" 'cider-repl-require-repl-utils
-                                        ;; toggle options
-                                        "Te" 'cider-enlighten-mode
-                                        "Tf" 'spacemacs/cider-toggle-repl-font-locking
-                                        "Tp" 'spacemacs/cider-toggle-repl-pretty-printing
-                                        "Tt" 'cider-auto-test-mode
-                                        ;; cider-tests
-                                        "ta" 'spacemacs/cider-test-run-all-tests
-                                        "tb" 'cider-test-show-report
-                                        "tl" 'spacemacs/cider-test-run-loaded-tests
-                                        "tn" 'spacemacs/cider-test-run-ns-tests
-                                        "tp" 'spacemacs/cider-test-run-project-tests
-                                        "tr" 'spacemacs/cider-test-rerun-failed-tests
-                                        "tt" 'spacemacs/cider-test-run-focused-test
-                                        ;; cider-debug and inspect
-                                        "db" 'cider-debug-defun-at-point
-                                        "de" 'spacemacs/cider-display-error-buffer
-                                        "dve" 'cider-inspect-last-sexp
-                                        "dvf" 'cider-inspect-defun-at-point
-                                        "dvi" 'cider-inspect
-                                        "dvl" 'cider-inspect-last-result
-                                        "dvv" 'cider-inspect-expr
-                                        ;; profile
-                                        "p+" 'cider-profile-samples
-                                        "pc" 'cider-profile-clear
-                                        "pn" 'cider-profile-ns-toggle
-                                        "ps" 'cider-profile-var-summary
-                                        "pS" 'cider-profile-summary
-                                        "pt" 'cider-profile-toggle
-                                        "pv" 'cider-profile-var-profiled-p)))
+      ;; TODO: having this work for cider-macroexpansion-mode would be nice,
+      ;;       but the problem is that it uses clojure-mode as its major-mode
+      (let ((cider--key-binding-prefixes
+             '(("m=e" . "edn")
+               ("md" . "debug")
+               ("mdv" . "inspect values")
+               ("me" . "evaluation")
+               ("men" . "namespace")
+               ("mep" . "pretty print")
+               ("mm" . "manage repls")
+               ("mml" . "link session")
+               ("mmS" . "sibling sessions")
+               ("mmq" . "quit/restart")
+               ("mp" . "profile")
+               ("ms" . "send to repl")
+               ("msc" . "connect external repl")
+               ("msj" . "jack-in")
+               ("msq" . "quit/restart repl")
+               ("mt" . "test")))
+            (cider--key-binding-non-lsp-prefixes
+             '(("m=" . "format")
+               ("mg" . "goto") ;; no lsp
+               ("mh" . "documentation")
+               ("mT" . "toggle"))))
+        (spacemacs|forall-clojure-modes m
+          (mapc (lambda (x) (spacemacs/declare-prefix-for-mode
+                              m (car x) (cdr x)))
+                cider--key-binding-prefixes)
+          (unless (eq clojure-backend 'lsp)
+            (mapc (lambda (x) (spacemacs/declare-prefix-for-mode
+                                m (car x) (cdr x)))
+                  cider--key-binding-non-lsp-prefixes)
+            (spacemacs/set-leader-keys-for-major-mode m
+              "hh" 'cider-doc
+              "=r" 'cider-format-region
+              "ge" 'cider-jump-to-compilation-error
+              "gr" 'cider-find-resource
+              "gs" 'cider-browse-spec
+              "gS" 'cider-browse-spec-all))
+          (spacemacs/set-leader-keys-for-major-mode m
+            ;; shortcuts
+            "'"  'sesman-start
+            ;; help / documentation
+            "ha" 'cider-apropos
+            "hc" 'cider-cheatsheet
+            "hd" 'cider-clojuredocs
+            "hj" 'cider-javadoc
+            "hn" 'cider-browse-ns
+            "hN" 'cider-browse-ns-all
+            "hs" 'cider-browse-spec
+            "hS" 'cider-browse-spec-all
+            ;; evaluate in source code buffer
+            "e;" 'cider-eval-defun-to-comment
+            "e$" 'spacemacs/cider-eval-sexp-end-of-line
+            "e(" 'cider-eval-list-at-point
+            "eb" 'cider-eval-buffer
+            "ec" 'cider-eval-list-at-point
+            "ee" 'cider-eval-last-sexp
+            "ef" 'cider-eval-defun-at-point
+            "ei" 'cider-interrupt
+            "el" 'spacemacs/cider-eval-sexp-end-of-line
+            "em" 'cider-macroexpand-1
+            "eM" 'cider-macroexpand-all
+            "ena" 'cider-ns-reload-all
+            "enn" 'cider-eval-ns-form
+            "enr" 'cider-ns-refresh
+            "enl" 'cider-ns-reload  ;; SPC u for cider-ns-reload-all
+            "ep;" 'cider-pprint-eval-defun-to-comment
+            "ep:" 'cider-pprint-eval-last-sexp-to-comment
+            "epf" 'cider-pprint-eval-defun-at-point
+            "epe" 'cider-pprint-eval-last-sexp
+            "er" 'cider-eval-region
+            "eu" 'cider-undef
+            "ev" 'cider-eval-sexp-at-point
+            "eV" 'cider-eval-sexp-up-to-point
+            "ew" 'cider-eval-last-sexp-and-replace
+            ;; format code style
+            "==" 'cider-format-buffer
+            "=eb" 'cider-format-edn-buffer
+            "=ee" 'cider-format-edn-last-sexp
+            "=er" 'cider-format-edn-region
+            "=f" 'cider-format-defun
+            ;; goto
+            "gb" 'cider-pop-back
+            "gc" 'cider-classpath
+            "gg" 'spacemacs/clj-find-var
+            "gn" 'cider-find-ns
+            ;; manage cider connections / sesman
+            "mb" 'sesman-browser
+            "mi" 'sesman-info
+            "mg" 'sesman-goto
+            "mlb" 'sesman-link-with-buffer
+            "mld" 'sesman-link-with-directory
+            "mlu" 'sesman-unlink
+            "mqq" 'sesman-quit
+            "mqr" 'sesman-restart
+            "mlp" 'sesman-link-with-project
+            "mSj" 'cider-connect-sibling-clj
+            "mSs" 'cider-connect-sibling-cljs
+            "ms" 'sesman-start
+            ;; send code - spacemacs convention
+            "sa" (if (eq m 'cider-repl-mode)
+                     'cider-switch-to-last-clojure-buffer
+                   'cider-switch-to-repl-buffer)
+            "sb" 'cider-load-buffer
+            "sB" 'spacemacs/cider-send-buffer-in-repl-and-focus
+            "scj" 'cider-connect-clj
+            "scm" 'cider-connect-clj&cljs
+            "scs" 'cider-connect-cljs
+            "se" 'spacemacs/cider-send-last-sexp-to-repl
+            "sE" 'spacemacs/cider-send-last-sexp-to-repl-focus
+            "sf" 'spacemacs/cider-send-function-to-repl
+            "sF" 'spacemacs/cider-send-function-to-repl-focus
+            "si" 'sesman-start
+            "sjj" 'cider-jack-in-clj
+            "sjm" 'cider-jack-in-clj&cljs
+            "sjs" 'cider-jack-in-cljs
+            "sl" 'spacemacs/cider-find-and-clear-repl-buffer
+            "sL" 'cider-find-and-clear-repl-output
+            "sn" 'spacemacs/cider-send-ns-form-to-repl
+            "sN" 'spacemacs/cider-send-ns-form-to-repl-focus
+            "so" 'cider-repl-switch-to-other
+            "sqq" 'cider-quit
+            "sqr" 'cider-restart
+            "sqn" 'cider-ns-reload
+            "sqN" 'cider-ns-reload-all
+            "sr" 'spacemacs/cider-send-region-to-repl
+            "sR" 'spacemacs/cider-send-region-to-repl-focus
+            "su" 'cider-repl-require-repl-utils
+            ;; toggle options
+            "Te" 'cider-enlighten-mode
+            "Tf" 'spacemacs/cider-toggle-repl-font-locking
+            "Tp" 'spacemacs/cider-toggle-repl-pretty-printing
+            "Tt" 'cider-auto-test-mode
+            ;; cider-tests
+            "ta" 'spacemacs/cider-test-run-all-tests
+            "tb" 'cider-test-show-report
+            "tl" 'spacemacs/cider-test-run-loaded-tests
+            "tn" 'spacemacs/cider-test-run-ns-tests
+            "tp" 'spacemacs/cider-test-run-project-tests
+            "tr" 'spacemacs/cider-test-rerun-failed-tests
+            "tt" 'spacemacs/cider-test-run-focused-test
+            ;; cider-debug and inspect
+            "db" 'cider-debug-defun-at-point
+            "de" 'spacemacs/cider-display-error-buffer
+            "dve" 'cider-inspect-last-sexp
+            "dvf" 'cider-inspect-defun-at-point
+            "dvi" 'cider-inspect
+            "dvl" 'cider-inspect-last-result
+            "dvv" 'cider-inspect-expr
+            ;; profile
+            "p+" 'cider-profile-samples
+            "pc" 'cider-profile-clear
+            "pn" 'cider-profile-ns-toggle
+            "ps" 'cider-profile-var-summary
+            "pS" 'cider-profile-summary
+            "pt" 'cider-profile-toggle
+            "pv" 'cider-profile-var-profiled-p)))
 
     ;; cider-repl-mode only
     (spacemacs/set-leader-keys-for-major-mode 'cider-repl-mode
