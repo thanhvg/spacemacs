@@ -128,6 +128,7 @@
             "e$" 'spacemacs/cider-eval-sexp-end-of-line
             "e(" 'cider-eval-list-at-point
             "eb" 'cider-eval-buffer
+            "ec" 'cider-eval-list-at-point
             "ee" 'cider-eval-last-sexp
             "ef" 'cider-eval-defun-at-point
             "ei" 'cider-interrupt
