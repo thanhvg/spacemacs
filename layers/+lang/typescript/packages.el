@@ -63,7 +63,6 @@
              (flycheck-add-mode 'javascript-eslint 'typescript-mode)
              (flycheck-add-mode 'tsx-tide 'typescript-tsx-mode)
              (add-to-list 'flycheck-disabled-checkers 'typescript-tslint)
-             (flycheck-disable-checker 'typescript-tslint)
              (flycheck-add-next-checker 'typescript-tide 'javascript-eslint 'append)
              (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append))
             (t
