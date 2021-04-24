@@ -27,6 +27,7 @@
     company
     emmet-mode
     evil-matchit
+    evil-collection
     flycheck
     import-js
     js-doc
@@ -49,6 +50,9 @@
 
 (defun react/post-init-evil-matchit ()
   (add-hook 'rjsx-mode-hook 'turn-on-evil-matchit-mode))
+
+(defun react/pre-init-evil-collection ()
+  (add-to-list 'spacemacs-evil-collection-allowed-list 'rjsx-mode))
 
 (defun react/post-init-flycheck ()
   (with-eval-after-load 'flycheck
