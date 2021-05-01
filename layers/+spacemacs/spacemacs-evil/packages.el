@@ -46,6 +46,9 @@
         evil-visualstar
         (hs-minor-mode :location built-in)
         vi-tilde-fringe
+        (term-cursor :location (recipe
+                               :fetcher github
+                               :repo "denrat/term-cursor.el"))
         eldoc))
 
 (defun spacemacs-evil/init-evil-anzu ()
@@ -176,7 +179,7 @@
             evil-goggles-async-duration 0.1
             evil-goggles-blocking-duration 0.05)
       (when (or vim-style-visual-feedback
-              hybrid-style-visual-feedback)
+                hybrid-style-visual-feedback)
         (spacemacs|add-transient-hook evil-operator-state-entry-hook
           (lambda () (require 'evil-goggles))
           lazy-load-evil-googles)))
@@ -408,6 +411,12 @@
 
 (defun spacemacs-evil/init-hs-minor-mode ()
   (add-hook 'prog-mode-hook 'spacemacs//enable-hs-minor-mode))
+
+(defun spacemacs-evil/init-term-cursor ()
+  (use-package term-cursor
+    :if (not (display-graphic-p))
+    :init
+    (global-term-cursor-mode)))
 
 (defun spacemacs-evil/init-vi-tilde-fringe ()
   (spacemacs|do-after-display-system-init
