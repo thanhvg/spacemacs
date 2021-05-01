@@ -46,6 +46,9 @@
         evil-visualstar
         (hs-minor-mode :location built-in)
         vi-tilde-fringe
+        (term-cursor :location (recipe
+                               :fetcher github
+                               :repo "denrat/term-cursor.el"))
         eldoc))
 
 (defun spacemacs-evil/init-evil-anzu ()
@@ -390,6 +393,12 @@
 
 (defun spacemacs-evil/init-hs-minor-mode ()
   (add-hook 'prog-mode-hook 'spacemacs//enable-hs-minor-mode))
+
+(defun spacemacs-evil/init-term-cursor ()
+  (use-package term-cursor
+    :if (not (display-graphic-p))
+    :init
+    (global-term-cursor-mode)))
 
 (defun spacemacs-evil/init-vi-tilde-fringe ()
   (spacemacs|do-after-display-system-init
