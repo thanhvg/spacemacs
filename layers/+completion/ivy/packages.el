@@ -29,6 +29,7 @@
         counsel
         (counsel-projectile :requires projectile)
         evil
+        evil-collection
         flx
         helm-make
         imenu
@@ -202,6 +203,9 @@
 (defun ivy/post-init-evil ()
   (spacemacs/set-leader-keys
     "re" 'spacemacs/ivy-evil-registers))
+
+(defun ivy/pre-init-evil-collection ()
+  (add-to-list 'spacemacs-evil-collection-allowed-list 'ivy))
 
 (defun ivy/init-flx ()
   (use-package flx))
