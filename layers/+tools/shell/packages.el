@@ -366,6 +366,11 @@
     (make-shell-pop-command "vterm" vterm)
     (spacemacs/set-leader-keys "atsv" 'spacemacs/shell-pop-vterm)
     (spacemacs/register-repl 'vterm 'vterm)
+    (spacemacs/set-leader-keys "psf" #'spacemacs/vterm-repl-send-function)
+    (spacemacs/set-leader-keys "psl" #'spacemacs/vterm-repl-send-line)
+    (spacemacs/set-leader-keys "pss" #'spacemacs/vterm-repl-send-dwim)
+    (spacemacs/set-leader-keys "psr" #'spacemacs/vterm-repl-send-region)
+    (spacemacs/set-leader-keys "psg" #'spacemacs/vterm-repl-send-buffer)
     :config
     (setq vterm-shell shell-default-term-shell)
     (define-key vterm-mode-map (kbd "M-n") 'vterm-send-down)
