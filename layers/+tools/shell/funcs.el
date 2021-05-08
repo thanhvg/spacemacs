@@ -298,3 +298,38 @@ tries to restore a dead buffer or window."
     (define-key mode-map (kbd "M-r") 'spacemacs/helm-vterm-search-history))
    ((configuration-layer/layer-used-p 'ivy)
     (define-key mode-map (kbd "M-r") 'spacemacs/counsel-vterm-search-history))))
+
+
+(defun spacemacs//vterm-repl--get-project-shell-buffer ()
+  (concat "*"
+          (spacemacs//current-layout-name)
+          "-"
+          (if (file-remote-p default-directory)
+              "remote-"
+            "")
+          "vterm"
+          (format "-%s" shell-pop-last-shell-buffer-index)
+          "*"))
+
+(defun spacemacs//vterm-repl-send-string (str)
+  (with-current-buffer (spacemacs//vterm-repl--get-project-shell-buffer)
+    (vterm-send-string str)))
+
+(defun spacemacs/vterm-repl-send-buffer ()
+  (interactive)
+  (spacemacs//vterm-repl-send-string (buffer-substring-no-properties (point-min) (point-max))))
+
+(defun spacemacs/vterm-repl-send-line ()
+  (interactive)
+  (spacemacs//vterm-repl-send-string
+   (thing-at-point 'line t)))
+
+(defun spacemacs/vterm-repl-send-function ()
+  (interactive)
+  (spacemacs//vterm-repl-send-string
+   (thing-at-point 'defun t)))
+
+(defun spacemacs/vterm-repl-send-region (start end)
+  (interactive "r")
+  (spacemacs//vterm-repl-send-string
+   (buffer-substring-no-properties start end)))
