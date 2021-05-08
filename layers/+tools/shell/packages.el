@@ -345,7 +345,11 @@
     (progn
       (make-shell-pop-command "vterm" vterm)
       (spacemacs/set-leader-keys "atsv" 'spacemacs/shell-pop-vterm)
-      (spacemacs/register-repl 'vterm 'vterm))
+      (spacemacs/register-repl 'vterm 'vterm)
+      (spacemacs/set-leader-keys "af" #'spacemacs/vterm-repl-send-function)
+      (spacemacs/set-leader-keys "al" #'spacemacs/vterm-repl-send-line)
+      (spacemacs/set-leader-keys "ar" #'spacemacs/vterm-repl-send-region)
+      (spacemacs/set-leader-keys "aa" #'spacemacs/vterm-repl-send-buffer))
     :config
     (progn
       (setq vterm-shell shell-default-term-shell)
