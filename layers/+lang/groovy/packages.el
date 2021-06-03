@@ -48,7 +48,6 @@
     :defer t
     :hook (groovy-mode-local-vars . spacemacs//groovy-setup-backend)
     :init
-    (setq lsp-groovy-server-file groovy-lsp-jar-path)
     (spacemacs/declare-prefix-for-mode 'groovy-mode "ms" "REPL")
     (spacemacs/set-leader-keys-for-major-mode 'groovy-mode
       "'"  'run-groovy
