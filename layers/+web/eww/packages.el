@@ -78,7 +78,7 @@
         (spacemacs/set-leader-keys-for-major-mode mode
           "f" 'eww-history-browse)
         (evil-define-key 'normal eww-history-mode-map "f" 'eww-history-browse
-          "q" 'quit-window))
+          "q" 'treemacs-quit))
 
       (let ((mode 'eww-bookmark-mode))
         (spacemacs/set-leader-keys-for-major-mode mode
