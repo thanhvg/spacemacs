@@ -151,7 +151,9 @@
 
 (defun version-control/post-init-evil-unimpaired ()
   (define-key evil-normal-state-map (kbd "[ h") 'spacemacs/vcs-previous-hunk)
-  (define-key evil-normal-state-map (kbd "] h") 'spacemacs/vcs-next-hunk))
+  (define-key evil-normal-state-map (kbd "] h") 'spacemacs/vcs-next-hunk)
+  (spacemacs/set-leader-keys "gj" 'spacemacs/vcs-next-hunk)
+  (spacemacs/set-leader-keys "gk" 'spacemacs/vcs-previous-hunk))
 
 (defun version-control/init-git-gutter ()
   (use-package git-gutter
