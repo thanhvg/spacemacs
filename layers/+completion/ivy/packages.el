@@ -41,7 +41,10 @@
                               (setq ivy-enable-advanced-buffer-information t))
                             ivy-enable-advanced-buffer-information))
         (ivy-spacemacs-help :location local)
-        ivy-xref
+        (ivy-xref
+         :location (recipe
+                    :fetcher github
+                    :repo "thanhvg/ivy-xref"))
         org
         persp-mode
         projectile
