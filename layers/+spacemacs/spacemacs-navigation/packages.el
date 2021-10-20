@@ -32,7 +32,8 @@
         golden-ratio
         (grep :location built-in)
         (info :location built-in)
-        (info+ :location (recipe :fetcher github
+        (info+ :toggle 'nil
+               :location (recipe :fetcher github
                                  :repo "emacsmirror/info-plus"))
         open-junk-file
         paradox
