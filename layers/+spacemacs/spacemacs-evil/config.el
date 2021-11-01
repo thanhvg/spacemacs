@@ -42,5 +42,6 @@
     process-menu
     quickrun
     replace
-    simple)
+    simple
+    xref)
   "List of modes Spacemacs will allow to be evilified by `evil-collection-init'.")
