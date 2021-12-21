@@ -158,7 +158,7 @@
 
 (defun emacs-lisp/init-elisp-def ()
   (use-package elisp-def
-    :defer t))
+    :defer (spacemacs/defer)))
 
 (defun emacs-lisp/init-elisp-slime-nav ()
   ;; Elisp go-to-definition with M-. and back again with M-,
