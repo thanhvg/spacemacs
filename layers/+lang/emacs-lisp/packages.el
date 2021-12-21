@@ -159,7 +159,7 @@
 
 (defun emacs-lisp/init-elisp-def ()
   (use-package elisp-def
-    :defer t))
+    :defer (spacemacs/defer)))
 
 (defun emacs-lisp/init-elisp-demos ()
   (use-package elisp-demos
