@@ -32,8 +32,8 @@
            (dap-ui-locals-mode . evil-evilified-state)
            (dap-ui-inspect-mode . evil-evilified-state))
     :config
-    (dap-mode 1)
-    (dap-ui-mode 1)
+    ;; (dap-mode 1)
+    ;; (dap-ui-mode 1)
     ;; mouse support
     (spacemacs|add-toggle dap-mouse
       :status dap-tooltip-mode
