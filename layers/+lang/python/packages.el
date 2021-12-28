@@ -34,7 +34,6 @@
     ggtags
     helm-cscope
     (helm-pydoc :requires helm)
-    (importmagic :toggle python-enable-importmagic)
     live-py-mode
     (nose :location (recipe :fetcher github :repo "syl20bnr/nose.el")
           :toggle (memq 'nose (flatten-list (list python-test-runner))))
@@ -164,19 +163,6 @@
     :defer t
     :init
     (spacemacs/set-leader-keys-for-major-mode 'python-mode "hd" 'helm-pydoc)))
-
-(defun python/init-importmagic ()
-  (use-package importmagic
-    :defer t
-    :init
-    (add-hook 'python-mode-hook
-              #'(lambda ()
-                  ;; skip temp buffer which bufer-name begin with space
-                  (unless (eq ?\s (string-to-char (buffer-name)))
-                    (importmagic-mode))))
-    (spacemacs|diminish importmagic-mode " ⓘ" " [i]")
-    (spacemacs/set-leader-keys-for-major-mode 'python-mode
-      "rf" 'importmagic-fix-symbol-at-point)))
 
 (defun python/init-live-py-mode ()
   (use-package live-py-mode
