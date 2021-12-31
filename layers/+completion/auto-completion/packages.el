@@ -30,7 +30,8 @@
         (company-quickhelp :toggle auto-completion-enable-help-tooltip)
         (company-statistics :toggle auto-completion-enable-sort-by-usage)
         counsel
-        (eacl :requires ivy)
+        eacl
+        evil
         fuzzy
         (helm-company :requires helm)
         (helm-c-yasnippet :requires helm)
@@ -107,9 +108,34 @@
 (defun auto-completion/init-eacl ()
   (use-package eacl
     :defer t
-    :init
-    (global-set-key (kbd "C-c n") 'eacl-complete-line)
-    (global-set-key (kbd "C-c m") 'eacl-complete-multiline)))
+    :init))
+
+(defun auto-completion/post-init-evil ()
+  (defvar spacemacs-company-extra-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map "l" #'spacemacs/company-whole-lines)
+      (define-key map "i" #'eacl-complete-multiline)
+      (define-key map "j" #'eacl-complete-line)
+      (define-key map "f" #'company-files)
+      (define-key map "o" #'company-capf)
+      (define-key map "n" #'spacemacs/company-dabbrev)
+      (define-key map "p" #'spacemacs/company-dabbrev-code-previous)
+      map)
+    "Keymap for company extra.")
+  (define-key evil-insert-state-map
+    (kbd "C-c x") spacemacs-company-extra-map)
+  (dolist (binding
+           '(("C-l" .  spacemacs/company-whole-lines)
+             ;; ("C-k" .   #'spacemacs/company-dict-or-keywords)
+             ("C-j" . eacl-complete-line)
+             ("C-i" . eacl-complete-multiline)
+             ("C-f" . company-files)
+             ("C-s" . company-yasnippet)
+             ("C-o" . company-capf)
+             ("C-n" . spacemacs/company-dabbrev)
+             ("C-p" . spacemacs/company-dabbrev-code-previous)))
+    (define-key evil-insert-state-map 
+      (kbd (format "C-c %s" (car binding))) (cdr binding))))
 
 (defun auto-completion/init-fuzzy ()
   (use-package fuzzy :defer t))
