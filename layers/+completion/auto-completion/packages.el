@@ -23,63 +23,22 @@
 
 (defconst auto-completion-packages
       '(
-        (auto-yasnippet)
-        (auto-complete :toggle (not (eq auto-completion-front-end 'company)))
-        (ac-ispell :toggle (not (eq auto-completion-front-end 'company)))
-        (company :toggle (eq auto-completion-front-end 'company))
+        auto-yasnippet
+        company
         (company-posframe :toggle auto-completion-use-company-posframe)
         (company-box :toggle auto-completion-use-company-box)
         (company-quickhelp :toggle auto-completion-enable-help-tooltip)
         (company-statistics :toggle auto-completion-enable-sort-by-usage)
         counsel
         (eacl :requires ivy)
-        (fuzzy :toggle (not (eq auto-completion-front-end 'company)))
-        (helm-company :requires helm :toggle (eq auto-completion-front-end 'company))
+        evil
+        (helm-company :requires helm)
         (helm-c-yasnippet :requires helm)
         hippie-exp
         (ivy-yasnippet :requires ivy)
         smartparens
         yasnippet
         yasnippet-snippets))
-
-
-;; TODO replace by company-ispell which comes with company
-;; to be moved to spell-checking layer as well
-(defun auto-completion/init-ac-ispell ()
-  (use-package ac-ispell
-    :defer t
-    :init
-    (setq ac-ispell-requires 4)
-    (with-eval-after-load 'auto-complete
-      (ac-ispell-setup))))
-;; (add-hook 'markdown-mode-hook 'ac-ispell-ac-setup)
-
-
-(defun auto-completion/init-auto-complete ()
-  (use-package auto-complete
-    :defer t
-    :init
-    (setq ac-auto-start 0
-          ac-delay auto-completion-idle-delay
-          ac-quick-help-delay 1.
-          ac-use-fuzzy t
-          ac-fuzzy-enable t
-          ac-comphist-file (concat spacemacs-cache-directory "ac-comphist.dat")
-          ;; use 'complete when auto-complete is disabled
-          tab-always-indent 'complete
-          ac-dwim t)
-    :config
-    (require 'auto-complete-config)
-    (setq-default ac-sources '(ac-source-abbrev
-                               ac-source-dictionary
-                               ac-source-words-in-same-mode-buffers))
-    (when (configuration-layer/package-used-p 'yasnippet)
-      (add-to-list 'ac-sources 'ac-source-yasnippet))
-    (add-to-list 'completion-styles 'initials t)
-    (define-key ac-completing-map (kbd "C-j") 'ac-next)
-    (define-key ac-completing-map (kbd "C-k") 'ac-previous)
-    (define-key ac-completing-map (kbd "S-<tab>") 'ac-previous)
-    (spacemacs|diminish auto-complete-mode " ⓐ" " a")))
 
 (defun auto-completion/init-auto-yasnippet ()
   (use-package auto-yasnippet
@@ -147,9 +106,6 @@
     :init
     (global-set-key (kbd "C-c n") 'eacl-complete-line)
     (global-set-key (kbd "C-c m") 'eacl-complete-multiline)))
-
-(defun auto-completion/init-fuzzy ()
-  (use-package fuzzy :defer t))
 
 (defun auto-completion/init-company-quickhelp ()
   (use-package company-quickhelp
