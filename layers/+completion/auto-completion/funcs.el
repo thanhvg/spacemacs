@@ -414,3 +414,50 @@ Disable smartparens and remember its initial state."
  Restore the initial state of smartparens."
   (when spacemacs--smartparens-enabled-initially
     (spacemacs//activate-smartparens)))
+
+
+;; Extra company functions
+
+(defun spacemacs/company-dabbrev ()
+  "Invokes `company-dabbrev-code' in prog-mode buffers and `company-dabbrev'
+everywhere else."
+  (interactive)
+  (call-interactively
+   (if (derived-mode-p 'prog-mode)
+       #'company-dabbrev-code
+     #'company-dabbrev)))
+
+(defun spacemacs/company-whole-lines (command &optional arg &rest ignored)
+  "`company-mode' completion backend that completes whole-lines, akin to vim's
+C-x C-l."
+  (interactive (list 'interactive))
+  (require 'company)
+  (pcase command
+    (`interactive (company-begin-backend 'spacemacs/company-whole-lines))
+    (`prefix (company-grab-line "^[\t\s]*\\(.+\\)" 1))
+    (`candidates
+     (all-completions
+      arg
+      (delete-dups
+       (split-string
+        (replace-regexp-in-string
+         "^[\t\s]+" ""
+         (concat (buffer-substring-no-properties (point-min) (line-beginning-position))
+                 (buffer-substring-no-properties (line-end-position) (point-max))))
+        "\\(\r\n\\|[\n\r]\\)" t))))))
+
+;; (defun spacemacs/company-dict-or-keywords ()
+;;   "`company-mode' completion combining `company-dict' and `company-keywords'."
+;;   (interactive)
+;;   (require 'company-dict)
+;;   (require 'company-keywords)
+;;   (let ((company-backends '((company-keywords company-dict))))
+;;     (call-interactively #'company-complete)))
+
+(defun spacemacs/company-dabbrev-code-previous ()
+  "TODO"
+  (interactive)
+  (require 'company-dabbrev)
+  (let ((company-selection-wrap-around t))
+    (call-interactively #'spacemacs/company-dabbrev)
+    (company-select-previous-or-abort)))
