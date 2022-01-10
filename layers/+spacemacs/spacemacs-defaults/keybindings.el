@@ -26,8 +26,8 @@
 ;; ---------------------------------------------------------------------------
 
 ;; We define prefix commands only for the sake of which-key
-(defconst spacemacs/key-binding-prefixes
-  (list dotspacemacs-emacs-command-key "M-x"
+(setq spacemacs/key-binding-prefixes
+      `(,dotspacemacs-emacs-command-key "M-x"
         "!"   "shell cmd"
         "*"   "search project w/input"
         "/"   "search project"
@@ -90,7 +90,9 @@
         "u"   "universal arg"
         "v"   "expand region"
         "w"   "windows"
+        "wa"  "ace-window"
         "wc"  "centered"
+        "we"  "eliminate"
         "wp"  "popup"
         "x"   "text"
         "xa"  "align"
@@ -671,9 +673,16 @@ respond to this toggle."
   "wl"  'evil-window-right
   "w <right>"  'evil-window-right
   "wm"  'spacemacs/toggle-maximize-buffer
-  ;; "wcc"  'spacemacs/toggle-centered-buffer
-  ;; "wcC"  'spacemacs/toggle-distraction-free
-  ;; "wc."  'spacemacs/centered-buffer-transient-state
+  "waa" 'ace-window
+  "wad" 'ace-delete-window
+  "was" 'ace-swap-window
+  "wcc"  'spacemacs/toggle-centered-buffer
+  "wcC"  'spacemacs/toggle-distraction-free
+  "wc."  'spacemacs/centered-buffer-transient-state
+  "weh" 'spacemacs/delete-window-left
+  "wel" 'spacemacs/delete-window-right
+  "wej" 'spacemacs/delete-window-below
+  "wek" 'spacemacs/delete-window-above
   "wo"  'other-frame
   "wr"  'spacemacs/rotate-windows-forward
   "wR"  'spacemacs/rotate-windows-backward
@@ -687,6 +696,7 @@ respond to this toggle."
   "ww"  'other-window
   "wx"  'kill-buffer-and-window
   "w/"  'split-window-right
+  "w\\"  'spacemacs/split-window-dwim
   "w="  'balance-windows-area
   "w+"  'spacemacs/window-layout-toggle
   "w_"  'spacemacs/maximize-horizontally
