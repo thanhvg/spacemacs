@@ -1915,3 +1915,23 @@ narrowed to."
 (defun spacemacs/narrow-to-region-indirect-buffer ()
   (interactive)
   (spacemacs/narrow-to-indirect-buffer 'narrow-to-region "Region"))
+
+(defun spacemacs/delete-window-above ()
+  "Delete window in direction 'above."
+  (interactive)
+  (delete-window (window-in-direction 'above)))
+
+(defun spacemacs/delete-window-below ()
+  "Delete window in direction 'below."
+  (interactive)
+  (delete-window (window-in-direction 'below)))
+
+(defun spacemacs/delete-window-left ()
+  "Delete window in direction 'left."
+  (interactive)
+  (delete-window (window-in-direction 'left)))
+
+(defun spacemacs/delete-window-right ()
+  "Delete window in direction 'right."
+  (interactive)
+  (delete-window (window-in-direction 'right)))

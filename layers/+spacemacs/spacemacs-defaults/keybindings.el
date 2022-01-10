@@ -87,7 +87,9 @@
                                        "u"   "universal arg"
                                        "v"   "expand region"
                                        "w"   "windows"
+                                       "wa"  "ace-window"
                                        "wc"  "centered"
+                                       "we"  "eliminate"
                                        "wp"  "popup"
                                        "x"   "text"
                                        "xa"  "align"
@@ -661,9 +663,16 @@ respond to this toggle."
   "wl"  'evil-window-right
   "w <right>"  'evil-window-right
   "wm"  'spacemacs/toggle-maximize-buffer
+  "waa" 'ace-window
+  "wad" 'ace-delete-window
+  "was" 'ace-swap-window
   "wcc"  'spacemacs/toggle-centered-buffer
   "wcC"  'spacemacs/toggle-distraction-free
   "wc."  'spacemacs/centered-buffer-transient-state
+  "weh" 'spacemacs/delete-window-left
+  "wel" 'spacemacs/delete-window-right
+  "wej" 'spacemacs/delete-window-below
+  "wek" 'spacemacs/delete-window-above
   "wo"  'other-frame
   "wr"  'spacemacs/rotate-windows-forward
   "wR"  'spacemacs/rotate-windows-backward
