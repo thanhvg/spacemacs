@@ -1966,3 +1966,30 @@ mode) that would cause this to work incorrectly."
 (defun spacemacs/narrow-to-region-indirect-buffer ()
   (interactive)
   (spacemacs/narrow-to-indirect-buffer 'narrow-to-region "Region" nil))
+
+(defun spacemacs/delete-window-above ()
+  "Delete window in direction 'above."
+  (interactive)
+  (delete-window (window-in-direction 'above)))
+
+(defun spacemacs/delete-window-below ()
+  "Delete window in direction 'below."
+  (interactive)
+  (delete-window (window-in-direction 'below)))
+
+(defun spacemacs/delete-window-left ()
+  "Delete window in direction 'left."
+  (interactive)
+  (delete-window (window-in-direction 'left)))
+
+(defun spacemacs/delete-window-right ()
+  "Delete window in direction 'right."
+  (interactive)
+  (delete-window (window-in-direction 'right)))
+
+(defun spacemacs/split-window-dwim ()
+  "To be called when minibuffer is active.
+Show current active buffer in another buffer."
+  (interactive)
+  (with-selected-window (or (minibuffer-selected-window) (selected-window))
+    (display-buffer (current-buffer) '(nil (inhibit-same-window . t)))))
