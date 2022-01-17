@@ -204,6 +204,7 @@
      spacemacs/compleseus-search-dir
      spacemacs/compleseus-search-projectile
      spacemacs/compleseus-search-default
+     spacemacs/compleseus-switch-to-buffer
      spacemacs/compleseus-search-projectile-auto
      :preview-key (list (kbd "C-SPC") (kbd "C-M-j") (kbd "C-M-k")))
     ;; :preview-key (kbd "C-SPC"))
