@@ -33,7 +33,7 @@
     highlight-parentheses
     indent-guide
     rainbow-delimiters
-    (term-cursor :location (recipe :fetcher github :repo "h0d/term-cursor.el"))
+    mixed-pitch
     volatile-highlights
     writeroom-mode))
 
@@ -136,6 +136,16 @@
       :documentation "Highlight indentation level at point globally. (alternative to highlight-indentation)."
       :evil-leader "t TAB")
     :spacediminish (" ⓘ" " i")))
+
+(defun spacemacs-editing-visual/init-mixed-pitch ()
+  (use-package mixed-pitch
+    :defer t
+    :init
+    (spacemacs|add-toggle mixed-pitch
+      :mode mixed-pitch-mode
+      :documentation "Mixing fixed-pitch and variable-pitch fonts."
+      :evil-leader "tM")
+    (spacemacs/add-to-hooks 'mixed-pitch-mode spacemacs-mixed-pitch-enabled-mode-hooks)))
 
 (defun spacemacs-editing-visual/init-rainbow-delimiters ()
   (use-package rainbow-delimiters
