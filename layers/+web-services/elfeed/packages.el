@@ -31,7 +31,7 @@
 (defun elfeed/init-elfeed ()
   (use-package elfeed
     :defer t
-    :init (spacemacs/set-leader-keys "are" 'elfeed)
+    :init (spacemacs/set-leader-keys "awf" 'elfeed)
     :config
     (evilified-state-evilify-map elfeed-search-mode-map
       :mode elfeed-search-mode
