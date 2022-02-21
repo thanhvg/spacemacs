@@ -33,6 +33,9 @@
     expand-region
     (hexl :location built-in)
     hungry-delete
+    (grep-buffer-maker
+     :location (recipe :fetcher url
+                       :url "https://raw.githubusercontent.com/thanhvg/elisppg/master/grep-buffer-maker.el"))
     link-hint
     lorem-ipsum
     (origami :toggle (eq 'origami dotspacemacs-folding-method))
@@ -232,6 +235,13 @@
     (setq-default hungry-delete-chars-to-skip " \t\f\v") ; only horizontal whitespace
     (define-key hungry-delete-mode-map (kbd "DEL") 'hungry-delete-backward)
     (define-key hungry-delete-mode-map (kbd "S-DEL") 'delete-backward-char)))
+
+(defun spacemacs-editing/init-grep-buffer-maker ()
+  (use-package grep-buffer-maker
+    :defer t
+    :init
+    (spacemacs/set-leader-keys "ed"
+      'grep-buffer-maker-dwim)))
 
 (defun spacemacs-editing/init-link-hint ()
   (use-package link-hint
