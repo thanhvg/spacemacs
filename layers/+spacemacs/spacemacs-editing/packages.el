@@ -44,6 +44,7 @@
     string-edit-at-point
     string-inflection
     multi-line
+    multifiles
     undo-tree
     (unkillable-scratch :toggle dotspacemacs-scratch-buffer-unkillable)
     uuidgen
@@ -518,6 +519,12 @@
       "c" 'string-edit-conclude
       "a" 'string-edit-abort
       "k" 'string-edit-abort)))
+
+(defun spacemacs-editing/init-multifiles ()
+  (use-package multifiles
+    :commands (mf/mirror-region-in-multifile)
+    :init
+    (spacemacs/set-leader-keys "er" 'mf/mirror-region-in-multifile)))
 
 (defun spacemacs-editing/init-multi-line ()
   (use-package multi-line
