@@ -50,6 +50,7 @@
     (undo-fu :toggle (eq 'undo-fu dotspacemacs-undo-system))
     (undo-fu-session :toggle (not (eq 'undo-tree dotspacemacs-undo-system)))
     (vundo :toggle (not (eq 'undo-tree dotspacemacs-undo-system)))
+    multifiles
     (unkillable-scratch :toggle dotspacemacs-scratch-buffer-unkillable)
     uuidgen
     (vimish-fold :toggle (eq 'vimish dotspacemacs-folding-method))
@@ -506,6 +507,12 @@
       "c" 'string-edit-at-point-conclude
       "a" 'string-edit-at-point-abort
       "k" 'string-edit-at-point-abort)))
+
+(defun spacemacs-editing/init-multifiles ()
+  (use-package multifiles
+    :commands (mf/mirror-region-in-multifile)
+    :init
+    (spacemacs/set-leader-keys "er" 'mf/mirror-region-in-multifile)))
 
 (defun spacemacs-editing/init-multi-line ()
   (use-package multi-line
