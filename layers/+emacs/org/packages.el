@@ -835,21 +835,14 @@ Headline^^            Visit entry^^               Filter^^                    Da
       "aop" 'spacemacs/org-project-capture-capture
       "po" 'spacemacs/org-project-capture-goto-todos)
     :config
-    (if (file-name-absolute-p org-project-capture-projects-file)
-        (progn
-          (setq org-project-capture-projects-file org-project-capture-projects-file)
-          (push (org-project-capture-project-todo-entry :empty-lines 1)
-                org-capture-templates)
-          (org-project-capture-single-file))
-      (progn
-        (setq org-project-capture-per-project-filepath org-project-capture-projects-file)
-        (org-project-capture-per-project)))))
-
-(defun org/init-org-projectile ()
-  (use-package org-projectile
-    :config
-    (setq org-project-capture-default-backend
-          (make-instance 'org-project-capture-projectile-backend))))
+    (progn
+      (push (org-projectile-project-todo-entry :empty-lines 1)
+            org-capture-templates)
+      (if (file-name-absolute-p org-projectile-file)
+          (progn
+            (setq org-projectile-projects-file org-projectile-file))
+        (org-projectile-per-project)
+        (setq org-projectile-per-project-filepath org-projectile-file)))))
 
 (defun org/pre-init-ox-epub ()
   (spacemacs|use-package-add-hook org :post-config (require 'ox-epub)))
