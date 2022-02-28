@@ -836,13 +836,14 @@ Headline^^            Visit entry^^               Filter^^                    Da
     (with-eval-after-load 'org-capture
       (require 'org-projectile))
     :config
-    (if (file-name-absolute-p org-projectile-file)
-        (progn
-          (setq org-projectile-projects-file org-projectile-file)
-          (push (org-projectile-project-todo-entry :empty-lines 1)
-                org-capture-templates))
-      (org-projectile-per-project)
-      (setq org-projectile-per-project-filepath org-projectile-file))))
+    (progn
+      (push (org-projectile-project-todo-entry :empty-lines 1)
+            org-capture-templates)
+      (if (file-name-absolute-p org-projectile-file)
+          (progn
+            (setq org-projectile-projects-file org-projectile-file))
+        (org-projectile-per-project)
+        (setq org-projectile-per-project-filepath org-projectile-file)))))
 
 (defun org/pre-init-ox-epub ()
   (spacemacs|use-package-add-hook org :post-config (require 'ox-epub)))
