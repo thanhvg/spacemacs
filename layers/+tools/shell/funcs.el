@@ -325,12 +325,19 @@ tries to restore a dead buffer or window."
             :action #'vterm-send-string
             :caller 'spacemacs/counsel-vterm-search-history))
 
+(defun spacemacs/vterm-search-history (it)
+  "Generic version to search vtern history."
+  (interactive (list (completing-read "Bash history: " (spacemacs//vterm-make-history-candidates))))
+  (vterm-send-string it))
+
 (defun spacemacs//vterm-bind-m-r (mode-map)
   (cond
    ((configuration-layer/layer-used-p 'helm)
     (define-key mode-map (kbd "M-r") 'spacemacs/helm-vterm-search-history))
    ((configuration-layer/layer-used-p 'ivy)
-    (define-key mode-map (kbd "M-r") 'spacemacs/counsel-vterm-search-history))))
+    (define-key mode-map (kbd "M-r") 'spacemacs/counsel-vterm-search-history))
+   ((configuration-layer/layer-used-p 'compleseus)
+    (define-key mode-map (kbd "M-r") 'spacemacs/vterm-search-history))))
 
 (defun spacemacs/shell-pop-with-eshell-history-write (orig-fun &rest args)
   "Make sure that the eshell history is written before the window is closed."
