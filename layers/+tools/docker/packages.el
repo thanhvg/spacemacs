@@ -23,22 +23,21 @@
 
 
 (defconst docker-packages
-  '(
+  '(evil-collection
     docker
     (docker-tramp :toggle (version< emacs-version "29.0.50"))
     dockerfile-mode
     flycheck))
 
+(defun docker/pre-init-evil-collection ()
+  (push 'docker spacemacs-evil-collection-allowed-list)
+  (push 'tablist spacemacs-evil-collection-allowed-list))
+
 (defun docker/init-docker ()
   (use-package docker
     :defer t
     :init
-    (spacemacs/set-leader-keys "atd" #'docker)
-    (evil-define-key 'normal docker-image-mode-map (kbd "q") 'quit-window)
-    (evil-define-key 'normal docker-container-mode-map (kbd "q") 'quit-window)
-    (evil-define-key 'normal docker-volume-mode-map (kbd "q") 'quit-window)
-    (evil-define-key 'normal docker-network-mode-map (kbd "q") 'quit-window)
-    (evil-define-key 'normal docker-machine-mode-map (kbd "q") 'quit-window)))
+    (spacemacs/set-leader-keys "atd" #'docker)))
 
 (defun docker/init-docker-tramp ()
   (use-package docker-tramp
