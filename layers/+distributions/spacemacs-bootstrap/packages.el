@@ -620,9 +620,7 @@ Press \\[which-key-toggle-persistent] to hide."
 ;; pre packages
 
 (defun spacemacs-bootstrap/init-evil-evilified-state ()
-  (use-package evil-evilified-state
-    :config
-    (add-to-list 'evil-evilified-state-modes 'special-mode))
+  (use-package evil-evilified-state)
   (define-key evil-evilified-state-map (kbd dotspacemacs-leader-key)
               spacemacs-default-map))
 
