@@ -197,9 +197,19 @@
 
 (defun auto-completion/init-company-posframe ()
   (use-package company-posframe
-    :hook '(company-mode . company-posframe-mode)
     :if (not auto-completion-use-company-box)
-    :config (spacemacs|hide-lighter company-posframe-mode)))
+    :after company
+    :init
+    (spacemacs|add-toggle company-posframe
+            :mode company-posframe-mode
+            :documentation "Enable company-posfame."
+            :status company-posframe-mode
+            :off (company-posframe-mode -1)
+            :on (company-posframe-mode +1)
+            :evil-leader "tP")
+    :config
+    (spacemacs|hide-lighter company-posframe-mode)
+    (company-posframe-mode +1)))
 
 (defun auto-completion/init-helm-c-yasnippet ()
   (use-package helm-c-yasnippet
