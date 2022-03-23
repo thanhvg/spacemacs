@@ -493,6 +493,7 @@
 
 (defun spacemacs-editing/init-string-inflection ()
   (use-package string-inflection
+    :defer t
     :init
     (spacemacs|define-transient-state string-inflection
       :title "String Inflection Transient State"
