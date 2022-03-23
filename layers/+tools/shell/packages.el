@@ -287,6 +287,7 @@
 
 (defun shell/init-xterm-color ()
   (use-package xterm-color
+    :defer t
     :init
     ;; Comint and Shell
     (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter)
