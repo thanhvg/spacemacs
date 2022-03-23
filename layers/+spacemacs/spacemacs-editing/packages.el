@@ -500,6 +500,7 @@
 
 (defun spacemacs-editing/init-string-inflection ()
   (use-package string-inflection
+    :defer t
     :init
     (progn
       (spacemacs|define-transient-state string-inflection
@@ -538,6 +539,7 @@
 
 (defun spacemacs-editing/init-multi-line ()
   (use-package multi-line
+    :defer t
     :init
     (progn
       (spacemacs|define-transient-state multi-line

@@ -313,6 +313,7 @@
 
 (defun shell/init-xterm-color ()
   (use-package xterm-color
+    :defer t
     :init
     (progn
       ;; Comint and Shell

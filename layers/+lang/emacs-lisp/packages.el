@@ -351,7 +351,8 @@
 
 (defun emacs-lisp/init-emr ()
   (use-package emr
-    :config
+    :defer t
+    :init
     (let ((key-binding-prefixes
            '(("mr" . "refactor")
              ("mrd" . "delete")

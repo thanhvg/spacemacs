@@ -40,6 +40,7 @@
 
 (defun spacemacs-editing-visual/init-column-enforce-mode ()
   (use-package column-enforce-mode
+    :defer t
     :init
     (progn
       (spacemacs|add-toggle highlight-long-lines
