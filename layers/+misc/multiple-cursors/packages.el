@@ -29,6 +29,7 @@
 
 (defun multiple-cursors/init-evil-mc ()
   (use-package evil-mc
+    :defer t
     :init
     (which-key-add-keymap-based-replacements evil-motion-state-map
       "gz"  "evil-mc")
