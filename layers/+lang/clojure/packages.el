@@ -619,6 +619,7 @@
 
 (defun clojure/init-flycheck-clj-kondo ()
   (use-package flycheck-clj-kondo
+    :defer t
     :if (configuration-layer/package-usedp 'flycheck)))
 
 (defun clojure/init-flycheck-joker ()
