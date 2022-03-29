@@ -1195,7 +1195,7 @@ If FRAME is nil, it defaults to the selected frame."
                                 (setq my-first-entry-done t)
                                 (format " %s:" (propertize (format "%s" my-index) 'face 'hydra-face-blue)))
                               (buffer-name (car my-buffer-list))))
-      (incf my-index)
+      (cl-incf my-index)
       (setq my-buffer-list (cdr my-buffer-list)))
     ;; (substring my-string 0 (- (frame-total-cols) 15))))
     (if (< (length my-string) my-max-len)
