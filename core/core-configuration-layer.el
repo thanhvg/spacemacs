@@ -307,6 +307,30 @@ If PROPS is non-nil then return packages as lists along with their properties."
              :documentation
              "Packages that must be enabled for this package to be enabled.")))
 
+(cl-defmethod cfgl-package-to-string ((pkg cfgl-package))
+  "Pretty print PKG."
+  (format "* %s\n - min-version: %s\n - owners: %s\n - pre-layers: %s\n - post-layers: %s\n - location: %s\n - toggle: %s\n - step: %s\n - lazy-install: %s\n - protected: %s\n - excluded: %s\n - requires: %s\n"
+          (oref pkg :name)
+          (oref pkg :min-version)
+          (oref pkg :owners)
+          (oref pkg :pre-layers)
+          (oref pkg :post-layers)
+          (oref pkg :location)
+          (oref pkg :toggle)
+          (oref pkg :step)
+          (oref pkg :lazy-install)
+          (oref pkg :protected)
+          (oref pkg :excluded)
+          (oref pkg :requires)))
+
+(cl-defmethod cfgl-package-to-string ((pkg-name symbol))
+  "Pretty print PKG-NAME."
+  (cfgl-package-to-string (configuration-layer/get-package pkg-name)))
+
+(cl-defmethod cfgl-package-to-string ((pkg-name null))
+  "Accept `null'."
+  "Package not found.")
+
 (cl-defmethod cfgl-package-toggled-p ((pkg cfgl-package) &optional inhibit-messages)
   "Evaluate the `toggle' slot of passed PKG.
 If INHIBIT-MESSAGES is non nil then any message emitted by the toggle evaluation
