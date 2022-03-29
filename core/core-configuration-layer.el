@@ -1201,8 +1201,7 @@ USEDP non-nil means that PKG is a used package."
 (defun configuration-layer/get-package (pkg-name)
   "Return a package object with name PKG-NAME.
 Return nil if package object is not found."
-  (when (spacemacs-ht-contains? configuration-layer--indexed-packages pkg-name)
-    (spacemacs-ht-get configuration-layer--indexed-packages pkg-name)))
+    (spacemacs-ht-get configuration-layer--indexed-packages pkg-name))
 
 (defun configuration-layer//sort-packages (packages)
   "Return a sorted list of PACKAGES objects."
