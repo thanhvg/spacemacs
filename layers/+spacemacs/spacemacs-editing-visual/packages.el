@@ -33,8 +33,6 @@
     highlight-parentheses
     indent-guide
     rainbow-delimiters
-    (term-cursor :location (recipe :fetcher github :repo "h0d/term-cursor.el"))
-    volatile-highlights
     writeroom-mode))
 
 
@@ -148,42 +146,6 @@
       :evil-leader "tCd")
     (when (memq dotspacemacs-highlight-delimiters '(any all))
       (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))))
-
-(defun spacemacs-editing-visual/init-term-cursor ()
-  (use-package term-cursor
-    :defer t
-    :init
-    (unless (display-graphic-p)
-     (global-term-cursor-mode))))
-
-(defun spacemacs-editing-visual/init-volatile-highlights ()
-  (use-package volatile-highlights
-    :defer t
-    :init
-    (spacemacs|add-toggle volatile-highlights
-      :mode volatile-highlights-mode
-      :documentation "Display visual feedback for some operations."
-      :evil-leader "thv")
-    (volatile-highlights-mode t)
-    :config
-    ;; additional extensions
-    ;; evil
-    (with-eval-after-load 'evil
-      (vhl/define-extension 'evil
-                            'evil-move
-                            'evil-paste-after
-                            'evil-paste-before
-                            'evil-paste-pop)
-      (vhl/install-extension 'evil)
-      (vhl/load-extension 'evil))
-    ;; undo-tree
-    (with-eval-after-load 'undo-tree
-      (vhl/define-extension 'undo-tree
-                            'undo-tree-move
-                            'undo-tree-yank)
-      (vhl/install-extension 'undo-tree)
-      (vhl/load-extension 'undo-tree))
-    (spacemacs|hide-lighter volatile-highlights-mode)))
 
 (defun spacemacs-editing-visual/init-writeroom-mode ()
   (use-package writeroom-mode
