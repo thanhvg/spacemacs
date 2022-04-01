@@ -33,8 +33,6 @@
     highlight-parentheses
     indent-guide
     rainbow-delimiters
-    (term-cursor :location (recipe :fetcher github :repo "h0d/term-cursor.el"))
-    volatile-highlights
     writeroom-mode))
 
 
@@ -158,41 +156,6 @@
       (global-term-cursor-mode))
     (when (or (daemonp) dotspacemacs-enable-server)
       (add-hook 'server-after-make-frame-hook 'spacemacs//maybe-enable-term-cursor))))
-
-(defun spacemacs-editing-visual/init-volatile-highlights ()
-  (use-package volatile-highlights
-    :defer t
-    :init
-    (spacemacs|add-toggle volatile-highlights
-      :mode volatile-highlights-mode
-      :documentation "Display visual feedback for some operations."
-      :evil-leader "thv")
-
-    ;; volatile-highlights is redundant with built-in highlighting in occur.  In
-    ;; Emacs 29, it starts to cause errors.  See
-    ;; https://github.com/k-talo/volatile-highlights.el/issues/26
-    (setq vhl/use-occur-extension-p (< emacs-major-version 28))
-
-    (volatile-highlights-mode t)
-    :config
-    ;; additional extensions
-    ;; evil
-    (with-eval-after-load 'evil
-      (vhl/define-extension 'evil
-                            'evil-move
-                            'evil-paste-after
-                            'evil-paste-before
-                            'evil-paste-pop)
-      (vhl/install-extension 'evil)
-      (vhl/load-extension 'evil))
-    ;; undo-tree
-    (with-eval-after-load 'undo-tree
-      (vhl/define-extension 'undo-tree
-                            'undo-tree-move
-                            'undo-tree-yank)
-      (vhl/install-extension 'undo-tree)
-      (vhl/load-extension 'undo-tree))
-    (spacemacs|hide-lighter volatile-highlights-mode)))
 
 (defun spacemacs-editing-visual/init-writeroom-mode ()
   (use-package writeroom-mode
