@@ -105,7 +105,6 @@
   (use-package popwin
     :config
     (progn
-      (popwin-mode 1)
       (spacemacs/set-leader-keys "wpm" 'popwin:messages)
       (spacemacs/set-leader-keys "wpp" 'popwin:close-popup-window)
       (spacemacs/set-leader-keys "rw" 'spacemacs/last-popwin)
