@@ -52,8 +52,11 @@
     (vterm
      :toggle (and shell-enable-vterm-support
                   module-file-suffix
-                  (not (spacemacs/system-is-mswindows))))))
-
+                  (not (spacemacs/system-is-mswindows))))
+    (vterm-extra
+     :location (recipe
+                :fetcher github
+                :repo  "Sbozzolo/vterm-extra"))))
 
 (defun shell/init-comint ()
   (setq comint-prompt-read-only t)
@@ -422,3 +425,10 @@
                                   (eshell-mode . terminal)
                                   (shell-mode . terminal)
                                   (term-mode . terminal)))))
+
+(defun shell/init-vterm-extra ()
+  (use-package vterm-extra
+    :after vterm
+    :bind (("C-c $" . vterm-extra-dispatcher)
+           :map vterm-mode-map
+           (("C-c C-e" . vterm-extra-edit-command-in-new-buffer)))))
