@@ -43,6 +43,7 @@
     (spacemacs//eww-setup-transient-state)
     (spacemacs/declare-prefix "awe" "eww")
     (spacemacs/set-leader-keys "awee" 'eww)
+    (spacemacs/set-leader-keys "aweb" 'eww-list-bookmarks)
     (spacemacs/set-leader-keys "awew" 'eww-switch-to-buffer)
     :config
     (define-key eww-link-keymap "f" 'eww-follow-link)
