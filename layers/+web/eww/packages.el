@@ -24,7 +24,7 @@
   '(
     evil
     (eww :location built-in)
-    texfrag
+    (texfrag :toggle 'nil)
     writeroom-mode
     zoom-frm))
 
