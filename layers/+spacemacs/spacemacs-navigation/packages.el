@@ -305,7 +305,8 @@
 
     ;; golden-ratio-inhibit-functions
     (dolist (f '(spacemacs/no-golden-ratio-guide-key
-                 spacemacs//ediff-in-comparison-buffer-p))
+                 spacemacs//ediff-in-comparison-buffer-p
+                 spacemacs/no-golden-ratio-for-which-key))
       (add-to-list 'golden-ratio-inhibit-functions f))
 
     (add-hook 'ediff-startup-hook 'spacemacs/ediff-balance-windows)
