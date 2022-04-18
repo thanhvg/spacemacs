@@ -325,6 +325,10 @@ in the window where the Symbol Highlight Transient State was closed."
   (or (spacemacs/no-golden-ratio-for-buffers " *guide-key*")
       (spacemacs/no-golden-ratio-for-buffers " *popwin-dummy*")))
 
+(defun spacemacs/no-golden-ratio-for-which-key ()
+  "Disable golden-ratio for `which-key'."
+  (and which-key--buffer
+       (window-live-p (get-buffer-window which-key--buffer))))
 
 ;; ediff
 
