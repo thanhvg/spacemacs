@@ -45,7 +45,7 @@ Example:
 
 | Key binding | Description                |
 |-------------+----------------------------|
-| ~SPC b I~   | open IBuffer menu (global) |
+| ~SPC b o~   | open IBuffer menu (global) |
 
 *Note:* The layer will also replace regular ~C-x C-b~ with =ibuffer=.
 
