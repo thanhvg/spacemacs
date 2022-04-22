@@ -31,7 +31,7 @@
   (use-package ibuffer
     :defer t
     :init
-    (spacemacs/set-leader-keys "bI" 'ibuffer)
+    (spacemacs/set-leader-keys "bo" 'ibuffer)
     (global-set-key (kbd "C-x C-b") 'ibuffer)
     (defun spacemacs//ibuffer-group-by-modes ()
       "Group buffers by modes."
