@@ -42,15 +42,19 @@
     :config
     (spacemacs//tide-setup-bindings)
     (add-hook 'tide-mode-hook #'spacemacs//tide-setup-jump-handle)
-    :init
-    (evilified-state-evilify tide-project-errors-mode tide-project-errors-mode-map
+    (evilified-state-evilify-map  tide-project-errors-mode-map
+      :mode tide-project-errors-mode
+      :bindings
       (kbd "C-k") 'tide-find-previous-error
       (kbd "C-j") 'tide-find-next-error
       (kbd "C-l") 'tide-goto-error)
-    (evilified-state-evilify tide-references-mode tide-references-mode-map
+    (evilified-state-evilify-map tide-references-mode-map
+      :mode tide-references-mode
+      :bindings
       (kbd "C-k") 'tide-find-previous-reference
       (kbd "C-j") 'tide-find-next-reference
       (kbd "C-l") 'tide-goto-reference)
+    :init
     ;; advice tide doc evil mode use q to `quit-window'
     (advice-add 'tide-make-help-buffer :filter-return 'spacemacs//tide-advice-add-quit-window)))
 
