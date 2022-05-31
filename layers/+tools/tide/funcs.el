@@ -58,12 +58,6 @@
 (defun spacemacs//tide-setup ()
   "Setup tide backend.
 Must be called by a layer using tide."
-  (evilified-state-evilify-map tide-references-mode-map
-    :mode tide-references-mode
-    :bindings
-    (kbd "C-k") 'tide-find-previous-reference
-    (kbd "C-j") 'tide-find-next-reference
-    (kbd "C-l") 'tide-goto-reference)
   (tide-hl-identifier-mode +1)
   (tide-setup))
 
