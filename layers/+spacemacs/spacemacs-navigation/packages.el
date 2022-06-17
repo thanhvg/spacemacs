@@ -317,7 +317,8 @@
   (use-package grep
     :defer t
     :config
-    (define-key grep-mode-map "h" nil)))
+    (define-key grep-mode-map "h" nil)
+    (evil-define-key 'normal grep-mode-map "q" 'quit-window)))
 
 (defun spacemacs-navigation/init-info ()
   (spacemacs/set-leader-keys "hj" 'info-display-manual))
