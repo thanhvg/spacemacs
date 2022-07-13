@@ -228,7 +228,12 @@
              (t (comint-simple-send proc command))))))
   (add-hook 'shell-mode-hook 'shell-comint-input-sender-hook)
   (add-hook 'shell-mode-hook 'spacemacs/disable-hl-line-mode)
+  (evil-define-key 'normal shell-mode-map
+    [return] 'comint-send-input)
 
+  (when (configuration-layer/layer-used-p 'compleseus)
+    (with-eval-after-load 'shell
+        (define-key shell-mode-map (kbd "M-r") 'spacemacs/shell-history)))
   (with-eval-after-load 'centered-cursor-mode
     (add-hook 'shell-mode-hook 'spacemacs//inhibit-global-centered-cursor-mode)))
 
