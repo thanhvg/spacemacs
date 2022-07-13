@@ -355,3 +355,7 @@ tries to restore a dead buffer or window."
                     (buffer-substring-no-properties (region-beginning) (region-end))
                   (thing-at-point 'line t))))
   (spacemacs//vterm-repl-send-string string))
+
+(defun spacemacs/shell-history (it)
+  (interactive (list (completing-read "Shell history: " (ring-elements comint-input-ring))))
+  (insert it))
