@@ -22,6 +22,7 @@
 
 (defconst compleseus-packages
   '(auto-highlight-symbol
+    evil-collection
     imenu
     marginalia
     ;; (compleseus-spacemacs-help :location local)
@@ -79,6 +80,9 @@
         ("b" spacemacs/consult-line-multi-symbol :exit t)
         ("f" spacemacs/compleseus-search-auto-symbol :exit t)
         ("/" spacemacs/compleseus-search-projectile-symbol :exit t)))))
+
+(defun compleseus/pre-init-evil-collection ()
+  (push 'embark spacemacs-evil-collection-allowed-list))
 
 (defun compleseus/post-init-imenu ()
   (spacemacs/set-leader-keys "ji" 'spacemacs/consult-jump-in-buffer)
@@ -326,6 +330,9 @@
      ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
     :init
     (spacemacs/set-leader-keys "?" #'embark-bindings)
+    ;; kill-buffer won't close consult buffer list
+    (setq embark-quit-after-action '((kill-buffer . nil) (t . t)))
+    (setq embark-confirm-act-all nil)
     ;; Optionally replace the key help with a completing-read interface
     (setq prefix-help-command #'embark-prefix-help-command)
     ;; same key binding as ivy-occur
