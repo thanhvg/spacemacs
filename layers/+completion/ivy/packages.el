@@ -265,6 +265,9 @@
       ;; add spacemacs/counsel-search command to ivy-highlight-grep-commands
       (add-to-list 'ivy-highlight-grep-commands 'spacemacs/counsel-search)
 
+      (setq read-minibuffer-restore-windows nil)
+      (define-key ivy-minibuffer-map (kbd "M-J") #'spacemacs/split-window-dwim)
+
       ;; mappings to quit minibuffer or enter transient state
       (define-key ivy-minibuffer-map [escape] 'minibuffer-keyboard-quit)
       (define-key ivy-minibuffer-map (kbd "M-SPC") 'hydra-ivy/body)
