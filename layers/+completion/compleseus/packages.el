@@ -472,6 +472,8 @@
 
     :config
     (define-key vertico-map (kbd "C-.") 'spacemacs/embark-select)
+    (setq read-minibuffer-restore-windows nil)
+    (define-key minibuffer-local-map (kbd "M-j") #'spacemacs/split-window-dwim)
     (define-key vertico-map (kbd "M-RET") #'vertico-exit-input)
     (define-key vertico-map (kbd "C-SPC") #'spacemacs/embark-preview)
     (define-key vertico-map (kbd "C-j") #'vertico-next)
