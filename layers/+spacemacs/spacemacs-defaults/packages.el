@@ -155,8 +155,7 @@
   (with-eval-after-load 'dired
     (require 'dired-x))
   (use-package dired-x
-    :commands (dired-jump
-               dired-jump-other-window
+    :commands (dired-jump-other-window
                dired-omit-mode)))
 
 (defun spacemacs-defaults/init-image-dired ()
