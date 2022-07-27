@@ -32,6 +32,7 @@
     counsel-gtags
     helm
     rainbow-identifiers
+    popwin
     slime
     (slime-company :requires company)))
 
@@ -50,7 +51,13 @@
         (save-excursion
           (unless (or (eobp) (eolp)) (forward-char))
           (apply f args))
-      (apply f args))))
+      (apply f args)))
+  (defun spacemacs//slime-advice-add-quit-window (buffer)
+    "Bind q to `quit-window' for evil local buffer."
+    (with-current-buffer buffer
+      (evil-define-key 'normal 'local (kbd "q") #'quit-window)
+      buffer))
+  (advice-add 'slime-show-description :filter-return 'spacemacs//slime-advice-add-quit-window))
 
 (defun common-lisp/pre-init-evil-cleverparens ()
   (spacemacs|use-package-add-hook evil-cleverparens
@@ -153,13 +160,19 @@
       "eC" 'spacemacs/cl-eval-current-form
       "es" 'spacemacs/cl-eval-current-symbol-sp)
 
-    ;; prefix names for which-key
-    (mapc (lambda (x)
-            (spacemacs/declare-prefix-for-mode 'lisp-mode (car x) (cdr x)))
-          '(("mh" . "help")
-            ("me" . "eval")
-            ("ms" . "repl")
-            ("mc" . "compile")
-            ("mg" . "nav")
-            ("mm" . "macro")
-            ("mt" . "toggle")))))
+      ;; prefix names for which-key
+      (mapc (lambda (x)
+              (spacemacs/declare-prefix-for-mode 'lisp-mode (car x) (cdr x)))
+            '(("mh" . "help")
+              ("me" . "eval")
+              ("ms" . "repl")
+              ("mc" . "compile")
+              ("mg" . "nav")
+              ("mm" . "macro")
+              ("mt" . "toggle")))))
+
+(defun common-lisp/pre-init-popwin ()
+  (spacemacs|use-package-add-hook popwin
+    :post-config
+    (push '("*slime-description*" :dedicated t :position bottom :stick t :height 0.4)
+          popwin:special-display-config)))
