@@ -32,6 +32,7 @@
     helm
     helm-gtags
     rainbow-identifiers
+    popwin
     slime
     (slime-company :requires company)))
 
@@ -50,7 +51,13 @@
         (save-excursion
           (unless (or (eobp) (eolp)) (forward-char))
           ad-do-it)
-      ad-do-it)))
+      ad-do-it))
+  (defun spacemacs//slime-advice-add-quit-window (buffer)
+    "Bind q to `quit-window' for evil local buffer."
+    (with-current-buffer buffer
+      (evil-define-key 'normal 'local (kbd "q") #'quit-window)
+      buffer))
+  (advice-add 'slime-show-description :filter-return 'spacemacs//slime-advice-add-quit-window))
 
 (defun common-lisp/pre-init-evil-cleverparens ()
   (spacemacs|use-package-add-hook evil-cleverparens
@@ -165,3 +172,9 @@
               ("mg" . "nav")
               ("mm" . "macro")
               ("mt" . "toggle"))))))
+
+(defun common-lisp/pre-init-popwin ()
+  (spacemacs|use-package-add-hook popwin
+    :post-config
+    (push '("*slime-description*" :dedicated t :position bottom :stick t :height 0.4)
+          popwin:special-display-config)))
