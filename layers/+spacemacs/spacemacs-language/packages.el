@@ -23,6 +23,7 @@
 
 (setq spacemacs-language-packages
       '((define-word :toggle (not (bound-and-true-p osx-use-dictionary-app)))
+        (dictionary :location built-in)
         google-translate))
 
 (defun spacemacs-language/init-define-word ()
@@ -31,6 +32,10 @@
     :init
     (spacemacs/set-leader-keys
       "xwd" 'define-word-at-point)))
+
+(defun spacemacs-language/init-dictionary ()
+  (spacemacs/set-leader-keys
+    "xww" 'dictionary-lookup-definition))
 
 (defun spacemacs-language/init-google-translate ()
   (use-package google-translate
