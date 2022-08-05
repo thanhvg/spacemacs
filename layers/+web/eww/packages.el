@@ -45,6 +45,13 @@
     (spacemacs/set-leader-keys "awee" 'eww)
     (spacemacs/set-leader-keys "aweb" 'eww-list-bookmarks)
     (spacemacs/set-leader-keys "awew" 'eww-switch-to-buffer)
+    (spacemacs|add-toggle eww-as-default-browser
+      :documentation "Eww as default browser."
+      :status (equal browse-url-browser-function 'eww-browse-url)
+      :on (setq browse-url-browser-function 'eww-browse-url)
+      ;; should have a var to store the original one
+      :off (setq browse-url-browser-function 'browse-url-default-browser)
+      :evil-leader "t e")
     :config
     (define-key eww-link-keymap "f" 'eww-follow-link)
     (define-key eww-link-keymap "F" (lambda () (interactive) (eww-follow-link 2)))
@@ -66,7 +73,8 @@
         "vx" 'eww-browse-with-external-browser
         "vf" 'eww-toggle-fonts
         "vr" 'eww-readable
-        "vs" 'eww-view-source)
+        "vs" 'eww-view-source
+        "y" 'eww-copy-page-url)
       (evil-define-key 'normal eww-mode-map
         (kbd "C-o") 'eww-back-url
         (kbd "C-i") 'eww-forward-url
