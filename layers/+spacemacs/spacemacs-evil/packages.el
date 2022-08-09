@@ -302,6 +302,10 @@
     (define-key evil-normal-state-map "gc" 'evilnc-comment-operator)
     (define-key evil-normal-state-map "gy" 'spacemacs/copy-and-comment-lines)
 
+    (setq evilnc-comment-text-object "c")
+    (define-key evil-inner-text-objects-map evilnc-comment-text-object 'evilnc-inner-commenter)
+    (define-key evil-outer-text-objects-map evilnc-comment-text-object 'evilnc-outer-commenter)
+
     (spacemacs/set-leader-keys
       ";"  'evilnc-comment-operator
       "cl" 'spacemacs/comment-or-uncomment-lines
