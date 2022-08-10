@@ -36,9 +36,9 @@
     :defer t
     :init
     (when tree-sitter-syntax-highlight-enable
-      (add-hook 'tree-sitter-after-on-hook #'spacemacs//tree-sitter-hl-maybe))
-    :config
-    (global-tree-sitter-mode)))
+      (add-hook 'tree-sitter-after-on-hook #'spacemacs//tree-sitter-hl-maybe)))
+    ;; TODO lazy loading
+    (global-tree-sitter-mode))
 
 (defun tree-sitter/init-tree-sitter-langs ()
   (use-package tree-sitter-langs
