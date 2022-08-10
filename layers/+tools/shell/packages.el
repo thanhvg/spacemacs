@@ -25,6 +25,7 @@
   '(
     (comint :location built-in)
     company
+    company-native-complete
     esh-help
     (eshell :location built-in)
     eshell-prompt-extras
@@ -57,7 +58,16 @@
   (with-eval-after-load 'centered-cursor-mode
     (add-hook 'comint-mode-hook 'spacemacs//inhibit-global-centered-cursor-mode)))
 
+(defun shell/init-company-native-complete()
+  (use-package company-native-complete
+    :defer t))
+
 (defun shell/pre-init-company ()
+  (spacemacs|add-company-backends :backends company-native-complete :modes shell-mode)
+  (spacemacs|use-package-add-hook company-native-complete
+    :post-init
+    (with-eval-after-load 'shell
+      (native-complete-setup-bash)))
   ;; support in eshell
   (spacemacs|use-package-add-hook eshell
     :post-init
