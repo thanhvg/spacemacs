@@ -21,7 +21,8 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 (defconst compleseus-packages
-  '(auto-highlight-symbol
+  '(all-the-icons-completion
+    auto-highlight-symbol
     evil-collection
     imenu
     marginalia
@@ -65,6 +66,13 @@
     (grep :location built-in)
 
     wgrep))
+
+(defun compleseus/init-all-the-icons-completion ()
+  (use-package all-the-icons-completion
+    :init
+    (all-the-icons-completion-mode)
+    :config 
+    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)))
 
 (defun compleseus/pre-init-auto-highlight-symbol ()
   (spacemacs|use-package-add-hook auto-highlight-symbol
@@ -118,7 +126,9 @@
                (projectile-switch-project . file)))
       (push it marginalia-command-categories))
     (setq marginalia-align 'right)
-    ;; The :init configuration is always executed (Not lazy!)
+    ;; for projectile-switch-project-action
+    (push '("Find file" . project-file) marginalia-prompt-categories)
+
     :init
     ;; Must be in the :init section of use-package such that the mode gets
     ;; enabled right away. Note that this forces loading the package.
