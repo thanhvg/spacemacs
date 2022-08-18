@@ -53,6 +53,10 @@
         ;; should have a var to store the original one
         :off (setq browse-url-browser-function 'browse-url-default-browser)
         :evil-leader "t e"))
+      ;; https://github.com/alphapapa/unpackaged.el
+      (add-hook 'eww-mode-hook
+                (lambda ()
+                  (setq-local imenu-create-index-function #'spacemacs/imenu-eww-headings)))
     :config
     (progn
       (define-key eww-link-keymap "f" 'eww-follow-link)
