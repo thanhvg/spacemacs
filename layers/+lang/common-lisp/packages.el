@@ -27,6 +27,7 @@
     (common-lisp-snippets :requires yasnippet)
     evil
     evil-cleverparens
+    company
     ggtags
     counsel-gtags
     helm
@@ -88,6 +89,11 @@
     (progn
       (setq slime-company-completion 'fuzzy)
       (add-to-list 'slime-contribs 'slime-company))))
+
+(defun common-lisp/post-init-company ()
+  (spacemacs|add-company-backends :backends (company-slime company-dabbrev-code)
+                                  :modes slime-mode slime-repl-mode sldb-mode))
+
 (defun common-lisp/init-slime-company ())
 
 (defun common-lisp/init-slime ()
