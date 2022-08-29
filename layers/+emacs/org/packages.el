@@ -71,7 +71,7 @@
     (ox-asciidoc :toggle org-enable-asciidoc-support)))
 
 (defun org/post-init-company ()
-  (spacemacs|add-company-backends :backends company-capf :modes org-mode))
+  (spacemacs|add-company-backends :modes org-mode))
 
 (defun org/post-init-company-emoji ()
   (spacemacs|add-company-backends :backends company-emoji :modes org-mode))
