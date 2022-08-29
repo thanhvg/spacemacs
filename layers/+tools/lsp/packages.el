@@ -64,7 +64,6 @@
                                           (member major-mode lsp-manage-backends-manually))
                                       :none
                                     :capf))
-    (setq lsp-prefer-capf t)
     ;; This sets the lsp indentation for all modes derived from web-mode.
     (add-to-list 'lsp--formatting-indent-alist '(web-mode . web-mode-markup-indent-offset))
     (setq lsp-keep-workspace-alive nil)
