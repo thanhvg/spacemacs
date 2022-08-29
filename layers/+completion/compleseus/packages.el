@@ -283,8 +283,6 @@
     ;; hide magit buffer
     (add-to-list 'consult-buffer-filter "magit.*:.*")
 
-    (setq consult-line-start-from-top nil)
-
     ;; Optionally configure the narrowing key.
     ;; Both < and C-+ work reasonably well.
     (setq consult-narrow-key "<") ;; (kbd "C-+")
