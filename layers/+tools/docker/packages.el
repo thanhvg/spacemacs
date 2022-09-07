@@ -52,11 +52,11 @@
     (spacemacs/set-leader-keys-for-major-mode 'dockerfile-mode
       (if (null docker-dockerfile-backend) "b" "cb") 'dockerfile-build-buffer
       (if (null docker-dockerfile-backend) "B" "cB") 'dockerfile-build-no-cache-buffer)
-    (if (package-installed-p 'docker)
-        (spacemacs/set-leader-keys-for-major-mode 'dockerfile-mode
-          "d" 'docker
-          "i" 'docker-images
-          "p" 'docker-containers))))
+    (with-eval-after-load 'docker
+      (spacemacs/set-leader-keys-for-major-mode 'dockerfile-mode
+        "d" 'docker
+        "i" 'docker-images
+        "p" 'docker-containers))))
 
 (defun docker/post-init-flycheck ()
   (spacemacs/enable-flycheck 'dockerfile-mode))
