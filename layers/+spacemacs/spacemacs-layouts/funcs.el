@@ -254,7 +254,9 @@ ask the user if a new layout should be created."
   (cond ((configuration-layer/layer-used-p 'helm)
          (spacemacs/helm-persp-close))
         ((configuration-layer/layer-used-p 'ivy)
-         (spacemacs/ivy-spacemacs-layout-close-other)))
+         (spacemacs/ivy-spacemacs-layout-close-other))
+        ((configuration-layer/layer-used-p 'compleseus)
+         (persp-kill-without-buffers)))
   (spacemacs/layouts-transient-state/body))
 
 (defun spacemacs/layouts-ts-kill ()
@@ -264,7 +266,9 @@ ask the user if a new layout should be created."
 
 (defun spacemacs/layouts-ts-kill-other ()
   (interactive)
-  (call-interactively 'spacemacs/helm-persp-kill)
+  (if (configuration-layer/layer-used-p 'helm)
+      (call-interactively 'spacemacs/helm-persp-kill)
+    (call-interactively 'persp-kill))
   (spacemacs/layouts-transient-state/body))
 
 (defun spacemacs/move-element-left (element list)
