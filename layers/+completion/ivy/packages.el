@@ -58,7 +58,9 @@
   (use-package all-the-icons-ivy-rich
     :after ivy-rich
     :config
-    (all-the-icons-ivy-rich-mode)))
+    (all-the-icons-ivy-rich-mode)
+    (with-eval-after-load 'counsel-projectile
+      (all-the-icons-ivy-rich-reload))))
 
 (defun ivy/pre-init-auto-highlight-symbol ()
   (spacemacs|use-package-add-hook auto-highlight-symbol
