@@ -129,6 +129,7 @@
     (setq marginalia-align 'right)
     ;; for projectile-switch-project-action
     (push '("Find file" . project-file) marginalia-prompt-categories)
+    (push '("Layouts" . layout) marginalia-prompt-categories)
 
     :init
     ;; Must be in the :init section of use-package such that the mode gets
@@ -385,7 +386,15 @@
             embark-highlight-indicator
             embark-isearch-highlight-indicator))
     (advice-add #'embark-completing-read-prompter
-                :around #'spacemacs/embark-hide-which-key-indicator)))
+                :around #'spacemacs/embark-hide-which-key-indicator)
+
+    ;; persp
+    (defvar persp-action-map
+      (let ((map (make-sparse-keymap)))
+        (set-keymap-parent map embark-general-map)
+        (define-key map "k" #'persp-kill)
+        map))
+    (add-to-list 'embark-keymap-alist '(layout . persp-action-map))))
 
 (defun compleseus/init-embark-consult ()
   (use-package embark-consult
