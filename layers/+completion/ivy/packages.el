@@ -59,6 +59,10 @@
     :after ivy-rich
     :config
     (all-the-icons-ivy-rich-mode)
+    (ivy-rich-modify-column
+     'counsel-projectile-find-file
+     'counsel-projectile-find-file-transformer
+     '(:width 0.6))
     (with-eval-after-load 'counsel-projectile
       (all-the-icons-ivy-rich-reload))))
 
