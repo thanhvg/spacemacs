@@ -310,9 +310,7 @@
       (evil-add-command-properties command :jump t)))
 
   ;; Configure consult-imenu for java-mode.
-  (use-package consult-imenu
-    :after consult
-    :config
+  (with-eval-after-load 'consult-imenu
     (add-to-list 'consult-imenu-config '(java-mode :toplevel "Classes" :types
                                                    ((?m "Methods" font-lock-function-name-face)
                                                     (?f "Fields" font-lock-variable-name-face)
