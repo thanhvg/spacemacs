@@ -47,7 +47,9 @@ The return value is nil if no font was found, truthy otherwise."
                             ;; we keep it for backward compatibility
                             (spacemacs/mplist-remove props :powerline-scale)
                             :powerline-offset))
-               (fontspec (apply 'font-spec :name font font-props)))
+               (fontspec (apply 'font-spec :name font font-props))
+               fallback-font-name
+               fallback-font-name2)
           (spacemacs-buffer/message "Setting font \"%s\"..." font)
           ;; We set the INHIBIT-CUSTOMIZE parameter to t to tell set-frame-font
           ;; not to fiddle with the default face in the user's Customization
