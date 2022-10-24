@@ -27,7 +27,7 @@
                         :files (:defaults "extensions/*.el")
                         ;; pin this because divish is still evolving fast
                         ;; there will be problem when dirvish rewrites their git history
-                        :commit "d12056285ac549dcfcea560de8402ebdddeb2700"))))
+                        :commit "ec4100612b2e93d9e188e7eab4c144b45f3547ee"))))
 
 (defun dirvish/init-dirvish ()
   (use-package dirvish
@@ -58,7 +58,7 @@
     ;; Otherwise some commands won't work properly
     (setq dired-listing-switches
           "-l --almost-all --human-readable --time-style=long-iso --group-directories-first --no-group")
-    (spacemacs/set-leader-keys-for-major-mode 'dirvish-mode
+    (spacemacs/set-leader-keys-for-major-mode 'dired-mode
       "SPC" #'dirvish-dispatch
       "." #'dirvish-dispatch
       "n" #'dirvish-narrow
