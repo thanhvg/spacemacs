@@ -225,9 +225,22 @@
     ;; (setq consult-preview-key (list (kbd "<S-down>") (kbd "<S-up>")))
     ;; For some commands and buffer sources it is useful to configure the
     ;; :preview-key on a per-command basis using the `consult-customize' macro.
+
+    (consult-customize
+     consult-line
+     projectile-find-file
+     projectile-find-dir
+     projectile-recentf
+     projectile-switch-to-buffer
+     projectile-switch-project
+     consult-keep-lines
+     consult-focus-lines
+     :add-history (seq-some #'thing-at-point '(region symbol)))
+
     (consult-customize
      consult-theme
-     :preview-key '(:debounce 0.2 any)
+     ;; :preview-key '(:debounce 0.2 any)
+     :preview-key nil
      consult-ripgrep consult-git-grep consult-grep
      consult-bookmark consult-recent-file consult-xref
      consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
