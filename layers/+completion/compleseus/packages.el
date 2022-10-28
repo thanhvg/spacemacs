@@ -87,7 +87,7 @@
 
 (defun compleseus/post-init-imenu ()
   (spacemacs/set-leader-keys "ji" 'spacemacs/consult-jump-in-buffer)
-  (spacemacs/set-leader-keys "sj" 'spacemacs/consult-jump-in-buffer))
+  (spacemacs/set-leader-keys "jI" 'consult-imenu-multi))
 
 (defun compleseus/init-helm-make ()
   (use-package helm-make
