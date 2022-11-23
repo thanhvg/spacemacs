@@ -34,6 +34,7 @@
 ;; Please keep this list alphabetized.
 (defvar spacemacs-evil-collection-allowed-list
   '(bookmark
+    devdocs
     dired
     ediff
     eww

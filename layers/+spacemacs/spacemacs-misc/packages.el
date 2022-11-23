@@ -47,5 +47,6 @@
     :defer t
     :init
     (progn
+      (spacemacs/set-leader-keys "hbb" #'devdocs-lookup)
       (defalias 'spacemacs/browse-docs-online-at-point 'devdocs-search)
       (spacemacs/set-leader-keys "hbd" #'spacemacs/browse-docs-online-at-point))))
