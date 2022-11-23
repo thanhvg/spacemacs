@@ -22,8 +22,10 @@
 
 
 (setq spacemacs-misc-packages
-      '(devdocs-browser
+      '(
+        devdocs
         dumb-jump))
+
 
 (defun spacemacs-misc/init-dumb-jump ()
   (use-package dumb-jump
@@ -40,20 +42,10 @@
     ;; options is available
     (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 90)))
 
-(defun spacemacs-misc/init-devdocs-browser ()
-  (use-package devdocs-browser
+(defun spacemacs-misc/init-devdocs ()
+  (use-package devdocs
     :defer t
     :init
-    (spacemacs/set-leader-keys
-      "hbb" #'devdocs-browser-open
-      "hbs" #'devdocs-browser-open-in
-      "hbu" #'devdocs-browser-update-docs
-      "hbi" #'devdocs-browser-install-doc
-      "hbr" #'devdocs-browser-uninstall-doc
-      "hbU" #'devdocs-browser-upgrade-doc
-      "hbo" #'devdocs-browser-download-offline-data
-      "hbR" #'devdocs-browser-remove-offline-data)
-    :config
-    (spacemacs/set-leader-keys-for-minor-mode 'devdocs-browser-eww-mode
-      "j" #'devdocs-browser-eww-goto-target
-      "o" #'devdocs-browser-eww-open-in-default-browser)))
+    (progn
+      (defalias 'spacemacs/browse-docs-online-at-point 'devdocs-search)
+      (spacemacs/set-leader-keys "hbd" #'spacemacs/browse-docs-online-at-point))))
