@@ -54,4 +54,7 @@
     (progn
       (spacemacs/set-leader-keys "hbb" #'devdocs-lookup ) 
       (defalias 'spacemacs/browse-docs-online-at-point 'devdocs-search)
-      (spacemacs/set-leader-keys "hbd" #'spacemacs/browse-docs-online-at-point))))
+      (spacemacs/set-leader-keys "hbd" #'spacemacs/browse-docs-online-at-point)
+      (add-hook 'devdocs-mode-hook
+                (lambda ()
+                  (setq-local imenu-create-index-function #'spacemacs/imenu-eww-headings))))))
