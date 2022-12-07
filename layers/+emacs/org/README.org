@@ -39,6 +39,7 @@
   - [[#verb-support][Verb support]]
   - [[#asciidoc-support][AsciiDoc support]]
   - [[#mixed-pitched-support][Mixed pitched support]]
+  - [[#el-easydraw][el-easydraw]]
   - [[#spacemacs-layout-integration][Spacemacs layout integration]]
 - [[#key-bindings][Key bindings]]
   - [[#starting-org-mode][Starting org-mode]]
@@ -586,7 +587,8 @@ variable =org-enable-asciidoc-support= to =t=.
 
 ** Mixed pitched support
 Set the variable =org-enable-mixed-pitch= to =t=.
-
+** el-easydraw
+https://github.com/misohena/el-easydraw
 ** Spacemacs layout integration
 A [[https://github.com/syl20bnr/spacemacs/blob/develop/doc/DOCUMENTATION.org#layouts-and-workspaces][Spacemacs custom layout]] =@Org= is defined by the layer and accessible via =SPC l o=. The startup behavior can be customized with the following layer variables:
 - =org-persp-startup-org-file= Defines the org file buffer that should be opened after startup. Defaults to the first file in =org-agenda-files=, if =org-persp-startup-org-file= is set to =nil=.

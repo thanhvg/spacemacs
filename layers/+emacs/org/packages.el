@@ -25,6 +25,8 @@
   '(
     company
     company-emoji
+    (edraw-org
+     :location (recipe :fetcher github :repo "misohena/el-easydraw"))
     emoji-cheat-sheet-plus
     evil-org
     evil-surround
@@ -81,6 +83,13 @@
 
 (defun org/post-init-company-emoji ()
   (spacemacs|add-company-backends :backends company-emoji :modes org-mode))
+
+(defun org/init-edraw-org ()
+  (use-package edraw-org
+    :defer t
+    :after org
+    :config
+    (edraw-org-setup-default)))
 
 (defun org/post-init-emoji-cheat-sheet-plus ()
   (add-hook 'org-mode-hook 'spacemacs/delay-emoji-cheat-sheet-hook))
