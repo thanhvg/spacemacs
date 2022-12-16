@@ -293,14 +293,9 @@
     (spacemacs/set-leader-keys
       "is" 'consult-yasnippet)))
 
-(defun compleseus/init-embark ()
-  (use-package embark
-    :bind
-    (("M-o" . embark-act)         ;; pick some comfortable binding
-     ("C-;" . embark-dwim)        ;; good alternative: M-.
-     ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
-
-    :init
+(defun compleseus/pre-init-embark ()
+  (spacemacs|use-package-add-hook embark
+    :post-init
     (spacemacs/set-leader-keys "?" #'embark-bindings)
     ;; kill-buffer won't close consult buffer list
     (setq embark-quit-after-action '((kill-buffer . nil) (t . t)))
@@ -309,17 +304,8 @@
     (setq prefix-help-command #'embark-prefix-help-command)
     ;; same key binding as ivy-occur
     (define-key minibuffer-local-map (kbd "C-c C-o") #'embark-export)
-    :config
+    :post-config
     (define-key embark-file-map "s" 'spacemacs/compleseus-search-from)
-
-    ;; which key integration setup
-    ;; https://github.com/oantolin/embark/wiki/Additional-Configuration#use-which-key-like-a-key-menu-prompt
-    (setq embark-indicators
-          '(spacemacs/embark-which-key-indicator
-            embark-highlight-indicator
-            embark-isearch-highlight-indicator))
-    (advice-add #'embark-completing-read-prompter
-                :around #'spacemacs/embark-hide-which-key-indicator)
 
     ;; persp
     (defvar persp-action-map
