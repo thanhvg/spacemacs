@@ -337,13 +337,9 @@
     (spacemacs/set-leader-keys
       "is" 'consult-yasnippet)))
 
-(defun compleseus/init-embark ()
-  (use-package embark
-    :bind
-    (("M-o" . embark-act)         ;; pick some comfortable binding
-     ("C-;" . embark-dwim)        ;; good alternative: M-.
-     ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
-    :init
+(defun compleseus/pre-init-embark ()
+  (spacemacs|use-package-add-hook embark
+    :post-init
     (spacemacs/set-leader-keys "?" #'embark-bindings)
     ;; kill-buffer won't close consult buffer list
     (setq embark-quit-after-action '((kill-buffer . nil) (t . t)))
@@ -352,17 +348,7 @@
     (setq prefix-help-command #'embark-prefix-help-command)
     ;; same key binding as ivy-occur
     (define-key minibuffer-local-map (kbd "C-c C-o") #'embark-export)
-    (define-key minibuffer-local-map (kbd "C-c C-l") #'embark-collect)
-    ;; mimic action key bindings from helm
-    (define-key minibuffer-local-map (kbd "C-z") #'spacemacs/embark-action-completing-read)
-    (define-key minibuffer-local-map (kbd "C-c C-e") #'spacemacs/consult-edit)
-    ;; which keys nice display
-    (which-key-add-keymap-based-replacements minibuffer-local-map "C-c C-o" "Embark export")
-    (which-key-add-keymap-based-replacements minibuffer-local-map "C-c C-l" "Embark collect")
-    (which-key-add-keymap-based-replacements minibuffer-local-map "C-c C-e" "Edit buffer")
-    (which-key-add-keymap-based-replacements minibuffer-local-map "C-z" "Embark actions...")
-    :config
-    ;; custom Embark actions
+    :post-config
     (define-key embark-file-map "s" 'spacemacs/compleseus-search-from)
     (define-key embark-buffer-map "s" #'spacemacs/embark-consult-line-multi)
     (add-to-list 'embark-multitarget-actions #'spacemacs/embark-consult-line-multi)
