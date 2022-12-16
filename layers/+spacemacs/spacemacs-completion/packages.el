@@ -25,6 +25,7 @@
       '(
         (default-helm-config :location built-in)
         (default-ivy-config :location built-in)
+        embark
         (flx-ido :requires ido-vertical-mode)
         (ido :location built-in
              :toggle
@@ -33,6 +34,22 @@
                       (configuration-layer/package-used-p 'vertico))))
         (ido-vertical-mode :location built-in :requires ido)))
 
+
+(defun spacemacs-completion/init-embark ()
+  (use-package embark
+    :bind
+    (("M-o" . embark-act)
+     ("C-;" . embark-dwim)
+     ("C-h B" . embark-bindings))
+    :config
+    ;; which key integration setup
+    ;; https://github.com/oantolin/embark/wiki/Additional-Configuration#use-which-key-like-a-key-menu-prompt
+    (setq embark-indicators
+          '(spacemacs/embark-which-key-indicator
+            embark-highlight-indicator
+            embark-isearch-highlight-indicator))
+    (advice-add #'embark-completing-read-prompter
+                :around #'spacemacs/embark-hide-which-key-indicator)))
 
 (defun spacemacs-completion/init-default-helm-config ()
   (setq helm-prevent-escaping-from-minibuffer t
