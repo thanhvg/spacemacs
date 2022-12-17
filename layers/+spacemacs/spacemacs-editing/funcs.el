@@ -188,3 +188,17 @@ See issues #6520 and #13172"
   (require 'wgrep)
   (wgrep-change-to-wgrep-mode)
   (evil-normal-state))
+
+
+;; avy
+;; https://github.com/abo-abo/avy/issues/312
+(defun spacemacs/avy-goto-symbol-at-point (&optional arg)
+  "Jump to a visible occurance of symbol-at-point.
+The window scope is determined by `avy-all-windows' (ARG negates it)."
+  (interactive "P")
+  (let ((avy-all-windows (if arg
+                             (not avy-all-windows)
+                           avy-all-windows)))
+    (avy-with avy-goto-symbol-at-point
+      (avy-process 
+       (avy--regex-candidates (regexp-quote (thing-at-point 'symbol t)))))))
