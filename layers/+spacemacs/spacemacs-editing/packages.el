@@ -84,10 +84,10 @@
       "jb" 'avy-pop-mark
       "jj" 'evil-avy-goto-char-timer
       "jl" 'evil-avy-goto-line
+      "jo" 'spacemacs/avy-goto-symbol-at-point
       "ju" 'spacemacs/avy-goto-url
       "jU" 'spacemacs/avy-open-url
-      "jw" 'evil-avy-goto-word-or-subword-1
-      "xo" 'spacemacs/avy-open-url)
+      "jw" 'evil-avy-goto-word-or-subword-1)
     :config
     (defun spacemacs/avy-goto-url ()
       "Use avy to go to an URL in the buffer."
