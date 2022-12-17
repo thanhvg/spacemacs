@@ -436,6 +436,7 @@
   "hTe" 'emacs-tutorial)
 ;; insert stuff ---------------------------------------------------------------
 (spacemacs/set-leader-keys
+  "io" 'open-line
   "iJ" 'spacemacs/insert-line-below-no-indent
   "iK" 'spacemacs/insert-line-above-no-indent
   "ik" 'spacemacs/evil-insert-line-above
@@ -446,7 +447,6 @@
   "j(" 'check-parens
   "j=" 'spacemacs/indent-region-or-buffer
   "j+" 'spacemacs/iwb-region-or-buffer
-  "jo" 'open-line
   "jS" 'spacemacs/split-and-new-line
   "jk" 'spacemacs/evil-goto-next-line-and-indent)
 
