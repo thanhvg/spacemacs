@@ -1993,3 +1993,17 @@ Show current active buffer in another buffer."
   (interactive)
   (with-selected-window (or (minibuffer-selected-window) (selected-window))
     (display-buffer (current-buffer) '(nil (inhibit-same-window . t)))))
+
+
+(defun spacemacs/occur-symbol-at-point (symbol &optional nlines region)
+  "Same as `occur' but on symbol at point."
+  (interactive
+   (nconc (list
+           (thing-at-point 'symbol t)
+           (when current-prefix-arg
+             (prefix-numeric-value current-prefix-arg))
+           (and (use-region-p) (list (region-bounds))))))
+  (funcall 'occur
+           (concat "\\_<" (regexp-quote symbol) "\\_>")
+           nlines
+           region))
