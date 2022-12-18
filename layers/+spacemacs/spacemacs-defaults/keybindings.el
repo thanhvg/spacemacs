@@ -1202,4 +1202,6 @@ If FRAME is nil, it defaults to the selected frame."
   ("0" spacemacs/switch-to-buff-0 :exit t))
 
 (spacemacs/set-leader-keys "." 'spacemacs/buffers-transient-state/body)
+
+(spacemacs/set-leader-keys "sn" 'spacemacs/occur-symbol-at-point)
 ;; end select buffer transient state
