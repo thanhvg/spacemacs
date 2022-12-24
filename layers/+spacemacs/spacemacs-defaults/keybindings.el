@@ -75,6 +75,7 @@
                                        "sr"  "ripgrep"
                                        "st"  "pt"
                                        "sw"  "web"
+                                       "sv"  "loccur"
                                        "t"   "toggles"
                                        "tC"  "colors"
                                        "tE"  "editing-styles"
