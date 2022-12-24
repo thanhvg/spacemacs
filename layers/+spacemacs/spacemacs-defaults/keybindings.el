@@ -76,6 +76,7 @@
         "sP"  "search project w/input"
         "sr"  "ripgrep"
         "st"  "pt"
+        "sv"  "loccur"
         "sw"  "web"
         "t"   "toggles"
         "tC"  "colors"
