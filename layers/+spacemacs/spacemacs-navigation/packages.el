@@ -34,6 +34,8 @@
         (info+ :toggle 'nil
                :location (recipe :fetcher github
                                  :repo "emacsmirror/info-plus"))
+        (loccur :location (recipe :fetcher github
+                                  :repo "thanhvg/loccur"))
         open-junk-file
         paradox
         restart-emacs
@@ -113,9 +115,9 @@
 
     (with-eval-after-load 'evil
       (define-key evil-motion-state-map (kbd "*")
-        'spacemacs/enter-ahs-forward)
+                  'spacemacs/enter-ahs-forward)
       (define-key evil-motion-state-map (kbd "#")
-        'spacemacs/enter-ahs-backward))
+                  'spacemacs/enter-ahs-backward))
 
     (spacemacs/set-leader-keys
       "sh" 'spacemacs/symbol-highlight
@@ -383,6 +385,15 @@
     :off (spacemacs/disable-smooth-scrolling)
     :documentation "Smooth scrolling."
     :evil-leader "tv"))
+
+(defun spacemacs-navigation/init-loccur ()
+  (use-package loccur
+    :defer t
+    :init
+    (spacemacs/set-leader-keys
+      "svv" 'loccur-current
+      "svl" 'loccur-previous-match
+      "svo" 'loccur)))
 
 (defun spacemacs-navigation/init-symbol-overlay ()
   (use-package symbol-overlay
