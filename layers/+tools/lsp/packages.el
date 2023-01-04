@@ -101,4 +101,6 @@
   (spacemacs|use-package-add-hook popwin
     :post-config
     (push '("*lsp-help*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
+          popwin:special-display-config)
+    (push '("*Call Hierarchy*" :dedicated t :position bottom :stick t :height 0.4)
           popwin:special-display-config)))
