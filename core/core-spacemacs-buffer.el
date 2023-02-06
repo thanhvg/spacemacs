@@ -280,6 +280,7 @@ Returns height in units of line height with a minimum of 1."
                           (spacemacs-buffer//do-insert-startupify-lists)
                           (recentf-mode -1)
                           (line-number-at-pos)))
+              ;; (count-lines (point-min) (point-max)))
             (setq dotspacemacs-startup-buffer-show-icons icons)
             lines))
          ;; We determine the maximum available banner height by subtracting the
@@ -371,11 +372,11 @@ Right justified, based on the Spacemacs buffers window width."
       (spacemacs-buffer//center-line (length build-by))
       (insert "\n\n")
       (widget-create 'url-link
-                     :tag proudly-free
-                     :help-echo "What is free software?"
-                     :mouse-face 'highlight
-                     :follow-link "\C-m"
-                     "https://www.gnu.org/philosophy/free-sw.en.html")
+                           :tag proudly-free
+                           :help-echo "What is free software?"
+                           :mouse-face 'highlight
+                           :follow-link "\C-m"
+                           "https://www.gnu.org/philosophy/free-sw.en.html")
       (spacemacs-buffer//center-line (+ 2 (length proudly-free)))
       (when gplv3
         (insert "\n\n")
@@ -709,8 +710,8 @@ and the trailing whitespace."
 (defun spacemacs-buffer//widget-text-note-beg-pos ()
   (let (pos)
     (dolist (w spacemacs-buffer--note-widgets)
-      (when (eq (car w) 'text)
-        (setq pos (marker-position (widget-get w :from)))))
+     (when (eq (car w) 'text)
+       (setq pos (marker-position (widget-get w :from)))))
     pos))
 
 (defun spacemacs-buffer//notes-clear-notes-and-widgets ()
@@ -913,8 +914,8 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
                 (line-beginning-position))))
     (spacemacs-buffer//center-line)
     (setq spacemacs-buffer--buttons-position (- (line-end-position)
-                                                (line-beginning-position)
-                                                len)))
+                                              (line-beginning-position)
+                                              len)))
   (insert "\n")
   (widget-create 'push-button
                  :help-echo "Update all ELPA packages to the latest versions."
@@ -1404,8 +1405,7 @@ startup list.")
 (defun spacemacs-buffer//do-insert-startupify-lists ()
   "Insert the startup lists in the current buffer."
   (setq spacemacs-buffer--startup-list-nr 1)
-  (let ((dotspacemacs-startup-buffer-show-icons dotspacemacs-startup-buffer-show-icons)
-        (is-org-loaded (bound-and-true-p spacemacs-initialized)))
+  (let ((dotspacemacs-startup-buffer-show-icons dotspacemacs-startup-buffer-show-icons))
     (if (display-graphic-p)
         (when (and spacemacs-initialized
                    (not (configuration-layer/package-used-p 'all-the-icons)))
@@ -1414,7 +1414,7 @@ startup list.")
       (setq dotspacemacs-startup-buffer-show-icons nil))
     (when dotspacemacs-startup-buffer-show-icons
       (require 'all-the-icons))
-    (dolist (els (if is-org-loaded (append '(warnings) dotspacemacs-startup-lists) '(warnings)))
+    (dolist (els (append '(warnings) dotspacemacs-startup-lists))
       (let ((el (or (car-safe els) els))
             (list-size (or (cdr-safe els)
                            spacemacs-buffer-startup-lists-length)))
@@ -1424,7 +1424,7 @@ startup list.")
           (spacemacs-buffer//insert-warnings))
          ((eq el 'recents) (spacemacs-buffer//insert-recent-files list-size))
          ((and (eq el 'recents-by-project)
-               (fboundp 'projectile-mode))
+         (fboundp 'projectile-mode))
           (spacemacs-buffer//insert-recent-files-by-project list-size))
          ((eq el 'todos) (spacemacs-buffer//insert-todos list-size))
          ((eq el 'agenda) (spacemacs-buffer//insert-agenda list-size))
@@ -1563,10 +1563,9 @@ can be adjusted with the variable:
     (force-mode-line-update)
     (spacemacs-buffer/goto-link-line)))
 
-(defun spacemacs-buffer/goto-buffer (&optional refresh do-not-switch)
-  "Create the special buffer for `spacemacs-buffer-mode'.
-REFRESH if the buffer should be redrawn. This will automatically
-switch to the buffer unless DO-NOT-SWITCH is non nil.
+(defun spacemacs-buffer/goto-buffer (&optional refresh)
+  "Create the special buffer for `spacemacs-buffer-mode' and switch to it.
+REFRESH if the buffer should be redrawn.
 
 If a prefix argument is given, switch to it in an other, possibly new window."
   (interactive)
@@ -1608,9 +1607,8 @@ If a prefix argument is given, switch to it in an other, possibly new window."
                    (forward-line (1- save-line))
                    (forward-to-indentation 0))
           (spacemacs-buffer/goto-link-line)))
-      (unless do-not-switch
-        (if current-prefix-arg
-            (switch-to-buffer-other-window spacemacs-buffer-name))
+      (if current-prefix-arg
+          (switch-to-buffer-other-window spacemacs-buffer-name)
         (switch-to-buffer spacemacs-buffer-name))
       (spacemacs//redisplay))))
 
