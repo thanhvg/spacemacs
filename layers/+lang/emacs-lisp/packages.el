@@ -218,7 +218,23 @@
       ","  'lisp-state-toggle-lisp-state
       "==" 'spacemacs/indent-region-or-buffer
       "tb" 'spacemacs/ert-run-tests-buffer
-      "tq" 'ert)))
+      "tq" 'ert))
+  ;; https://www.reddit.com/r/emacs/comments/10ktqj0/weekly_tips_tricks_c_thread/j68uook/
+  (with-eval-after-load 'elisp-mode
+    ;; Use the GNU-style tab size (8) for the core Emacs sources.
+    (let* ((emacs-source-rx (rx "/emacs/" (eval emacs-version)
+                                "/lisp" (? "/")
+                                eos))
+           (emacs-source-path (cl-some (lambda (x)
+                                         (when (string-match-p emacs-source-rx x)
+                                           x))
+                                       load-path)))
+      (dir-locals-set-class-variables
+       'builtin-elisp
+       '((emacs-lisp-mode . ((tab-width . 8)))))
+      (dir-locals-set-directory-class
+       emacs-source-path
+       'builtin-elisp))))
 
 (defun emacs-lisp/init-macrostep ()
   (use-package macrostep
