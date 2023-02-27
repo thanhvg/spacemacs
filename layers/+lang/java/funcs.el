@@ -25,7 +25,8 @@
   "Conditionally setup java backend."
   (pcase java-backend
     ('meghanada (spacemacs//java-setup-meghanada))
-    ('lsp (spacemacs//java-setup-lsp))))
+    ('lsp (spacemacs//java-setup-lsp))
+    ('lspce (spacemacs//java-setup-lspce))))
 
 (defun spacemacs//java-setup-company ()
   "Conditionally setup company based on backend."
@@ -130,3 +131,7 @@
   "Show sub type hierarchy."
   (interactive)
   (lsp-java-type-hierarchy 0))
+
+(defun spacemacs//java-setup-lspce ()
+  "Setup LSPE Java."
+  (lspce-mode))
