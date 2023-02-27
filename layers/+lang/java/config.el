@@ -27,5 +27,5 @@
 
 (defvar java-backend (if (configuration-layer/layer-used-p 'lsp) 'lsp 'meghanada)
   "The backend to use for IDE features.
-Possible values are `lsp' and `meghanada'.
+Possible values are `lsp', `lspce' or `meghanada'.
 If `nil' then `meghanada' is the default backend unless `lsp' layer is used.")
