@@ -224,7 +224,7 @@
     ;; is 'any, such that any key triggers the preview.
     ;; (setq consult-preview-key 'any)
     ;; (setq consult-preview-key (kbd "M-."))
-    ;; (setq consult-preview-key (list (kbd "<S-down>") (kbd "<S-up>")))
+    ;; (setq consult-preview-key (list "C-SPC" "C-M-j" "C-M-k"))
     ;; For some commands and buffer sources it is useful to configure the
     ;; :preview-key on a per-command basis using the `consult-customize' macro.
 
@@ -253,7 +253,7 @@
      spacemacs/compleseus-search-default
      spacemacs/compleseus-switch-to-buffer
      spacemacs/compleseus-search-projectile-auto
-     :preview-key (list (kbd "C-SPC") (kbd "C-M-j") (kbd "C-M-k")))
+     :preview-key (list "C-SPC" "C-M-j" "C-M-k"))
 
     ;; hide magit buffer
     (add-to-list 'consult-buffer-filter "magit.*:.*")
