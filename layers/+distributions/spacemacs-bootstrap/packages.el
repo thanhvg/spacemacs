@@ -29,7 +29,13 @@
     (bind-map :step bootstrap)
     (bind-key :step bootstrap)
     (diminish :step bootstrap)
-    (evil :step bootstrap)
+    (evil :step bootstrap
+          :location (recipe
+                     :fetcher github
+                     :repo  "emacs-evil/evil"
+                     :commit "e7f170fb1f08662b5a4165adc23d84858129e3ef"))
+                     ;; break evil-mc
+                     ;; :commit "2b2ba3cbeabe1f239b6b0ebdaddcb68dd158bd1f"))
     (hydra :step bootstrap)
     (use-package :step bootstrap)
     (which-key :step bootstrap)
@@ -244,9 +250,9 @@
 
   (when dotspacemacs-enable-paste-transient-state
     (define-key evil-normal-state-map
-      "p" 'spacemacs/paste-transient-state/evil-paste-after)
+                "p" 'spacemacs/paste-transient-state/evil-paste-after)
     (define-key evil-normal-state-map
-      "P" 'spacemacs/paste-transient-state/evil-paste-before))
+                "P" 'spacemacs/paste-transient-state/evil-paste-before))
   ;; fold transient state
   (when (eq 'evil dotspacemacs-folding-method)
     (spacemacs|define-transient-state fold
@@ -302,8 +308,8 @@
   ;; `spacemacs/counsel-find-file' more `M-o' actions
   (with-eval-after-load 'dired
     (define-key dired-mode-map "j"
-      (cond ((configuration-layer/layer-used-p 'helm) 'spacemacs/helm-find-files)
-            ((configuration-layer/layer-used-p 'ivy) 'spacemacs/counsel-find-file))))
+                (cond ((configuration-layer/layer-used-p 'helm) 'spacemacs/helm-find-files)
+                      ((configuration-layer/layer-used-p 'ivy) 'spacemacs/counsel-find-file))))
 
   ;; support smartparens-strict-mode
   (when (configuration-layer/package-used-p 'smartparens)
@@ -558,7 +564,7 @@ Press \\[which-key-toggle-persistent] to hide."
 
   ;; hide the "C-c -> eyebrowse-create-window-config" entry
   (push '(("\\(.*\\)C-c C-w C-c" . "eyebrowse-create-window-config") . t)
-         which-key-replacement-alist)
+        which-key-replacement-alist)
 
   ;; C-c C-d-
   ;; Combine the d and C-d key entries
@@ -568,7 +574,7 @@ Press \\[which-key-toggle-persistent] to hide."
 
   ;; hide the "C-d -> elisp-slime-nav-describe-elisp-thing-at-point" entry
   (push '(("\\(.*\\)C-c C-d C-d" . "elisp-slime-nav-describe-elisp-thing-at-point") . t)
-         which-key-replacement-alist)
+        which-key-replacement-alist)
 
   (which-key-add-key-based-replacements
     dotspacemacs-leader-key '("root" . "Spacemacs root")
@@ -590,7 +596,7 @@ Press \\[which-key-toggle-persistent] to hide."
 (defun spacemacs-bootstrap/init-evil-evilified-state ()
   (use-package evil-evilified-state)
   (define-key evil-evilified-state-map (kbd dotspacemacs-leader-key)
-    spacemacs-default-map))
+              spacemacs-default-map))
 
 ;; we own pcre2el here, so that it's always available to ivy and helm
 ;; (necessary when using spacemacs-base distribution)
