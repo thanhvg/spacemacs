@@ -29,7 +29,13 @@
     (bind-map :step bootstrap)
     (bind-key :step bootstrap)
     (diminish :step bootstrap)
-    (evil :step bootstrap)
+    (evil :step bootstrap
+          :location (recipe
+                     :fetcher github
+                     :repo  "emacs-evil/evil"
+                     :commit "e7f170fb1f08662b5a4165adc23d84858129e3ef"))
+                     ;; break evil-mc
+                     ;; :commit "2b2ba3cbeabe1f239b6b0ebdaddcb68dd158bd1f"))
     (hydra :step bootstrap)
     (use-package :step bootstrap)
     (which-key :step bootstrap)
