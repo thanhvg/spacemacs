@@ -22,7 +22,12 @@
 
 
 (defconst tabs-packages
-  '(centaur-tabs))
+  '(centaur-tabs
+    (awesome-tab
+     :toggle 'nil
+     :location (recipe
+                :fetcher github
+                :repo  "manateelazycat/awesome-tab"))))
 
 (defun tabs/init-centaur-tabs ()
 
@@ -66,6 +71,10 @@
           ("g T"     . spacemacs/tabs-backward)
           ("g C-t"   . centaur-tabs-move-current-tab-to-right)
           ("g C-S-t" . centaur-tabs-move-current-tab-to-left))
+    ("C-c j" . centaur-tabs-ace-jump)
     ("C-c t s" . centaur-tabs-counsel-switch-group)
     ("C-c t p" . centaur-tabs-group-by-projectile-project)
     ("C-c t g" . centaur-tabs-group-buffer-groups)))
+
+
+(defun tabs/init-awesome-tab ())
