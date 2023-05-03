@@ -38,8 +38,9 @@
     (electric-indent-mode :location built-in)
     (ediff :location built-in)
     (eldoc :location built-in)
-    (help-fns+ :location local
-               :toggle (not (fboundp 'describe-keymap))) ; built in emacs28+
+    (help-fns+ :location (recipe
+                          :fetcher github
+                          :repo  "emacsmirror/help-fns-plus"))
     (hi-lock :location built-in)
     (image-mode :location built-in)
     (imenu :location built-in)
