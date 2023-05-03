@@ -24,6 +24,7 @@
 (setq sql-packages
       '(
         company
+        ejc-sql
         org
         sql
         (sql-indent :location elpa :toggle sql-auto-indent)
@@ -214,9 +215,27 @@
     (spacemacs|hide-lighter sqlup-mode)
     (setq sqlup-blacklist (append sqlup-blacklist
                                   sql-capitalize-keywords-blacklist))))
+(defun sql/init-ejc-sql ()
+  (use-package ejc-sql
+    :defer t
+    :init
+    (setq clomacs-httpd-default-port 1979) ; Use a port other than 8080.
+    (add-hook 'ejc-sql-minor-mode-hook
+              (lambda ()
+                (ejc-eldoc-setup)))
+    :config
+    (add-hook 'ejc-sql-minor-mode-hook
+              (lambda ()
+                (ejc-eldoc-setup)))))
 
 (defun sql/post-init-company ()
-  (spacemacs//sql-setup-company))
+  (spacemacs//sql-setup-company)
+  (setq ejc-complete-on-dot t)
+  (add-hook 'ejc-sql-minor-mode-hook
+            (lambda ()
+              (require 'ejc-company)
+              (push 'ejc-company-backend company-backends)
+              (company-mode t))))
 
 (defun sql/pre-init-org ()
   (spacemacs|use-package-add-hook org
