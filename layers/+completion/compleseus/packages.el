@@ -23,6 +23,7 @@
 (defconst compleseus-packages
   '(all-the-icons-completion
     auto-highlight-symbol
+    company
     evil-collection
     imenu
     marginalia
@@ -518,3 +519,8 @@
     (setq
      spacemacs--persp-display-buffers-func 'spacemacs/compleseus-switch-to-buffer
      spacemacs--persp-display-perspectives-func 'spacemacs/compleseus-spacemacs-layout-layouts)))
+
+(defun compleseus/pre-init-company ()
+  (spacemacs|use-package-add-hook company
+    :post-config
+    (define-key company-active-map (kbd "C-/") 'spacemacs/consult-company)))
