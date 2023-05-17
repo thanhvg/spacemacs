@@ -23,6 +23,7 @@
 (defconst compleseus-packages
   '(all-the-icons-completion
     auto-highlight-symbol
+    company
     evil-collection
     imenu
     marginalia
@@ -563,3 +564,8 @@
     :hook (marginalia-mode . nerd-icons-completion-marginalia-setup)
     :init
     (nerd-icons-completion-mode)))
+
+(defun compleseus/pre-init-company ()
+  (spacemacs|use-package-add-hook company
+    :post-config
+    (define-key company-active-map (kbd "C-/") 'spacemacs/consult-company)))
