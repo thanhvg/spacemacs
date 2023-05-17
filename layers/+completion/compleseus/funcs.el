@@ -58,7 +58,7 @@
                                (or (thing-at-point 'symbol t) "")))
                           ""))
          (default-directory
-           (or initial-directory (read-directory-name "Start from directory: "))))
+          (or initial-directory (read-directory-name "Start from directory: "))))
     (consult-ripgrep default-directory initial-input)))
 
 (defun spacemacs/consult-line ()
@@ -175,3 +175,13 @@ This solves the problem: Binding a key to: `find-file' calls: `ido-find-file'"
    (cond
     ((eq major-mode 'org-mode) 'consult-org-heading)
     (t 'consult-imenu))))
+
+(defun spacemacs/consult-company ()
+  "Complete using `company-candidates'."
+  (interactive)
+  (company-mode 1)
+  (unless company-candidates
+    (company-complete))
+  (when company-candidates
+    (company--continue)
+    (company-finish (completing-read "Candidate: " company-candidates))))
