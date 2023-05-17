@@ -211,6 +211,16 @@ This solves the problem: Binding a key to: `find-file' calls: `ido-find-file'"
     ((eq major-mode 'org-mode) 'consult-org-heading)
     (t 'consult-imenu))))
 
+(defun spacemacs/consult-company ()
+  "Complete using `company-candidates'."
+  (interactive)
+  (company-mode 1)
+  (unless company-candidates
+    (company-complete))
+  (when company-candidates
+    (company--continue)
+    (company-finish (completing-read "Candidate: " company-candidates))))
+
 (defun spacemacs/compleseus-grep-change-to-wgrep-mode ()
   (interactive)
   (require 'wgrep)
