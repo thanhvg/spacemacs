@@ -251,6 +251,16 @@ to act on with `embark-act-all', and move to the next candidate."
              (car (nth (1+ idx) consult--narrow-keys))))
        (caar consult--narrow-keys)))))
 
+(defun spacemacs/consult-company ()
+  "Complete using `company-candidates'."
+  (interactive)
+  (company-mode 1)
+  (unless company-candidates
+    (company-complete))
+  (when company-candidates
+    (company--continue)
+    (company-finish (completing-read "Candidate: " company-candidates))))
+
 (defun spacemacs/compleseus-grep-change-to-wgrep-mode ()
   (interactive)
   (require 'wgrep)
