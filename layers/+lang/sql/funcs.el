@@ -131,3 +131,10 @@
   (interactive)
   (let ((sql-pop-to-buffer-after-send-region nil))
     (sql-send-line-and-next)))
+
+(defun spacemacs/sql-ejc-toggle-table-mode ()
+  (interactive)
+  (if (equal ejc-result-table-impl 'orgtbl-mode)
+      (setq ejc-result-table-impl 'ejc-result-mode)
+    (setq ejc-result-table-impl 'orgtbl-mode))
+  (message "set %s to handle table result" ejc-result-table-impl))
