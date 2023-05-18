@@ -218,6 +218,7 @@
 (defun sql/init-ejc-sql ()
   (use-package ejc-sql
     :defer t
+    :commands ejc-create-connection
     :init
     (setq clomacs-httpd-default-port 1979) ; Use a port other than 8080.
     (add-hook 'ejc-sql-minor-mode-hook
@@ -226,7 +227,16 @@
     :config
     (add-hook 'ejc-sql-minor-mode-hook
               (lambda ()
-                (ejc-eldoc-setup)))))
+                (ejc-eldoc-setup)))
+    (define-key ejc-command-map
+                (kbd "q")
+                #'ejc-quit-connection)
+    (define-key ejc-command-map
+                (kbd "k")
+                #'ejc-invalidate-cache)
+    (define-key ejc-command-map
+                (kbd "m")
+                #'spacemacs/sql-ejc-toggle-table-mode)))
 
 (defun sql/post-init-company ()
   (spacemacs//sql-setup-company)
