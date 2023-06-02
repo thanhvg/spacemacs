@@ -2030,3 +2030,56 @@ Show current active buffer in another buffer."
            (concat "\\_<" (regexp-quote symbol) "\\_>")
            nlines
            region))
+
+(defun spacemacs//buffers-ts-hint-and-count ()
+  "return (string . num)"
+  (let* ((my-index 1)
+         (my-string "")
+         (my-buffer-list (cdr (spacemacs//get-recent-buffers)))
+         (my-first-entry-done nil)
+         (my-b-key " [b] list-buffers")
+         (my-max-len (- (frame-total-cols) (length my-b-key) 2)))
+    (add-text-properties 2 3 '(face hydra-face-blue) my-b-key)
+    (catch 'out
+      (while (and (< my-index 10) my-buffer-list)
+        (let* ((current-buffer-name (concat
+                                     (if my-first-entry-done
+                                         (format " | %s:"
+                                                 (propertize
+                                                  (format "%s" (car (alist-get my-index spacemacs-echo-buffer-list-mapping))) 'face 'hydra-face-blue))
+                                       (setq my-first-entry-done t)
+                                       (format " %s:"
+                                               (propertize (format "%s" (car (alist-get my-index spacemacs-echo-buffer-list-mapping))) 'face 'hydra-face-blue)))
+                                     (buffer-name (car my-buffer-list))))
+               (my-over-shoot (- (+ (length current-buffer-name) (length my-string)) my-max-len)))
+
+          (if (< my-over-shoot 0)
+              (setq my-string (concat my-string current-buffer-name))
+            ;; else early return
+            ;; can cut off?
+            (progn
+              (when (> (length current-buffer-name) (+ my-over-shoot 3))
+                (setq my-string (concat my-string
+                                        (substring current-buffer-name 0 (- (length current-buffer-name) 3 my-over-shoot))
+                                        "..."))
+                (cl-incf my-index))
+              (throw 'out nil)))
+          (cl-incf my-index)
+          (setq my-buffer-list (cdr my-buffer-list)))))
+    (cons (concat my-string my-b-key) my-index)))
+
+(defun spacemacs/echo-buffer-list ()
+  (interactive)
+  (let* ((temp (spacemacs//buffers-ts-hint-and-count))
+         (msg (car temp))
+         (count (cdr temp)))
+    (message msg)
+   (set-transient-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "b") #'switch-to-buffer)
+      (dolist (i (number-sequence 1 count +1))
+        (let* ((tmp (alist-get i spacemacs-echo-buffer-list-mapping))
+               (key (car tmp))
+               (func (cdr tmp)))
+         (define-key map (kbd key) func)))
+      map))))
