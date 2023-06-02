@@ -249,3 +249,16 @@ It runs `tabulated-list-revert-hook', then calls `tabulated-list-print'."
 
 ;; Suppress the *Warnings* buffer when native compilation shows warnings.
 (setq native-comp-async-report-warnings-errors 'silent)
+
+(defvar spacemacs-echo-buffer-list-mapping
+  '((1 . ("a" . spacemacs/switch-to-buff-1))
+    (2 . ("s" . spacemacs/switch-to-buff-2))
+    (3 . ("d" . spacemacs/switch-to-buff-3))
+    (4 . ("f" . spacemacs/switch-to-buff-4))
+    (5 . ("g" . spacemacs/switch-to-buff-5))
+    (6 . ("h" . spacemacs/switch-to-buff-6))
+    (7 . ("j" . spacemacs/switch-to-buff-7))
+    (8 . ("k" . spacemacs/switch-to-buff-8))
+    (9 . ("l" . spacemacs/switch-to-buff-9))
+    (0 . (";" . spacemacs/switch-to-buff-0)))
+  "The mapping of buffer index to key.")
