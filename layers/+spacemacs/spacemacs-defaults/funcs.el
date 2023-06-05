@@ -1968,17 +1968,17 @@ Show current active buffer in another buffer."
          (my-first-entry-done nil)
          (my-b-key " [b] list-buffers")
          (my-max-len (- (frame-total-cols) (length my-b-key) 2)))
-    (add-text-properties 2 3 '(face hydra-face-blue) my-b-key)
+    (add-text-properties 2 3 '(face font-lock-constant-face) my-b-key)
     (catch 'out
       (while (and (< my-index 10) my-buffer-list)
         (let* ((current-buffer-name (concat
                                      (if my-first-entry-done
                                          (format " | %s:"
                                                  (propertize
-                                                  (format "%s" (car (alist-get my-index spacemacs-echo-buffer-list-mapping))) 'face 'hydra-face-blue))
+                                                  (format "%s" (car (alist-get my-index spacemacs-echo-buffer-list-mapping))) 'face 'font-lock-constant-face))
                                        (setq my-first-entry-done t)
                                        (format " %s:"
-                                               (propertize (format "%s" (car (alist-get my-index spacemacs-echo-buffer-list-mapping))) 'face 'hydra-face-blue)))
+                                               (propertize (format "%s" (car (alist-get my-index spacemacs-echo-buffer-list-mapping))) 'face 'font-lock-constant-face)))
                                      (buffer-name (car my-buffer-list))))
                (my-over-shoot (- (+ (length current-buffer-name) (length my-string)) my-max-len)))
 
@@ -1998,6 +1998,9 @@ Show current active buffer in another buffer."
     (cons (concat my-string my-b-key) my-index)))
 
 (defun spacemacs/echo-buffer-list ()
+  "Put buffer list to echo line.
+
+The list is cut of to fit one line if necessary. Each buffer has a key to press to activate it."
   (interactive)
   (let* ((temp (spacemacs//buffers-ts-hint-and-count))
          (msg (car temp))
@@ -2012,3 +2015,24 @@ Show current active buffer in another buffer."
                (func (cdr tmp)))
          (define-key map (kbd key) func)))
       map))))
+
+(defun spacemacs//buffers-hint-ml ()
+  "Return buffer list with mapping key.
+The string not longer than half window with."
+
+  (let ((buffer-list-str (mapconcat
+         #'identity
+         (seq-map-indexed
+          (lambda (it idx)
+            (concat
+             " "
+             (propertize
+              (format "%s" (car (alist-get (1+ idx) spacemacs-echo-buffer-list-mapping)))
+              'face 'font-lock-constant-face)
+             ":"
+             (buffer-name it)))
+          (seq-take (cdr (spacemacs//get-recent-buffers)) 10))))
+        (max (/ (window-width) 2)))
+    (if (> (length buffer-list-str) max)
+        (substring buffer-list-str 0 max)
+      buffer-list-str)))
