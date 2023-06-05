@@ -2072,18 +2072,19 @@ The list is cut of to fit one line if necessary. Each buffer has a key to press 
   "Return buffer list with mapping key.
 The string not longer than half window with."
 
-  (let ((buffer-list-str (mapconcat
-         #'identity
-         (seq-map-indexed
-          (lambda (it idx)
-            (concat
-             " "
-             (propertize
-              (format "%s" (car (alist-get (1+ idx) spacemacs-echo-buffer-list-mapping)))
-              'face 'font-lock-constant-face)
-             ":"
-             (buffer-name it)))
-          (seq-take (cdr (spacemacs//get-recent-buffers)) 10))))
+  (let ((buffer-list-str
+         (mapconcat
+          #'identity
+          (seq-map-indexed
+           (lambda (it idx)
+             (concat
+              (propertize
+               (format "%s" (car (alist-get (1+ idx) spacemacs-echo-buffer-list-mapping)))
+               'face 'font-lock-constant-face)
+              ":"
+              (buffer-name it)))
+           (seq-take (cdr (spacemacs//get-recent-buffers)) 10))
+          " "))
         (max (/ (window-width) 2)))
     (if (> (length buffer-list-str) max)
         (substring buffer-list-str 0 max)
