@@ -1224,6 +1224,7 @@ If FRAME is nil, it defaults to the selected frame."
   ("0" spacemacs/switch-to-buff-0 :exit t))
 
 (spacemacs/set-leader-keys "." 'spacemacs/echo-buffer-list)
+(spacemacs/set-leader-keys "[" 'spacemacs/echo-buffer-list)
 
 ;; (define-key global-map (kbd "C-c j") 'spacemacs/echo-buffer-list)
 
