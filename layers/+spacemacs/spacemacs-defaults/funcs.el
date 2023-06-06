@@ -1967,7 +1967,7 @@ Show current active buffer in another buffer."
          (my-buffer-list (cdr (spacemacs//get-recent-buffers)))
          (my-first-entry-done nil)
          (my-b-key " [b] list-buffers")
-         (my-max-len (- (frame-total-cols) (length my-b-key) 2)))
+         (my-max-len (- (frame-total-cols) (length my-b-key) 3)))
     (add-text-properties 2 3 '(face font-lock-constant-face) my-b-key)
     (catch 'out
       (while (and (< my-index 10) my-buffer-list)
@@ -2033,7 +2033,7 @@ The string not longer than half window with."
               (buffer-name it)))
            (seq-take (cdr (spacemacs//get-recent-buffers)) 10))
           " "))
-        (max (/ (window-width) 2)))
+        (max (max 0 (- (window-width) (length (buffer-name)) 100))))
     (if (> (length buffer-list-str) max)
         (substring buffer-list-str 0 max)
       buffer-list-str)))
