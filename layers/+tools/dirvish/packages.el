@@ -27,7 +27,8 @@
                         :files (:defaults "extensions/*.el")
                         ;; pin this because divish is still evolving fast
                         ;; there will be problem when dirvish rewrites their git history
-                        :commit "ec4100612b2e93d9e188e7eab4c144b45f3547ee"))))
+                        ;; :commit "ec4100612b2e93d9e188e7eab4c144b45f3547ee"
+                        ))))
 
 (defun dirvish/init-dirvish ()
   (use-package dirvish
