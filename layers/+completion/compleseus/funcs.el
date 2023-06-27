@@ -43,9 +43,9 @@
    '(consult--source-hidden-buffer
      consult--source-persp-buffers
      consult--source-modified-buffers
-     consult--source-recent-file
-     consult--source-bookmark
-     consult--source-project-buffer
+     ;; consult--source-recent-file
+     ;; consult--source-bookmark
+     ;; consult--source-project-buffer
      consult--source-project-recent-file)))
 
 
