@@ -2019,15 +2019,18 @@ The list is cut of to fit one line if necessary. Each buffer has a key to press 
          (msg (car temp))
          (count (cdr temp)))
     (message msg)
-   (set-transient-map
-    (let ((map (make-sparse-keymap)))
-      (define-key map (kbd "b") #'switch-to-buffer)
-      (dolist (i (number-sequence 1 count +1))
-        (let* ((tmp (alist-get i spacemacs-echo-buffer-list-mapping))
-               (key (car tmp))
-               (func (cdr tmp)))
-         (define-key map (kbd key) func)))
-      map))))
+    (set-transient-map
+     (let ((map (make-sparse-keymap)))
+       (define-key map (kbd "b")
+                   (lambda ()
+                     (interactive)
+                     (call-interactively (key-binding (kbd (concat dotspacemacs-leader-key " bb"))))))
+       (dolist (i (number-sequence 1 count +1))
+         (let* ((tmp (alist-get i spacemacs-echo-buffer-list-mapping))
+                (key (car tmp))
+                (func (cdr tmp)))
+           (define-key map (kbd key) func)))
+       map))))
 
 (defun spacemacs//buffers-hint-ml ()
   "Return buffer list with mapping key.
