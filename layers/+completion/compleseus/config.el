@@ -27,7 +27,7 @@
 
 (defvar consult--source-modified-buffers
   `(:name "Modified Buffers"
-          :narrow   (?M . "Modified Buffers")
+          :narrow   (?m . "Modified Buffers")
           :hidden   t
           :category buffer
           :face     consult-buffer
