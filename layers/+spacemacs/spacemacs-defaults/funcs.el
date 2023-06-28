@@ -1975,7 +1975,7 @@ Show current active buffer in another buffer."
 
 (defun spacemacs//buffers-ts-hint-and-count ()
   "return (string . num)"
-  (let* ((my-index 1)
+  (let* ((my-index 0)
          (my-string "")
          (my-buffer-list (cdr (spacemacs//get-recent-buffers)))
          (my-first-entry-done nil)
@@ -2025,7 +2025,7 @@ The list is cut of to fit one line if necessary. Each buffer has a key to press 
                    (lambda ()
                      (interactive)
                      (call-interactively (key-binding (kbd (concat dotspacemacs-leader-key " bb"))))))
-       (dolist (i (number-sequence 1 count +1))
+       (dolist (i (number-sequence 0 count +1))
          (let* ((tmp (alist-get i spacemacs-echo-buffer-list-mapping))
                 (key (car tmp))
                 (func (cdr tmp)))
@@ -2043,7 +2043,7 @@ The string not longer than half window with."
            (lambda (it idx)
              (concat
               (propertize
-               (format "%s" (car (alist-get (1+ idx) spacemacs-echo-buffer-list-mapping)))
+               (format "%s" (car (alist-get idx spacemacs-echo-buffer-list-mapping)))
                'face 'font-lock-constant-face)
               ":"
               (buffer-name it)))
