@@ -29,3 +29,5 @@
   "The backend to use for IDE features.
 Possible values are `lsp', `lspce' or `meghanada'.
 If `nil' then `meghanada' is the default backend unless `lsp' layer is used.")
+
+(defvar java-use-ts-mode nil "When non-nil, use `java-ts-mode' package.")
