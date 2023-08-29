@@ -13,20 +13,10 @@
 - [[#backends][Backends]]
   - [[#lsp-java][LSP Java]]
     - [[#installation][Installation]]
-  - [[#meghanada][Meghanada]]
-    - [[#installation-1][Installation]]
-    - [[#about-maven][About Maven]]
 - [[#key-bindings][Key bindings]]
   - [[#lsp-java-1][LSP Java]]
     - [[#code-completion][Code completion]]
     - [[#debugger][Debugger]]
-  - [[#meghanada-1][Meghanada]]
-    - [[#server][Server]]
-    - [[#navigation][Navigation]]
-    - [[#compilation][Compilation]]
-    - [[#tests-junit][Tests (junit)]]
-    - [[#refactoring][Refactoring]]
-    - [[#tasks][Tasks]]
   - [[#maven][Maven]]
 
 * Description
@@ -84,27 +74,6 @@ order to learn how to select a different backend.
 The lsp server will be installed automatically whenever a Java file
 is opened.
 
-** Meghanada
-Meghanada is composed of a lightweight server and an Emacs minor mode. It
-is unintrusive and integrates with =company= and =flycheck=.
-
-Both =Gradle= and =Maven= projects are compatible with Meghanada.
-
-*** Installation
-The Meghanada server will be installed automatically whenever a Java file
-is opened.
-
-If you get issues with the auto-installation you can either download the last
-version of the server manually or build from source hosted on [[https://github.com/mopemope/meghanada-server][the GitHub
-repository]] and copy the =jar= file to =.emacs.d/.cache/meghanada= folder.
-
-No additional configuration is necessary!
-
-*** About Maven
-Maven is not fully supported by Meghanada (but should still work fine for most
-projects). If you encounter disconnection from the server then run =mvn install=
-at the root of your project first.
-
 * Key bindings
 ** LSP Java
 *** Code completion
@@ -152,60 +121,6 @@ at the root of your project first.
 *** Debugger
 Using the =dap= layer you'll get access to all the DAP key bindings, see the
 complete list of key bindings on the [[https://github.com/syl20bnr/spacemacs/tree/develop/layers/%2Btools/dap#key-bindings][dap layer description]].
-
-** Meghanada
-*** Server
-
-| Key binding | Description                                  |
-|-------------+----------------------------------------------|
-| ~SPC m D c~ | Connect to server                            |
-| ~SPC m D d~ | Disconnect from server                       |
-| ~SPC m D i~ | Install server (should be done automatically |
-| ~SPC m D k~ | Kill server                                  |
-| ~SPC m D l~ | Clear server cache                           |
-| ~SPC m D p~ | Ping server                                  |
-| ~SPC m D r~ | Restart server                               |
-| ~SPC m D s~ | Start server                                 |
-| ~SPC m D u~ | Update server                                |
-| ~SPC m D v~ | Print version of the server                  |
-
-*** Navigation
-
-| Key binding | Description                    |
-|-------------+--------------------------------|
-| ~SPC m g b~ | Jump back to previous location |
-| ~SPC m g g~ | Jump to declaration            |
-
-*** Compilation
-
-| Key binding | Description           |
-|-------------+-----------------------|
-| ~SPC m c b~ | Compile file (buffer) |
-| ~SPC m c c~ | Compile project       |
-
-*** Tests (junit)
-
-| Key binding | Description                 |
-|-------------+-----------------------------|
-| ~SPC m t a~ | Run all tests               |
-| ~SPC m t c~ | Run test class around point |
-| ~SPC m t l~ | Run last tests              |
-| ~SPC m t t~ | Run test cause around point |
-
-*** Refactoring
-
-| Key binding | Description                            |
-|-------------+----------------------------------------|
-| ~SPC m =~   | Beautify code                          |
-| ~SPC m r i~ | Optimize imports                       |
-| ~SPC m r I~ | Import all                             |
-| ~SPC m r n~ | Create a new class, interface, or enum |
-
-*** Tasks
-
-| Key binding | Description |
-|-------------+-------------|
-| ~SPC m x :~ | Run task    |
 
 ** Maven
 
