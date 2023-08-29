@@ -73,11 +73,10 @@
   (use-package maven-test-mode
     :defer t
     :init
-    (when (configuration-layer/package-used-p 'java-mode)
-      (add-hook 'java-mode-hook 'maven-test-mode)
-      (spacemacs/declare-prefix-for-mode 'java-mode "mm" "maven")
-      (spacemacs/declare-prefix-for-mode 'java-mode "mmg" "goto")
-      (spacemacs/declare-prefix-for-mode 'java-mode "mmt" "tests"))
+    (add-hook 'java-mode-hook 'maven-test-mode)
+    (spacemacs/declare-prefix-for-mode 'java-mode "mm" "maven")
+    (spacemacs/declare-prefix-for-mode 'java-mode "mmg" "goto")
+    (spacemacs/declare-prefix-for-mode 'java-mode "mmt" "tests")
     :config
     (spacemacs|hide-lighter maven-test-mode)
     (spacemacs/set-leader-keys-for-minor-mode 'maven-test-mode
@@ -146,10 +145,9 @@
   (use-package mvn
     :defer t
     :init
-    (when (configuration-layer/package-used-p 'java-mode)
-      (spacemacs/declare-prefix-for-mode 'java-mode "mm" "maven")
-      (spacemacs/declare-prefix-for-mode 'java-mode "mmc" "compile")
-      (spacemacs/set-leader-keys-for-major-mode 'java-mode
-        "mcc" 'mvn-compile
-        "mcC" 'mvn-clean
-        "mcr" 'spacemacs/mvn-clean-compile))))
+    (spacemacs/declare-prefix-for-mode 'java-mode "mm" "maven")
+    (spacemacs/declare-prefix-for-mode 'java-mode "mmc" "compile")
+    (spacemacs/set-leader-keys-for-major-mode 'java-mode
+      "mcc" 'mvn-compile
+      "mcC" 'mvn-clean
+      "mcr" 'spacemacs/mvn-clean-compile)))
