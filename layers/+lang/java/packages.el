@@ -29,6 +29,7 @@
     ggtags
     counsel-gtags
     (java-mode :location built-in)
+    (java-ts-mode :location built-in :toggle java-use-ts-mode)
     maven-test-mode
     (meghanada :toggle (eq java-backend 'meghanada))
     mvn
@@ -66,6 +67,15 @@
     :defer t
     :init
     (add-hook 'java-mode-local-vars-hook #'spacemacs//java-setup-backend)
+    (put 'java-backend 'safe-local-variable 'symbolp)))
+
+(defun java/init-java-ts-mode ()
+  (use-package java-ts-mode
+    :defer t
+    :init
+    (add-to-list 'major-mode-remap-alist
+                 '(java-mode . java-ts-mode))
+    (add-hook 'java-ts-mode-local-vars-hook #'spacemacs//java-setup-backend)
     (put 'java-backend 'safe-local-variable 'symbolp)))
 
 (defun java/init-maven-test-mode ()
@@ -144,6 +154,7 @@
     :defer t
     :if (eq java-backend 'lsp)
     :config
+    (when java-use-ts-mode (setq lsp-java-format-tab-size 4))
     ;; key bindings
     (dolist (prefix '(("mc" . "compile/create")
                       ("mgk" . "type hierarchy")
