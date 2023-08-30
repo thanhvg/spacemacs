@@ -33,12 +33,6 @@
   (when (eq java-backend 'lsp)
     (spacemacs//java-setup-lsp-dap)))
 
-(defun spacemacs//java-setup-flycheck ()
-  "Conditionally setup flycheck based on backend."
-  (pcase java-backend
-    ('meghanada (spacemacs//java-setup-meghanada-flycheck))
-    ('lsp (spacemacs//java-setup-lsp-flycheck))))
-
 
 ;; Maven
 
@@ -78,11 +72,6 @@
     ;; run
     "tt" 'dap-java-run-test-method
     "tc" 'dap-java-run-test-class))
-
-(defun spacemacs//java-setup-lsp-flycheck ()
-  "Setup LSP Java syntax checking."
-  (unless (configuration-layer/layer-used-p 'lsp)
-    (message "`lsp' layer is not installed, please add `lsp' layer to your dotfile.")))
 
 (defun spacemacs/lsp-java-super-type ()
   "Show super type hierarchy."
