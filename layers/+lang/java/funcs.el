@@ -20,6 +20,11 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+(defun spacemacs//java-mode ()
+  "Return desired java mode."
+  (if java-use-ts-mode
+      'java-ts-mode
+    'java-mode))
 
 (defun spacemacs//java-setup-backend ()
   "Conditionally setup java backend."
