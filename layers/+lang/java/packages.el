@@ -24,7 +24,6 @@
 (defconst java-packages
   '(
     dap-mode
-    flycheck
     ggtags
     (java-mode :location built-in)
     (java-ts-mode :location built-in :toggle java-use-ts-mode)
@@ -36,11 +35,9 @@
 
 (defun java/pre-init-dap-mode ()
   (when (eq java-backend 'lsp)
-    (add-to-list 'spacemacs--dap-supported-modes 'java-mode))
-  (add-hook 'java-mode-local-vars-hook #'spacemacs//java-setup-dap))
-
-(defun java/post-init-flycheck ()
-  (add-hook 'java-mode-local-vars-hook #'spacemacs//java-setup-flycheck))
+    (add-to-list 'spacemacs--dap-supported-modes 'java-mode 'java-ts-mode)
+    (add-hook 'java-mode-local-vars-hook #'spacemacs//java-setup-dap)
+    (add-hook 'java-mode-ts-local-vars-hook #'spacemacs//java-setup-dap)))
 
 (defun java/post-init-ggtags ()
   (add-hook 'java-mode-local-vars-hook #'spacemacs/ggtags-mode-enable))
