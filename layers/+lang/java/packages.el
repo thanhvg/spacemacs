@@ -22,8 +22,7 @@
 
 
 (defconst java-packages
-  '(
-    dap-mode
+  '(dap-mode
     ggtags
     counsel-gtags
     (java-mode :location built-in)
@@ -36,7 +35,7 @@
 
 (defun java/pre-init-dap-mode ()
   (when (eq java-backend 'lsp)
-    (add-to-list 'spacemacs--dap-supported-modes 'java-mode 'java-ts-mode)
+    (add-to-list 'spacemacs--dap-supported-modes (spacemacs//java-mode))
     (add-hook 'java-mode-local-vars-hook #'spacemacs//java-setup-dap)
     (add-hook 'java-mode-ts-local-vars-hook #'spacemacs//java-setup-dap)))
 
@@ -45,7 +44,7 @@
 
 (defun java/post-init-smartparens ()
   (with-eval-after-load 'smartparens
-    (sp-local-pair 'java-mode "/** " " */" :trigger "/**")))
+    (sp-local-pair (spacemacs//java-mode) "/** " " */" :trigger "/**")))
 
 (defun java/post-init-counsel-gtags nil)
 
@@ -74,9 +73,12 @@
     :defer t
     :init
     (add-hook 'java-mode-hook 'maven-test-mode)
-    (spacemacs/declare-prefix-for-mode 'java-mode "mm" "maven")
-    (spacemacs/declare-prefix-for-mode 'java-mode "mmg" "goto")
-    (spacemacs/declare-prefix-for-mode 'java-mode "mmt" "tests")
+    (spacemacs/declare-prefix-for-mode (spacemacs//java-mode)
+      "mm" "maven")
+    (spacemacs/declare-prefix-for-mode (spacemacs//java-mode)
+      "mmg" "goto")
+    (spacemacs/declare-prefix-for-mode (spacemacs//java-mode)
+      "mmt" "tests")
     :config
     (spacemacs|hide-lighter maven-test-mode)
     (spacemacs/set-leader-keys-for-minor-mode 'maven-test-mode
@@ -102,9 +104,10 @@
                       ("mrg" . "generate")
                       ("mre" . "extract")
                       ("mt" . "test")))
-      (spacemacs/declare-prefix-for-mode
-        'java-mode (car prefix) (cdr prefix)))
-    (spacemacs/set-leader-keys-for-major-mode 'java-mode
+      (spacemacs/declare-prefix-for-mode (spacemacs//java-mode)
+        (car prefix) (cdr prefix)))
+    (spacemacs/set-leader-keys-for-major-mode (spacemacs//java-mode)
+
       "wu"  'lsp-java-update-project-configuration
 
       ;; refactoring
@@ -146,9 +149,12 @@
   (use-package mvn
     :defer t
     :init
-    (spacemacs/declare-prefix-for-mode 'java-mode "mm" "maven")
-    (spacemacs/declare-prefix-for-mode 'java-mode "mmc" "compile")
-    (spacemacs/set-leader-keys-for-major-mode 'java-mode
+    (spacemacs/declare-prefix-for-mode (spacemacs//java-mode)
+      "mm" "maven")
+    (spacemacs/declare-prefix-for-mode (spacemacs//java-mode)
+      "mmc" "compile")
+    (spacemacs/set-leader-keys-for-major-mode (spacemacs//java-mode)
+
       "mcc" 'mvn-compile
       "mcC" 'mvn-clean
       "mcr" 'spacemacs/mvn-clean-compile)))
