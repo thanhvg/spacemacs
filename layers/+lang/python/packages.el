@@ -95,7 +95,9 @@
     :if (not (configuration-layer/layer-used-p 'ipython-notebook))
     :defer t
     :commands (code-cells-mode)
-    :init (add-hook 'python-mode-hook 'code-cells-mode)
+    :init
+    (add-hook 'python-mode-hook 'code-cells-mode)
+    (add-hook 'python-ts-mode-hook 'code-cells-mode)
     :config (spacemacs/set-leader-keys-for-minor-mode 'code-cells-mode
               "gB" 'code-cells-backward-cell
               "gF" 'code-cells-forward-cell
@@ -129,7 +131,8 @@
     (spacemacs//bind-python-formatter-keys)
     (when (and python-format-on-save
                (eq 'black python-formatter))
-      (add-hook 'python-mode-hook 'blacken-mode))
+      (add-hook 'python-mode-hook 'blacken-mode)
+      (add-hook 'python-ts-mode-hook 'blacken-mode))
     :config (spacemacs|hide-lighter blacken-mode)))
 
 (defun python/init-cython-mode ()
@@ -143,17 +146,20 @@
 
 (defun python/pre-init-dap-mode ()
   (when (eq python-backend 'lsp)
-    (add-to-list 'spacemacs--dap-supported-modes 'python-mode))
-  (add-hook 'python-mode-local-vars-hook #'spacemacs//python-setup-dap))
+    (add-to-list 'spacemacs--dap-supported-modes 'python-mode)
+    (add-to-list 'spacemacs--dap-supported-modes 'python-ts-mode))
+  (add-hook 'python-mode-local-vars-hook #'spacemacs//python-setup-dap)
+  (add-hook 'python-ts-mode-local-vars-hook #'spacemacs//python-setup-dap))
 
 (defun python/post-init-eldoc ()
   (add-hook 'python-mode-local-vars-hook #'spacemacs//python-setup-eldoc))
 
 (defun python/post-init-evil-matchit ()
-  (add-hook `python-mode-hook `turn-on-evil-matchit-mode))
+  (add-hook 'python-mode-hook `turn-on-evil-matchit-mode)
+  (add-hook 'python-ts-mode-hook `turn-on-evil-matchit-mode))
 
 (defun python/post-init-flycheck ()
-  (spacemacs/enable-flycheck 'python-mode))
+  (spacemacs/enable-flycheck (spacemacs//python-mode)))
 
 (defun python/pre-init-helm-cscope ()
   (spacemacs|use-package-add-hook xcscope
@@ -356,26 +362,32 @@
     :defer t
     :mode (("SConstruct\\'" . python-mode) ("SConscript\\'" . python-mode))
     :init
+    (when python-use-ts-mode
+      (add-to-list 'major-mode-remap-alist
+               '(python-mode . python-ts-mode)))
     (spacemacs/register-repl 'python
                              'spacemacs/python-start-or-switch-repl "python")
     (spacemacs//bind-python-repl-keys)
-    (add-hook 'python-mode-local-vars-hook 'spacemacs//python-setup-backend)
+    (add-hook (if python-use-ts-mode
+                  'python-ts-mode-local-vars-hook
+                'python-mode-local-vars-hook)
+              'spacemacs//python-setup-backend)
     (add-hook 'python-mode-hook 'spacemacs//python-default)
     :config
     ;; add support for `ahs-range-beginning-of-defun' for python-mode
     (with-eval-after-load 'auto-highlight-symbol
       (add-to-list 'ahs-plugin-bod-modes 'python-mode))
 
-    (spacemacs/declare-prefix-for-mode 'python-mode "mc" "execute")
-    (spacemacs/declare-prefix-for-mode 'python-mode "md" "debug")
-    (spacemacs/declare-prefix-for-mode 'python-mode "mh" "help")
-    (spacemacs/declare-prefix-for-mode 'python-mode "mg" "goto")
-    (spacemacs/declare-prefix-for-mode 'python-mode "ms" "REPL")
-    (spacemacs/declare-prefix-for-mode 'python-mode "mr" "refactor")
-    (spacemacs/declare-prefix-for-mode 'python-mode "mv" "virtualenv")
-    (spacemacs/declare-prefix-for-mode 'python-mode "mvp" "pipenv")
-    (spacemacs/declare-prefix-for-mode 'python-mode "mvo" "poetry")
-    (spacemacs/set-leader-keys-for-major-mode 'python-mode
+    (spacemacs/declare-prefix-for-mode (spacemacs//python-mode) "mc" "execute")
+    (spacemacs/declare-prefix-for-mode (spacemacs//python-mode) "md" "debug")
+    (spacemacs/declare-prefix-for-mode (spacemacs//python-mode) "mh" "help")
+    (spacemacs/declare-prefix-for-mode (spacemacs//python-mode) "mg" "goto")
+    (spacemacs/declare-prefix-for-mode (spacemacs//python-mode) "ms" "REPL")
+    (spacemacs/declare-prefix-for-mode (spacemacs//python-mode) "mr" "refactor")
+    (spacemacs/declare-prefix-for-mode (spacemacs//python-mode) "mv" "virtualenv")
+    (spacemacs/declare-prefix-for-mode (spacemacs//python-mode) "mvp" "pipenv")
+    (spacemacs/declare-prefix-for-mode (spacemacs//python-mode) "mvo" "poetry")
+    (spacemacs/set-leader-keys-for-major-mode (spacemacs//python-mode)
       "'"  'spacemacs/python-start-or-switch-repl
       "cc" 'spacemacs/python-execute-file
       "cC" 'spacemacs/python-execute-file-focus
