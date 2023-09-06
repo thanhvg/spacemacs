@@ -101,3 +101,6 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
 ;; package declares them but does not initialize them.
 (defvar python-shell--interpreter nil)
 (defvar python-shell--interpreter-args nil)
+
+(defvar python-use-ts-mode nil
+  "When true use `python-ts-mode'.")
