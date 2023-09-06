@@ -377,8 +377,8 @@ to be called for each testrunner. "
 
 (defun spacemacs//bind-python-testing-keys ()
   "Bind the keys for testing in Python."
-  (spacemacs/declare-prefix-for-mode 'python-mode "mt" "test")
-  (spacemacs/set-leader-keys-for-major-mode 'python-mode
+  (spacemacs/declare-prefix-for-mode (spacemacs//python-mode) "mt" "test")
+  (spacemacs/set-leader-keys-for-major-mode (spacemacs//python-mode)
     "tA" 'spacemacs/python-test-pdb-all
     "ta" 'spacemacs/python-test-all
     "tB" 'spacemacs/python-test-pdb-module
@@ -412,7 +412,7 @@ Bind formatter to '==' for LSP and '='for all other backends."
      '(spacemacs python)
      "Configuration error: `python-formatter' is `lsp', but `python-lsp-server' is `pyright', which does not support formatting."
      :error))
-  (spacemacs/set-leader-keys-for-major-mode 'python-mode
+  (spacemacs/set-leader-keys-for-major-mode (spacemacs//python-mode)
     (if (eq python-backend 'lsp)
         "=="
       "=")
@@ -605,3 +605,9 @@ If region is not active then send line."
     "c" 'comint-clear-buffer
     "r" 'pyvenv-restart-python
     "vw" 'pyvenv-workon))
+
+(defun spacemacs//python-mode ()
+  "Return desired python mode."
+  (if python-use-ts-mode
+      'python-ts-mode
+    'python-mode))
