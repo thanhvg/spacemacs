@@ -54,20 +54,14 @@
     :post-config (add-to-list 'org-babel-load-languages '(java . t))))
 
 (defun java/init-java-mode ()
-  (use-package java-mode
-    :defer t
-    :init
-    (add-hook 'java-mode-local-vars-hook #'spacemacs//java-setup-backend)
-    (put 'java-backend 'safe-local-variable 'symbolp)))
+  (add-hook 'java-mode-local-vars-hook #'spacemacs//java-setup-backend)
+  (put 'java-backend 'safe-local-variable 'symbolp))
 
 (defun java/init-java-ts-mode ()
-  (use-package java-ts-mode
-    :defer t
-    :init
-    (add-to-list 'major-mode-remap-alist
-                 '(java-mode . java-ts-mode))
-    (add-hook 'java-ts-mode-local-vars-hook #'spacemacs//java-setup-backend)
-    (put 'java-backend 'safe-local-variable 'symbolp)))
+  (add-to-list 'major-mode-remap-alist
+               '(java-mode . java-ts-mode))
+  (add-hook 'java-ts-mode-local-vars-hook #'spacemacs//java-setup-backend)
+  (put 'java-backend 'safe-local-variable 'symbolp))
 
 (defun java/init-maven-test-mode ()
   (use-package maven-test-mode
