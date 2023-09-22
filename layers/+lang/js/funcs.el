@@ -23,14 +23,12 @@
 (defun spacemacs//js-setup-backend ()
   "Conditionally setup javascript backend."
   (pcase (spacemacs//js-backend)
-    (`tern (spacemacs//js-setup-tern))
     (`tide (spacemacs//tide-setup))
     (`lsp (spacemacs//js-setup-lsp))))
 
 (defun spacemacs//js-setup-company ()
   "Conditionally setup company based on backend."
   (pcase (spacemacs//js-backend)
-    (`tern (spacemacs//js-setup-tern-company))
     (`tide (spacemacs//tide-setup-company 'js-mode))
     (`lsp (spacemacs//js-setup-lsp-company))))
 
@@ -70,22 +68,6 @@
   "Setup DAP integration."
   (require 'dap-firefox)
   (require 'dap-chrome))
-
-
-;; tern
-(defun spacemacs//js-setup-tern ()
-  (if (configuration-layer/layer-used-p 'tern)
-      (when (locate-file "tern" exec-path)
-        (spacemacs/tern-setup-tern))
-    (message (concat "Tern was configured as the javascript backend but "
-                     "the `tern' layer is not present in your `.spacemacs'!"))))
-
-(defun spacemacs//js-setup-tern-company ()
-  (if (configuration-layer/layer-used-p 'tern)
-      (when (locate-file "tern" exec-path)
-        (spacemacs/tern-setup-tern-company 'js2-mode))
-    (message (concat "Tern was configured as the javascript backend but "
-                     "the `tern' layer is not present in your `.spacemacs'!"))))
 
 
 ;; js-doc

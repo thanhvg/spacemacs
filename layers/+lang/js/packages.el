@@ -16,12 +16,14 @@
         evil-matchit
         flycheck
         (js-mode :location built-in)
+        (js-ts-mode :location built-in)
+        (typescript-ts-mode :location built-in)
         js-doc
         nodejs-repl
         ;; org
         prettier-js
-        skewer-mode
-        tern
+        ;; skewer-mode
+        ;; tern
         web-beautify))
 
 (defun js/post-init-add-node-modules-path ()
@@ -121,37 +123,6 @@
 (defun js/pre-init-prettier-js ()
   (when (eq js-fmt-tool 'prettier)
     (add-to-list 'spacemacs--prettier-modes 'js-mode)))
-
-(defun js/init-skewer-mode ()
-  (when (eq js-repl 'skewer)
-    (use-package skewer-mode
-      :defer t
-      :init
-      (progn
-        (spacemacs/register-repl 'skewer-mode
-                                 'spacemacs/skewer-start-repl
-                                 "skewer")
-        (add-hook 'js-mode-hook 'skewer-mode))
-      :config
-      (progn
-        (spacemacs|hide-lighter skewer-mode)
-        (spacemacs/declare-prefix-for-mode 'js-mode "ms" "skewer")
-        (spacemacs/declare-prefix-for-mode 'js-mode "me" "eval")
-        (spacemacs/set-leader-keys-for-major-mode 'js2-mode
-          "'" 'spacemacs/skewer-start-repl
-          "ee" 'skewer-eval-last-expression
-          "eE" 'skewer-eval-print-last-expression
-          "sb" 'skewer-load-buffer
-          "sB" 'spacemacs/skewer-load-buffer-and-focus
-          "si" 'spacemacs/skewer-start-repl
-          "sf" 'skewer-eval-defun
-          "sF" 'spacemacs/skewer-eval-defun-and-focus
-          "sr" 'spacemacs/skewer-eval-region
-          "sR" 'spacemacs/skewer-eval-region-and-focus
-          "ss" 'skewer-repl)))))
-
-(defun js/post-init-tern ()
-  (add-to-list 'tern--key-bindings-modes 'js-mode))
 
 (defun js/pre-init-web-beautify ()
   (when (eq js-fmt-tool 'web-beautify)
