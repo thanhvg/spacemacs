@@ -15,66 +15,45 @@
         company
         evil-matchit
         flycheck
-        (js-mode :location built-in)
-        (js-ts-mode :location built-in)
+        (js :location built-in)
         (typescript-ts-mode :location built-in)
         js-doc
         nodejs-repl
         ;; org
         prettier-js
         ;; skewer-mode
-        ;; tern
         web-beautify))
 
 (defun js/post-init-add-node-modules-path ()
-  (spacemacs/add-to-hooks #'add-node-modules-path '(css-mode-hook
-                                                    js-mode-hook)))
+  (spacemacs/add-to-hooks #'add-node-modules-path '(css-mode-hook))
+  (spacemacs/add-to-hooks #'add-node-modules-path js-modes-hooks))
+
 (defun js/post-init-company ()
-  (add-hook 'js-mode-local-vars-hook #'spacemacs//js-setup-company))
+  (dolist (hook js-modes-local-vars-hooks)
+    (add-hook hook #'company-mode)))
 
 (defun js/post-init-evil-matchit ()
-  (add-hook `js-mode-hook `turn-on-evil-matchit-mode))
+  (spacemacs/add-to-hooks #'turn-on-evil-matchit-mode js-modes-hooks))
 
 (defun js/post-init-flycheck ()
-  (spacemacs/enable-flycheck 'js-mode)
-  (add-hook 'js-mode-hook #'spacemacs//js-setup-checkers 'append))
-
-(defun js/pre-init-import-js ()
-  (when (eq javascript-import-tool 'import-js)
-    (add-to-list 'spacemacs--import-js-modes (cons 'js-mode 'js-mode-hook))))
+  (dolist (mode js-modes)
+    (spacemacs/enable-flycheck mode))
+  ;; (spacemacs/add-to-hooks #'spacemacs//js-setup-checkers js-modes-local-vars-hooks 'append)
+  )
 
 (defun js/init-js-doc ()
   (use-package js-doc
     :defer t
-    :init (spacemacs/js-doc-set-key-bindings 'js-mode)))
+    :init (spacemacs/js-doc-set-key-bindings 'js-ts-mode)))
 
-(defun js/init-js-mode ()
-  (use-package js-mode
-    :defer t
-    ;; :mode (("\\.m?js\\'"  . js2-mode))
-    :init
-    (progn
-      (add-hook 'js-mode-local-vars-hook #'spacemacs//js-setup-backend)
-      ;; (add-hook 'js-mode-local-vars-hook #'spacemacs//javascript-setup-next-error-fn)
-      ;; safe values for backend to be used in directory file variables
-      (dolist (value '(lsp tern tide))
-        (add-to-list 'safe-local-variable-values
-                     (cons 'js-backend value))))
-    :config
-    (progn
-      ;; prefixes
-      ;; (spacemacs/declare-prefix-for-mode 'js2-mode "mh" "documentation")
-      ;; (spacemacs/declare-prefix-for-mode 'js2-mode "mg" "goto")
-      ;; (spacemacs/declare-prefix-for-mode 'js2-mode "mr" "refactor")
-      ;; (spacemacs/declare-prefix-for-mode 'js2-mode "mz" "folding")
-      ;; key bindings
-      )))
-
+(defun js/init-js ()
+  (put 'js-backend 'safe-local-variable 'symbolp)
+  (spacemacs/add-to-hooks #'spacemacs//js-setup-backend js-modes-local-vars-hooks))
 
 (defun js/init-nodejs-repl ()
   (when (eq js-repl 'nodejs)
     (use-package nodejs-repl
-      :defer nil
+      :defer t
       :init
       (spacemacs/register-repl 'nodejs-repl
                                'nodejs-repl
@@ -116,15 +95,18 @@
           "msR" "nodejs-send-region-and-focus")
         ))))
 
+(defun js/init-typescript-ts-mode ())
+
 ;; (defun js/pre-init-org ()
 ;;   (spacemacs|use-package-add-hook org
 ;;     :post-config (add-to-list 'org-babel-load-languages '(js . t))))
 
 (defun js/pre-init-prettier-js ()
   (when (eq js-fmt-tool 'prettier)
-    (add-to-list 'spacemacs--prettier-modes 'js-mode)))
+    (dolist (mode js-modes)
+      (add-to-list 'spacemacs--prettier-modes mode))))
 
 (defun js/pre-init-web-beautify ()
   (when (eq js-fmt-tool 'web-beautify)
     (add-to-list 'spacemacs--web-beautify-modes
-                 (cons 'js-mode 'web-beautify-js))))
+                 (cons 'js-ts-mode 'web-beautify-js))))
