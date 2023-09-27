@@ -12,58 +12,20 @@
 
 ;; backend
 
-(defun spacemacs//js-backend ()
-  "Returns selected backend."
-  (if js-backend
-      js-backend
-    (cond
-     ((configuration-layer/layer-used-p 'lsp) 'lsp)
-     (t 'tern))))
-
 (defun spacemacs//js-setup-backend ()
   "Conditionally setup javascript backend."
-  (pcase (spacemacs//js-backend)
-    (`tide (spacemacs//tide-setup))
-    (`lsp (spacemacs//js-setup-lsp))))
-
-(defun spacemacs//js-setup-company ()
-  "Conditionally setup company based on backend."
-  (pcase (spacemacs//js-backend)
-    (`tide (spacemacs//tide-setup-company 'js-mode))
-    (`lsp (spacemacs//js-setup-lsp-company))))
+  (pcase js-backend
+    ('tide (spacemacs//tide-setup))
+    ('lsp (lsp))))
 
 (defun spacemacs//js-setup-dap ()
   "Conditionally setup elixir DAP integration."
   ;; currently DAP is only available using LSP
-  (pcase (spacemacs//js-backend)
-    (`lsp (spacemacs//js-setup-lsp-dap))))
+  (pcase js-backend
+    ('lsp (spacemacs//js-setup-lsp-dap))))
 
 
 ;; lsp
-
-(defun spacemacs//js-setup-lsp ()
-  "Setup lsp backend."
-  (if (configuration-layer/layer-used-p 'lsp)
-      (progn
-        (when (not js-lsp-linter)
-          (setq-local lsp-diagnostic-package :none))
-        (lsp))
-    (message (concat "`lsp' layer is not installed, "
-                     "please add `lsp' layer to your dotfile."))))
-
-(defun spacemacs//js-setup-lsp-company ()
-  "Setup lsp auto-completion."
-  (if (configuration-layer/layer-used-p 'lsp)
-      (progn
-        (spacemacs|add-company-backends
-          :backends company-lsp
-          :modes js-mode
-          :append-hooks nil
-          :call-hooks t)
-        (company-mode))
-    (message (concat "`lsp' layer is not installed, "
-                     "please add `lsp' layer to your dotfile."))))
-
 (defun spacemacs//js-setup-lsp-dap ()
   "Setup DAP integration."
   (require 'dap-firefox)
@@ -91,9 +53,10 @@
 
 ;; Others
 
-(defun spacemacs//js-setup-checkers ()
-  (when-let* ((found (executable-find "eslint_d")))
-    (set (make-local-variable 'flycheck-javascript-eslint-executable) found)))
+;; (defun spacemacs//js-setup-checkers ()
+;;   (when-let* ((found (executable-find "eslint_d")))
+;;     (set (make-local-variable 'flycheck-javascript-eslint-executable) found)))
+(defun spacemacs//js-setup-checkers ())
 
 (defun spacemacs/js-format ()
   "Call formatting tool specified in `js-fmt-tool'."
