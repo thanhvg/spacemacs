@@ -13,21 +13,24 @@
 
 (spacemacs|define-jump-handlers js-mode)
 
-(defvar js-backend 'tern
+(defvar js-backend 'tide
   "The backend to use for IDE features.
-Possible values are `tern', `tide' and `lsp'.
-If `nil' then `tern' is the default backend unless `lsp' layer is used.")
+Possible values are `tide' and `lsp'.")
 
 (defvar js-fmt-tool 'web-beautify
   "The formatter to format a JavaScript file. Possible values are `web-beautify' and `prettier'.")
 
-(defvar js-import-tool nil
-  "The import backend to import modules. Possible values are `import-js' and `nil' to disable.")
-
 (defvar js-repl 'nodejs
   "Repl to be configured by the layer, `skewer' for browser based js, `nodejs' for server based development.")
 
-(defvar js-lsp-linter t
-  "If the backend is `lsp', and this variable is non-nil, then
-use lsp as the linter, otherwise let flycheck choose the best
-linter that's available.")
+(defvar js-modes
+  '(js-ts-mode typescript-ts-mode tsx-ts-mode)
+  "list of js based modes.")
+
+(defvar js-modes-hooks
+  '(js-ts-mode-hook typescript-ts-mode-hook tsx-ts-mode-hook)
+  "list of js based mode hooks.")
+
+(defvar js-modes-local-vars-hooks
+  '(js-ts-mode-local-vars-hook typescript-ts-mode-local-vars-hook  tsx-ts-mode-local-vars-hook)
+  "list of js based modes local vars hook.")
