@@ -22,9 +22,37 @@
 
 
 (setq node-packages
-      '(
-        (add-node-modules-path :toggle node-add-modules-path)
-        ))
+      '((add-node-modules-path :toggle node-add-modules-path)
+        js-doc
+        nodejs-repl
+        npm-mode))
 
 (defun node/init-add-node-modules-path ()
   (use-package add-node-modules-path :defer t))
+
+(defun node/init-nodejs-repl ()
+  (use-package nodejs-repl
+    :defer t
+    :init
+    (spacemacs/register-repl 'nodejs-repl
+                             'nodejs-repl
+                             "nodejs-repl")))
+
+(defun node/init-js-doc ()
+  (use-package js-doc
+    :defer t))
+    
+(defun node/init-npm-mode ()
+  (use-package npm-mode
+    :defer t
+    :config
+    (spacemacs/set-leader-keys-for-minor-mode 'npm-mode
+      "n" "npm"
+      "ni" 'npm-mode-npm-install
+      "nr" 'npm-mode-npm-run
+      "ns" 'npm-mode-npm-install-save
+      "nd" 'npm-mode-npm-install-save-dev
+      "nn" 'npm-mode-npm-init
+      "nu" 'npm-mode-npm-uninstall
+      "nl" 'npm-mode-npm-list
+      "np" 'npm-mode-visit-project-file)))

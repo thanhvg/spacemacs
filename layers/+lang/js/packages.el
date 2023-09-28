@@ -19,9 +19,9 @@
         (typescript-ts-mode :location built-in)
         js-doc
         nodejs-repl
+        npm-mode
         ;; org
         prettier-js
-        ;; skewer-mode
         web-beautify))
 
 (defun js/post-init-add-node-modules-path ()
@@ -41,65 +41,29 @@
   ;; (spacemacs/add-to-hooks #'spacemacs//js-setup-checkers js-modes-local-vars-hooks 'append)
   )
 
-(defun js/init-js-doc ()
-  (use-package js-doc
-    :defer t
-    :init (spacemacs/js-doc-set-key-bindings 'js-ts-mode)))
+(defun js/pre-init-js-doc ()
+  (spacemacs/add-to-hooks #'spacemacs/node-js-doc-require js-modes-hooks)
+  (spacemacs|use-package-add-hook js-doc
+    :post-init (dolist (mode js-modes)
+                   (spacemacs/node-js-doc-set-key-bindings mode))))
 
 (defun js/init-js ()
   (put 'js-backend 'safe-local-variable 'symbolp)
   (spacemacs/add-to-hooks #'spacemacs//js-setup-backend js-modes-local-vars-hooks))
 
-(defun js/init-nodejs-repl ()
-  (when (eq js-repl 'nodejs)
-    (use-package nodejs-repl
-      :defer t
-      :init
-      (spacemacs/register-repl 'nodejs-repl
-                               'nodejs-repl
-                               "nodejs-repl")
-      :config
-      (progn
-        (spacemacs/declare-prefix-for-mode 'js-mode "ms" "nodejs-repl")
-        (spacemacs/set-leader-keys-for-major-mode 'js-mode
-          "'" 'nodejs-repl
-          "ss" 'nodejs-repl
-          "si" 'nodejs-repl-switch-to-repl
-          "se" 'nodejs-repl-send-last-expression
-          "sE" (lambda ()
-                 (interactive)
-                 (nodejs-repl-send-last-expression)
-                 (nodejs-repl-switch-to-repl))
-          "sb" 'nodejs-repl-send-buffer
-          "sB" (lambda ()
-                 (interactive)
-                 (nodejs-repl-send-buffer)
-                 (nodejs-repl-switch-to-repl))
-          "sl" 'nodejs-repl-send-line
-          "sL" (lambda ()
-                 (interactive)
-                 (nodejs-repl-send-line)
-                 (nodejs-repl-switch-to-repl))
-          "sr" 'nodejs-repl-send-region
-          "sR" (lambda (start end)
-                 (interactive "r")
-                 (nodejs-repl-send-region start end)
-                 (nodejs-repl-switch-to-repl)))
-        (spacemacs/declare-prefix-for-mode 'js-mode
-          "msE" "nodejs-send-last-expression-and-focus")
-        (spacemacs/declare-prefix-for-mode 'js-mode
-          "msB" "nodejs-send-buffer-and-focus")
-        (spacemacs/declare-prefix-for-mode 'js-mode
-          "msL" "nodejs-send-line-and-focus")
-        (spacemacs/declare-prefix-for-mode 'js-mode
-          "msR" "nodejs-send-region-and-focus")
-        ))))
+(defun js/post-init-nodejs-repl ()
+  (dolist (mode js-modes)
+   (spacemacs/node-nodejs-repl-set-key-bindings mode)))
 
 (defun js/init-typescript-ts-mode ())
 
 ;; (defun js/pre-init-org ()
 ;;   (spacemacs|use-package-add-hook org
 ;;     :post-config (add-to-list 'org-babel-load-languages '(js . t))))
+
+
+(defun js/post-init-npm-mode ()
+  (spacemacs/add-to-hooks #'npm-mode js-modes-hooks))
 
 (defun js/pre-init-prettier-js ()
   (when (eq js-fmt-tool 'prettier)
