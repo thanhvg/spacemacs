@@ -30,7 +30,7 @@
 
 (defun js/post-init-company ()
   (dolist (hook js-modes-local-vars-hooks)
-    (add-hook hook #'company-mode)))
+    (add-hook hook #'spacemacs/js-setup-company)))
 
 (defun js/post-init-evil-matchit ()
   (spacemacs/add-to-hooks #'turn-on-evil-matchit-mode js-modes-hooks))
