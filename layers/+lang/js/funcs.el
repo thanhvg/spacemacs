@@ -32,25 +32,6 @@
   (require 'dap-chrome))
 
 
-;; js-doc
-
-(defun spacemacs/js-doc-require ()
-  "Lazy load js-doc"
-  (require 'js-doc))
-(add-hook 'js-mode-hook 'spacemacs/js-doc-require)
-
-(defun spacemacs/js-doc-set-key-bindings (mode)
-  "Setup the key bindings for `js2-doc' for the given MODE."
-  (spacemacs/declare-prefix-for-mode mode "mrd" "documentation")
-  (spacemacs/set-leader-keys-for-major-mode mode
-    "rdb" 'js-doc-insert-file-doc
-    "rdf" (if (configuration-layer/package-used-p 'yasnippet)
-              'js-doc-insert-function-doc-snippet
-            'js-doc-insert-function-doc)
-    "rdt" 'js-doc-insert-tag
-    "rdh" 'js-doc-describe-tag))
-
-
 ;; company
 
 (defun spacemacs/js-setup-company ()
