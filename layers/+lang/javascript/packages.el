@@ -70,21 +70,11 @@
   ;; Required to make imenu functions work correctly
   (add-hook 'js2-mode-hook 'js2-imenu-extras-mode))
 
-(defun javascript/init-npm-mode ()
-  (use-package npm-mode
-    :defer t
-    :init (add-hook 'js2-mode-hook #'npm-mode)
-    :config
-    (spacemacs/declare-prefix-for-mode 'js2-mode "mn" "npm")
-    (spacemacs/set-leader-keys-for-major-mode 'js2-mode
-      "ni" 'npm-mode-npm-install
-      "nr" 'npm-mode-npm-run
-      "ns" 'npm-mode-npm-install-save
-      "nd" 'npm-mode-npm-install-save-dev
-      "nn" 'npm-mode-npm-init
-      "nu" 'npm-mode-npm-uninstall
-      "nl" 'npm-mode-npm-list
-      "np" 'npm-mode-visit-project-file)))
+(defun javascript/post-init-nodejs-repl ()
+  (spacemacs/node-nodejs-repl-set-key-bindings 'js2-mode))
+
+(defun javascript/post-init-npm-mode ()
+  (add-hook 'js2-mode-hook #'npm-mode))
 
 (defun javascript/post-init-impatient-mode ()
   (spacemacs/set-leader-keys-for-major-mode 'js2-mode
@@ -94,11 +84,10 @@
   (when (eq javascript-import-tool 'import-js)
     (add-to-list 'spacemacs--import-js-modes (cons 'js2-mode 'js2-mode-hook))))
 
-(defun javascript/init-js-doc ()
-  (use-package js-doc
-    :defer t
-    :init (spacemacs/js-doc-set-key-bindings 'js2-mode)
-    (add-hook 'js2-mode-hook 'spacemacs/js-doc-require)))
+(defun javascript/pre-init-js-doc ()
+  (spacemacs|use-package-add-hook js-doc
+    :post-config (spacemacs/node-js-doc-set-key-bindings 'js2-mode))
+  (add-hook 'js2-mode-hook 'spacemacs/node-js-doc-require))
 
 (defun javascript/init-js2-mode ()
   (use-package js2-mode
@@ -197,49 +186,9 @@
         :evil-leader-for-mode (js2-mode . "Tl"))
       (spacemacs|diminish livid-mode " 🅻" " [l]"))))
 
-(defun javascript/init-nodejs-repl ()
+(defun javascript/post-init-nodejs-repl ()
   (when (eq javascript-repl 'nodejs)
-    (use-package nodejs-repl
-      :defer nil
-      :init
-      (spacemacs/register-repl 'nodejs-repl
-                               'nodejs-repl
-                               "nodejs-repl")
-      :config
-      (spacemacs/declare-prefix-for-mode 'js2-mode "ms" "nodejs-repl")
-      (spacemacs/set-leader-keys-for-major-mode 'js2-mode
-        "'" 'nodejs-repl
-        "ss" 'nodejs-repl
-        "si" 'nodejs-repl-switch-to-repl
-        "se" 'nodejs-repl-send-last-expression
-        "sE" (lambda ()
-               (interactive)
-               (nodejs-repl-send-last-expression)
-               (nodejs-repl-switch-to-repl))
-        "sb" 'nodejs-repl-send-buffer
-        "sB" (lambda ()
-               (interactive)
-               (nodejs-repl-send-buffer)
-               (nodejs-repl-switch-to-repl))
-        "sl" 'nodejs-repl-send-line
-        "sL" (lambda ()
-               (interactive)
-               (nodejs-repl-send-line)
-               (nodejs-repl-switch-to-repl))
-        "sr" 'nodejs-repl-send-region
-        "sR" (lambda (start end)
-               (interactive "r")
-               (nodejs-repl-send-region start end)
-               (nodejs-repl-switch-to-repl)))
-      (spacemacs/declare-prefix-for-mode 'js2-mode
-        "msE" "nodejs-send-last-expression-and-focus")
-      (spacemacs/declare-prefix-for-mode 'js2-mode
-        "msB" "nodejs-send-buffer-and-focus")
-      (spacemacs/declare-prefix-for-mode 'js2-mode
-        "msL" "nodejs-send-line-and-focus")
-      (spacemacs/declare-prefix-for-mode 'js2-mode
-        "msR" "nodejs-send-region-and-focus"))))
-
+    (spacemacs/node-nodejs-repl-set-key-bindings 'js2-mode)))
 
 (defun javascript/pre-init-org ()
   (spacemacs|use-package-add-hook org
