@@ -51,6 +51,19 @@
     "rdh" 'js-doc-describe-tag))
 
 
+;; company
+
+(defun spacemacs/js-setup-company ()
+  (company-mode)
+  (when (equal js-backend 'tide)
+    (spacemacs/setup-company-backends-for-buffer 'company-tide)
+    ;; (spacemacs|add-company-backends
+    ;;  :backends company-tide
+    ;;  :modes js-based-ts-mode
+    ;;  :append-hooks nil
+    ;;  :call-hooks t)
+    ))
+
 ;; Others
 
 ;; (defun spacemacs//js-setup-checkers ()
