@@ -67,7 +67,7 @@
 
 (defun react/post-init-js-doc ()
   (add-hook 'rjsx-mode-hook 'spacemacs/js-doc-require)
-  (spacemacs/js-doc-set-key-bindings 'rjsx-mode))
+  (spacemacs/node-js-doc-set-key-bindings 'rjsx-mode))
 
 (defun react/init-rjsx-mode ()
   (use-package rjsx-mode

@@ -81,16 +81,6 @@
   "Lazy load js-doc"
   (require 'js-doc))
 
-(defun spacemacs/js-doc-set-key-bindings (mode)
-  "Setup the key bindings for `js2-doc' for the given MODE."
-  (spacemacs/declare-prefix-for-mode mode "mrd" "documentation")
-  (spacemacs/set-leader-keys-for-major-mode mode
-    "rdb" 'js-doc-insert-file-doc
-    "rdf" (if (configuration-layer/package-used-p 'yasnippet)
-              'js-doc-insert-function-doc-snippet
-            'js-doc-insert-function-doc)
-    "rdt" 'js-doc-insert-tag
-    "rdh" 'js-doc-describe-tag))
 
 ;; js-refactor
 
