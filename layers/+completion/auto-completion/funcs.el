@@ -161,6 +161,9 @@ MODE parameter must match the :modes values used in the call to
     (append (if (consp backend) backend (list backend))
             '(:with company-yasnippet))))
 
+(defun spacemacs/setup-company-backends-for-buffer (&rest backends)
+  (setq company-backends (append backends spacemacs-default-company-backends)))
+
 
 ;; auto-completion key bindings functions
 
