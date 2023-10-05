@@ -228,7 +228,9 @@
         "vpu" 'pipenv-uninstall))))
 
 (defun python/pre-init-poetry ()
-  (add-to-list 'spacemacs--python-poetry-modes 'python-mode))
+  (add-to-list 'spacemacs--python-poetry-modes 'python-mode)
+  (add-to-list 'spacemacs--python-poetry-modes 'python-ts-mode))
+
 (defun python/init-poetry ()
   (use-package poetry
     :defer t
@@ -249,8 +251,9 @@
 (defun python/init-pippel ()
   (use-package pippel
     :defer t
-    :init (spacemacs/set-leader-keys-for-major-mode 'python-mode
-            "P" 'pippel-list-packages)
+    :init
+    (spacemacs/set-leader-keys-for-major-mode 'python-mode "P" 'pippel-list-packages)
+    (spacemacs/set-leader-keys-for-major-mode 'python-ts-mode "P" 'pippel-list-packages)
     :config
     (evilified-state-evilify-map pippel-package-menu-mode-map
       :mode pippel-package-menu-mode)))
@@ -283,7 +286,9 @@
       "hP" 'pydoc)))
 
 (defun python/pre-init-pyenv-mode ()
-  (add-to-list 'spacemacs--python-pyenv-modes 'python-mode))
+  (add-to-list 'spacemacs--python-pyenv-modes 'python-mode)
+  (add-to-list 'spacemacs--python-pyenv-modes 'python-ts-mode))
+
 (defun python/init-pyenv-mode ()
   (use-package pyenv-mode
     :if (executable-find "pyenv")
@@ -308,12 +313,15 @@
       "vs" 'pyenv-mode-set)))
 
 (defun python/pre-init-pyvenv ()
-  (add-to-list 'spacemacs--python-pyvenv-modes 'python-mode))
+  (add-to-list 'spacemacs--python-pyvenv-modes 'python-mode)
+  (add-to-list 'spacemacs--python-pyvenv-modes 'python-ts-mode))
+
 (defun python/init-pyvenv ()
   (use-package pyvenv
     :defer t
     :init
     (add-hook 'python-mode-hook #'pyvenv-tracking-mode)
+    (add-hook 'python-ts-mode-hook #'pyvenv-tracking-mode)
     (pcase python-auto-set-local-pyvenv-virtualenv
       ('on-visit
        (dolist (m spacemacs--python-pyvenv-modes)
