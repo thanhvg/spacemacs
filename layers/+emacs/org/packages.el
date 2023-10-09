@@ -56,7 +56,7 @@
     org-present
     org-cliplink
     org-rich-yank
-    (org-project-capture :requires projectile)
+    org-project-capture
     (org-projectile :requires projectile)
     (ox-epub :toggle org-enable-epub-support)
     (ox-twbs :toggle org-enable-bootstrap-support)
@@ -837,20 +837,26 @@ Headline^^            Visit entry^^               Filter^^                    Da
 
 (defun org/init-org-project-capture ()
   (use-package org-project-capture
-    :commands (org-project-capture-location-for-project)
+    :after org-capture
     :init
     (spacemacs/set-leader-keys
-      "aop" 'spacemacs/org-project-capture-capture
-      "po" 'spacemacs/org-project-capture-goto-todos)
+      "aop" 'org-project-capture/capture
+      "po" 'org-project-capture/goto-todos)
+    (if (file-name-absolute-p org-projectile-file)
+        (progn
+          (setq org-project-capture-projects-file org-projectile-file))
+      (org-project-capture-per-project)
+      (setq org-project-capture-per-project-filepath org-projectile-file))
     :config
-    (progn
-      (push (org-projectile-project-todo-entry :empty-lines 1)
-            org-capture-templates)
-      (if (file-name-absolute-p org-projectile-file)
-          (progn
-            (setq org-projectile-projects-file org-projectile-file))
-        (org-projectile-per-project)
-        (setq org-projectile-per-project-filepath org-projectile-file)))))
+    (push (org-project-capture-project-todo-entry :empty-lines 1)
+          org-capture-templates)))
+
+(defun org/init-org-projectile ()
+  (use-package org-projectile
+    :after org-project-capture
+    :config
+    (setq org-project-capture-default-backend
+          (make-instance 'org-project-capture-projectile-backend))))
 
 (defun org/pre-init-ox-epub ()
   (spacemacs|use-package-add-hook org :post-config (require 'ox-epub)))
