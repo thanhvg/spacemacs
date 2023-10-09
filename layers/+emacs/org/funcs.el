@@ -38,15 +38,22 @@
 
 
 
-(defun org-projectile/capture (&optional arg)
+(defun org-project-capture/capture (&optional arg)
   (interactive "P")
   (if arg
-      (org-projectile-project-todo-completing-read :empty-lines 1)
-    (org-projectile-capture-for-current-project :empty-lines 1)))
+      (org-project-capture-project-todo-completing-read :empty-lines 1)
+    (org-project-capture-capture-for-current-project :empty-lines 1)))
 
-(defun org-projectile/goto-todos ()
+(defun org-project-capture/goto-todos ()
   (interactive)
-  (org-projectile-goto-location-for-project (projectile-project-name)))
+  (if-let (org-todo-buffer
+           (seq-find
+            (lambda (buf) (s-ends-with? org-projectile-file (buffer-file-name buf)))
+            (persp-buffer-list)
+            nil))
+      (switch-to-buffer-other-window org-todo-buffer)
+    (org-project-capture-goto-location-for-project
+     (org-project-capture-current-project (org-project-capture-strategy-get-backend org-project-capture-strategy)))))
 
 
 
