@@ -843,6 +843,12 @@ Headline^^            Visit entry^^               Filter^^                    Da
       (setq org-project-capture-per-project-filepath org-projectile-file))
     :config
     (push (org-project-capture-project-todo-entry :empty-lines 1)
+          org-capture-templates)
+    (push (org-project-capture-project-todo-entry
+           :capture-character "n"
+           :capture-template "* %?\n%i\n%a"
+           :capture-heading "Project Note"
+           :empty-lines 1)
           org-capture-templates)))
 
 (defun org/init-org-projectile ()
