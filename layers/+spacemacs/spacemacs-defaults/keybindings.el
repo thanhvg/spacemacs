@@ -426,7 +426,8 @@
   "hdl" 'spacemacs/describe-last-keys
   "hdp" 'describe-package
   "hdP" 'configuration-layer/describe-package
-  "hds" 'spacemacs/describe-system-info
+  "hdS" 'spacemacs/describe-system-info
+  "hds" 'shortdoc
   "hdt" 'describe-text-properties
   "hdT" 'describe-theme
   "hdv" 'describe-variable
