@@ -53,7 +53,6 @@
                 :fetcher github
                 :repo  "Sbozzolo/vterm-extra"))))
 
-
 (defun shell/init-comint ()
   (setq comint-prompt-read-only t)
   (add-hook 'comint-mode-hook 'spacemacs/disable-hl-line-mode)
@@ -81,6 +80,15 @@
       ;; terminal often are
       (add-hook 'eshell-mode-hook
                 'spacemacs//eshell-switch-company-frontend))))
+
+(defun shell/init-eat ()
+  (use-package eat
+    :defer t
+    :init
+    (setq eat-enable-auto-line-mode t)
+    :config
+    ;; (add-hook 'eat-mode-hook #'eat-line-mode)
+    (add-hook 'eat--line-mode-hook #'spacemacs/eat-setup-company)))
 
 (defun shell/init-esh-help ()
   (use-package esh-help
