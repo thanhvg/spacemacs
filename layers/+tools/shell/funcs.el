@@ -359,3 +359,7 @@ tries to restore a dead buffer or window."
 (defun spacemacs/shell-history (it)
   (interactive (list (completing-read "Shell history: " (ring-elements comint-input-ring))))
   (insert it))
+
+(defun spacemacs/eat-setup-company ()
+  (company-mode)
+  (spacemacs/setup-company-backends-for-buffer 'company-capf))
