@@ -26,6 +26,7 @@
     (comint :location built-in)
     company
     company-native-complete
+    eat
     esh-help
     (eshell :location built-in)
     eshell-prompt-extras
@@ -50,7 +51,6 @@
      :location (recipe
                 :fetcher github
                 :repo  "Sbozzolo/vterm-extra"))))
-
 
 (defun shell/init-comint ()
   (setq comint-prompt-read-only t)
@@ -79,6 +79,15 @@
       ;; terminal often are
       (add-hook 'eshell-mode-hook
                 'spacemacs//eshell-switch-company-frontend))))
+
+(defun shell/init-eat ()
+  (use-package eat
+    :defer t
+    :init
+    (setq eat-enable-auto-line-mode t)
+    :config
+    ;; (add-hook 'eat-mode-hook #'eat-line-mode)
+    (add-hook 'eat--line-mode-hook #'spacemacs/eat-setup-company)))
 
 (defun shell/init-esh-help ()
   (use-package esh-help
