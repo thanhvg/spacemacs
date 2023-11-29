@@ -30,7 +30,8 @@
   "Conditionally setup java backend."
   (pcase java-backend
     ('lsp (spacemacs//java-setup-lsp))
-    ('lspce (spacemacs//java-setup-lspce))))
+    ('lspce (spacemacs//java-setup-lspce))
+    ('bridge (lsp-bridge-mode))))
 
 (defun spacemacs//java-setup-dap ()
   "Conditionally setup elixir DAP integration."
