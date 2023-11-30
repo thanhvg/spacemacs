@@ -41,7 +41,7 @@
 ;;; Code:
 
 (defconst lsp-bridge-packages
-  '(lsp-bridge))
+  '((lsp-bridge :location built-in)))
 
 (defun lsp-bridge/init-lsp-bridge ()
   (use-package lsp-bridge
