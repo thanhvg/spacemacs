@@ -230,6 +230,8 @@ Cate special text banner can de reachable via `998', `cat' or `random*'.
            (spacemacs-buffer//choose-random-text-banner))
           ((eq 'random* dotspacemacs-startup-banner)
            (spacemacs-buffer//choose-random-text-banner t))
+          ((eq 'random** dotspacemacs-startup-banner)
+           (spacemacs-buffer//choose-random-text-banner-always))
           ((eq 'doge dotspacemacs-startup-banner)
            (spacemacs-buffer//get-banner-path 999))
           ((eq 'doge-inverted dotspacemacs-startup-banner)
@@ -260,6 +262,13 @@ If ALL is non-nil then truly all banners can be selected."
       (setq spacemacs-buffer--random-banner (nth choice files))))
   spacemacs-buffer--random-banner)
 
+(defun spacemacs-buffer//choose-random-text-banner-always ()
+  "Return the full path of a banner randomly."
+  (let* ((files (directory-files spacemacs-banner-directory t ".*\.txt"))
+          (count (length files))
+          (choice (random count)))
+    (nth choice files)))
+  
 (defun spacemacs-buffer//get-banner-path (index)
   "Return the full path to banner with index INDEX."
   (concat spacemacs-banner-directory (format "%03d-banner.txt" index)))
