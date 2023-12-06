@@ -206,7 +206,7 @@ the official spacemacs logo. An integer value is the index of text
 banner, `random' chooses a random text banner in `core/banners'
 directory. A string value must be a path to a .PNG file.
 If the value is nil then no banner is displayed."
-  '(choice (const official) (const random) (const nil) string integer)
+  '(choice (const official) (const random) (const random*) (const random**) (const nil) string integer)
   'spacemacs-dotspacemacs-init)
 
 (spacemacs|defc dotspacemacs-startup-banner-scale 'auto
