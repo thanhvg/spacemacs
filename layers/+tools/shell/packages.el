@@ -410,6 +410,7 @@
       (kbd "C-k") 'vterm-send-up)
 
     (add-hook 'vterm-mode-hook 'spacemacs/disable-hl-line-mode)
+    (add-hook 'vterm-mode-hook #'spacemacs//evil-vterm-compat)
     (with-eval-after-load 'centered-cursor-mode
       (add-hook 'vterm-mode-hook 'spacemacs//inhibit-global-centered-cursor-mode))))
 
