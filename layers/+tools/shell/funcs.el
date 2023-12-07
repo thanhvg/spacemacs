@@ -390,6 +390,10 @@ tries to restore a dead buffer or window."
                   (thing-at-point 'line t))))
   (spacemacs//vterm-repl-send-string string))
 
+(defun spacemacs//evil-vterm-compat ()
+  ;; https://github.com/emacs-evil/evil-collection/issues/651
+  (add-hook 'evil-insert-state-entry-hook #'vterm-reset-cursor-point nil t))
+
 (defun spacemacs/shell-history (it)
   (interactive (list (completing-read "Shell history: " (ring-elements comint-input-ring))))
   (insert it))
