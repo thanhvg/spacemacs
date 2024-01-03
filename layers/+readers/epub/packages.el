@@ -31,8 +31,11 @@
     (evilified-state-evilify-map nov-mode-map
       :mode nov-mode
       :bindings
-      (kbd "H") 'nov-previous-document
-      (kbd "L") 'nov-next-document
+      (kbd "zz") 'evil-scroll-line-to-center
+      (kbd "zt") 'evil-scroll-line-to-top
+      (kbd "zb") 'evil-scroll-line-to-bottom
+      (kbd "H") 'nov-history-back
+      (kbd "L") 'nov-history-forward
       (kbd "[") 'nov-previous-document
       (kbd "]") 'nov-next-document
       (kbd "d") 'nov-scroll-up
