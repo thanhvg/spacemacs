@@ -29,6 +29,7 @@
     (diff-hl            :toggle (or (eq 'diff-hl version-control-diff-tool)
                                     (eq 'git-gutter+ version-control-diff-tool)))
     diff-mode
+    evil-collection
     evil-unimpaired
     (git-gutter         :toggle (eq 'git-gutter version-control-diff-tool))
     (git-gutter-fringe  :toggle (eq 'git-gutter version-control-diff-tool))
@@ -144,6 +145,10 @@
       ("q" nil "quit" :exit t)
       ("<escape>" nil nil :exit t))))
 
+(defun version-control/pre-init-evil-collection ()
+  (when (eq version-control-diff-tool 'diff-hl)
+    (add-to-list 'spacemacs-evil-collection-allowed-list 'diff-hl)))
+
 (defun version-control/init-diff-hl ()
   (use-package diff-hl
     :defer t
@@ -155,9 +160,19 @@
           (run-with-idle-timer 1 nil 'global-diff-hl-mode))
       (run-with-idle-timer 1 nil 'diff-hl-margin-mode))
     :config
+    ;; gv-map is always available thanks to gv= setup in init
+    (let ((gv-map (keymap-lookup
+                   (keymap-lookup spacemacs-default-map "g") "v")))
+      ;; iterate diff-hl-command-map and copy its keymap items to gv-map instead
+      ;; of (define-key spacemacs-default-map (kbd "gv") diff-hl-command-map)
+      ;; which would override the whole gv tree
+      (map-keymap
+       (lambda (key cmd)
+         ;; (message "%s %s" (key-description (vector key)) cmd)
+         (define-key gv-map (vector key) cmd))
+       diff-hl-command-map))
     (spacemacs|do-after-display-system-init
-      (setq diff-hl-side (if (eq version-control-diff-side 'left)
-                             'left 'right)))))
+     (setq diff-hl-side version-control-diff-side))))
 
 (defun version-control/post-init-evil-unimpaired ()
   (define-key evil-normal-state-map (kbd "[ h") 'spacemacs/vcs-previous-hunk)
