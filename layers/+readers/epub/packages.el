@@ -29,15 +29,9 @@
     :mode ("\\.epub\\'" . nov-mode)
     :init
     (add-to-list 'spacemacs-large-file-modes-list 'nov-mode t)
+    (evil-set-initial-state 'nov-mode 'motion)
     :config
-    (evilified-state-evilify-map nov-mode-map
-      :mode nov-mode
-      :bindings
-      (kbd "zz") 'evil-scroll-line-to-center
-      (kbd "zt") 'evil-scroll-line-to-top
-      (kbd "w") 'evil-forward-word
-      (kbd "b") 'evil-backward-word-begin
-      (kbd "zb") 'evil-scroll-line-to-bottom
+    (evil-define-key* 'motion nov-mode-map
       (kbd "H") 'nov-history-back
       (kbd "L") 'nov-history-forward
       (kbd "[") 'nov-previous-document
