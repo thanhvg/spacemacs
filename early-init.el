@@ -33,6 +33,10 @@
 ;; Earlier Emacs versions do not load the early init file and do not initialize
 ;; the package manager before loading the init file, so this file is neither
 ;; needed nor loaded on those versions.
+
+;; lsp-mode
+(setenv "LSP_USE_PLISTS" "true")
+
 (setq package-enable-at-startup nil)
 
 (load (concat (file-name-directory load-file-name)
