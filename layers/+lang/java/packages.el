@@ -29,7 +29,11 @@
     (java-ts-mode :location built-in :toggle java-use-ts-mode)
     maven-test-mode
     mvn
-    (lsp-java :requires lsp-mode)
+    (lsp-java :requires lsp-mode
+              :location (recipe
+                         :fetcher github
+                         :branch "dev"
+                         :repo "thanhvg/lsp-java"))
     org
     smartparens))
 
