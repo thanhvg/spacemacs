@@ -87,15 +87,6 @@
       (add-hook 'eshell-mode-hook
                 'spacemacs//eshell-switch-company-frontend))))
 
-(defun shell/init-eat ()
-  (use-package eat
-    :defer t
-    :init
-    (setq eat-enable-auto-line-mode t)
-    :config
-    ;; (add-hook 'eat-mode-hook #'eat-line-mode)
-    (add-hook 'eat--line-mode-hook #'spacemacs/eat-setup-company)))
-
 (defun shell/init-esh-help ()
   (use-package esh-help
     :defer t
@@ -383,6 +374,7 @@
     (spacemacs/set-leader-keys "atsa" 'spacemacs/shell-pop-eat)
     (spacemacs/register-repl 'eat 'eat)
     :config
+    (add-hook 'eat--line-mode-hook #'spacemacs/eat-setup-company)
     (setq eat-shell shell-default-term-shell)))
 
 (defun shell/init-vterm ()
