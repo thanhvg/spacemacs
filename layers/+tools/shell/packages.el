@@ -83,8 +83,12 @@
 (defun shell/init-eat ()
   (use-package eat
     :defer t
+    :commands (eat eat-other-window eat-project eat-project-other-window)
     :init
-    (setq eat-enable-auto-line-mode t)
+    ;; (setq eat-enable-auto-line-mode t)
+    (make-shell-pop-command "eat" eat)
+    (spacemacs/set-leader-keys "atsa" 'spacemacs/shell-pop-eat)
+    (spacemacs/register-repl 'eat 'eat)
     :config
     ;; (add-hook 'eat-mode-hook #'eat-line-mode)
     (add-hook 'eat--line-mode-hook #'spacemacs/eat-setup-company)))
@@ -360,17 +364,6 @@
                             eshell-mode-hook
                             shell-mode-hook
                             term-mode-hook)))
-
-(defun shell/init-eat ()
-  (use-package eat
-    :defer t
-    :commands (eat eat-other-window eat-project eat-project-other-window)
-    :init
-    (make-shell-pop-command "eat" eat)
-    (spacemacs/set-leader-keys "atsa" 'spacemacs/shell-pop-eat)
-    (spacemacs/register-repl 'eat 'eat)
-    :config
-    (setq eat-shell shell-default-term-shell)))
 
 (defun shell/init-vterm ()
   (use-package vterm
