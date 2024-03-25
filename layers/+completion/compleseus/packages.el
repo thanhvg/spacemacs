@@ -456,7 +456,7 @@
 
     (setq vertico-resize nil
           vertico-count 20
-          vertico-cycle nil)
+          vertico-cycle t)
 
     (vertico-mode)
 
