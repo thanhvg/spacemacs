@@ -374,6 +374,8 @@
     (spacemacs/set-leader-keys "atsa" 'spacemacs/shell-pop-eat)
     (spacemacs/register-repl 'eat 'eat)
     :config
+    (dolist (mode-map (list eat-mode-map eat-line-mode-map eat-char-mode-map))
+      (define-key mode-map (kbd "M-r") 'spacemacs/eat-search-history))
     (add-hook 'eat--line-mode-hook #'spacemacs/eat-setup-company)
     (setq eat-shell shell-default-term-shell)))
 
