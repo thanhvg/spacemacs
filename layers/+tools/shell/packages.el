@@ -87,15 +87,6 @@
       (add-hook 'eshell-mode-hook
                 'spacemacs//eshell-switch-company-frontend))))
 
-(defun shell/init-eat ()
-  (use-package eat
-    :defer t
-    :init
-    (setq eat-enable-auto-line-mode t)
-    :config
-    ;; (add-hook 'eat-mode-hook #'eat-line-mode)
-    (add-hook 'eat--line-mode-hook #'spacemacs/eat-setup-company)))
-
 (defun shell/init-esh-help ()
   (use-package esh-help
     :defer t
@@ -384,7 +375,9 @@
     (spacemacs/register-repl 'eat 'eat)
     :config
     (setq eat-shell shell-default-term-shell)
-    (add-hook 'eat-mode-hook 'spacemacs/disable-hl-line-mode)))
+    (add-hook 'eat-mode-hook 'spacemacs/disable-hl-line-mode)
+    (add-hook 'eat--line-mode-hook #'spacemacs/eat-setup-company)
+    (setq eat-shell shell-default-term-shell)))
 
 (defun shell/init-vterm ()
   (use-package vterm
