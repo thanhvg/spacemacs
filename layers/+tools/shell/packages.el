@@ -92,6 +92,8 @@
     (spacemacs/register-repl 'eat 'eat)
     :config
     ;; (add-hook 'eat-mode-hook #'eat-line-mode)
+    (dolist (mode-map (list eat-mode-map eat-line-mode-map eat-char-mode-map))
+      (define-key mode-map (kbd "M-r") 'spacemacs/eat-search-history))
     (add-hook 'eat--line-mode-hook #'spacemacs/eat-setup-company)))
 
 (defun shell/init-esh-help ()
