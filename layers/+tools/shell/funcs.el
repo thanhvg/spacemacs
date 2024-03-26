@@ -405,4 +405,7 @@ tries to restore a dead buffer or window."
 (defun spacemacs/eat-search-history (it)
   "Generic version to search vtern history."
   (interactive (list (completing-read "Bash history: " (spacemacs//vterm-make-history-candidates))))
-  (eat-term-send-string eat-terminal it))
+  ;; this would make the insert read only
+  ;; (eat-term-send-string-as-yank eat-terminal it)
+  (delete-region (eat-term-end eat-terminal) (point-max))
+  (insert it))
