@@ -64,10 +64,7 @@
                        :url "https://raw.githubusercontent.com/minad/vertico/main/extensions/vertico-repeat.el"))
 
     (vertico-posframe :togle (and (eq compleseus-engine 'vertico)
-                                  compleseus-use-vertico-posframe))
-    (grep :location built-in)
-
-    wgrep))
+                                  compleseus-use-vertico-posframe))))
 
 (defun compleseus/init-all-the-icons-completion ()
   (use-package all-the-icons-completion
@@ -517,11 +514,6 @@
                 ("C-h" . vertico-directory-delete-char))
     ;; Tidy shadowed file names
     :hook (rfn-eshadow-update-overlay . vertico-directory-tidy)))
-
-(defun compleseus/post-init-grep ()
-  (spacemacs/set-leader-keys-for-major-mode 'grep-mode
-    "w" 'spacemacs/compleseus-grep-change-to-wgrep-mode
-    "f" 'next-error-follow-minor-mode))
 
 (defun compleseus/init-wgrep ()
   (evil-define-key 'normal wgrep-mode-map ",," #'spacemacs/wgrep-finish-edit)
