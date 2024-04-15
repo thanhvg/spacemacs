@@ -22,11 +22,11 @@
 
 
 (setq spacemacs-misc-packages
-      '(
-        devdocs
+      '(devdocs
         dumb-jump
-        request))
-
+        request
+        grep
+        wgrep))
 
 (defun spacemacs-misc/init-dumb-jump ()
   (use-package dumb-jump
@@ -58,3 +58,16 @@
       (add-hook 'devdocs-mode-hook
                 (lambda ()
                   (setq-local imenu-create-index-function #'spacemacs/imenu-eww-headings))))))
+
+(defun spacemacs-misc/post-init-grep ()
+  (spacemacs/set-leader-keys-for-major-mode 'grep-mode
+    "w" 'spacemacs/grep-change-to-wgrep-mode))
+
+(defun spacemacs-misc/init-wgrep ()
+  (add-hook 'spacemacs-editing-style-hook #'spacemacs//set-initial-grep-state)
+  (evil-define-key 'normal wgrep-mode-map ",," #'spacemacs/wgrep-finish-edit)
+  (evil-define-key 'normal wgrep-mode-map ",c" #'spacemacs/wgrep-finish-edit)
+  (evil-define-key 'normal wgrep-mode-map ",a" #'spacemacs/wgrep-abort-changes)
+  (evil-define-key 'normal wgrep-mode-map ",k" #'spacemacs/wgrep-abort-changes)
+  (evil-define-key 'normal wgrep-mode-map ",q" #'spacemacs/wgrep-abort-changes-and-quit)
+  (evil-define-key 'normal wgrep-mode-map ",s" #'spacemacs/wgrep-save-changes-and-quit))

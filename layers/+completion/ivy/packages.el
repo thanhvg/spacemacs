@@ -51,7 +51,6 @@
         recentf
         smex
         swiper
-        wgrep
         ))
 
 (defun ivy/init-all-the-icons-ivy-rich ()
@@ -442,8 +441,3 @@
       "sB" 'swiper-all-thing-at-point)
     (global-set-key "\C-s" 'swiper)))
 
-(defun ivy/init-wgrep ()
-  (evil-define-key 'normal wgrep-mode-map ",," 'wgrep-finish-edit)
-  (evil-define-key 'normal wgrep-mode-map ",c" 'wgrep-finish-edit)
-  (evil-define-key 'normal wgrep-mode-map ",a" 'wgrep-abort-changes)
-  (evil-define-key 'normal wgrep-mode-map ",k" 'wgrep-abort-changes))
