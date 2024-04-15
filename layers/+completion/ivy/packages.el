@@ -51,7 +51,6 @@
         recentf
         amx
         swiper
-        wgrep
         ))
 
 (defun ivy/init-all-the-icons-ivy-rich ()
@@ -438,7 +437,3 @@
     (with-eval-after-load 'info
       (define-key Info-mode-map (kbd "C-s") 'isearch-forward))))
 
-(defun ivy/post-init-wgrep ()
-  (spacemacs/set-leader-keys-for-major-mode 'ivy-occur-grep-mode
-    "w" 'spacemacs/grep-change-to-wgrep-mode
-    "s" 'wgrep-save-all-buffers))
