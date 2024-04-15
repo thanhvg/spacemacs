@@ -59,9 +59,7 @@
      :toggle (eq compleseus-engine 'vertico)
      ;; TODO: Remove when https://github.com/minad/vertico/issues/83 solved.
      :location (recipe :fetcher url
-                       :url "https://raw.githubusercontent.com/minad/vertico/main/extensions/vertico-repeat.el"))
-    (grep :location built-in)
-    wgrep))
+                       :url "https://raw.githubusercontent.com/minad/vertico/main/extensions/vertico-repeat.el"))))
 
 (defun compleseus/init-all-the-icons-completion ()
   (use-package all-the-icons-completion
@@ -455,10 +453,6 @@
                 ("C-h" . vertico-directory-delete-char))
     ;; Tidy shadowed file names
     :hook (rfn-eshadow-update-overlay . vertico-directory-tidy)))
-
-(defun compleseus/post-init-grep ()
-  (spacemacs/set-leader-keys-for-major-mode 'grep-mode
-    "w" 'spacemacs/compleseus-grep-change-to-wgrep-mode))
 
 (defun compleseus/init-wgrep ()
   (evil-define-key 'normal wgrep-mode-map ",," #'spacemacs/wgrep-finish-edit)
