@@ -51,7 +51,6 @@
         recentf
         smex
         swiper
-        wgrep
         ))
 
 (defun ivy/init-all-the-icons-ivy-rich ()
@@ -441,7 +440,3 @@
       "sB" 'swiper-all-thing-at-point)
     (global-set-key "\C-s" 'swiper)))
 
-(defun ivy/post-init-wgrep ()
-  (spacemacs/set-leader-keys-for-major-mode 'ivy-occur-grep-mode
-    "w" 'spacemacs/grep-change-to-wgrep-mode
-    "s" 'wgrep-save-all-buffers))
