@@ -261,12 +261,6 @@ to act on with `embark-act-all', and move to the next candidate."
     (company--continue)
     (company-finish (completing-read "Candidate: " company-candidates))))
 
-(defun spacemacs/compleseus-grep-change-to-wgrep-mode ()
-  (interactive)
-  (require 'wgrep)
-  (wgrep-change-to-wgrep-mode)
-  (evil-normal-state))
-
 (defun spacemacs/consult-edit ()
   "Export the consult buffer and make the buffer editable righ away."
   (interactive)
