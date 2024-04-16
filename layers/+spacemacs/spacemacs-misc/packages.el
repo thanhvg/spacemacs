@@ -22,8 +22,10 @@
 
 
 (setq spacemacs-misc-packages
-      '(devdocs
+      '(evil-collection
+        devdocs
         dumb-jump
+        deadgrep
         grep
         wgrep))
 
@@ -66,3 +68,14 @@
   (evil-define-key 'normal wgrep-mode-map ",k" #'spacemacs/wgrep-abort-changes)
   (evil-define-key 'normal wgrep-mode-map ",q" #'spacemacs/wgrep-abort-changes-and-quit)
   (evil-define-key 'normal wgrep-mode-map ",s" #'spacemacs/wgrep-save-changes-and-quit))
+
+(defun spacemacs-misc/init-deadgrep ()
+  (use-package deadgrep
+    :defer t
+    :init
+    (spacemacs/set-leader-keys "sj" #'deadgrep)
+    :config
+    (evil-define-key 'normal deadgrep-mode-map "o" #'spacemacs/ace-link-deadgrep)))
+
+(defun spacemacs-misc/pre-init-evil-collection ()
+  (add-to-list 'spacemacs-evil-collection-allowed-list 'deadgrep))
