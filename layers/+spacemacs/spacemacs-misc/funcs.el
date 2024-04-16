@@ -1,4 +1,5 @@
-
+;; wgrep
+
 (defun spacemacs/grep-change-to-wgrep-mode ()
   (interactive)
   (require 'wgrep)
@@ -41,3 +42,29 @@
   (spacemacs/wgrep-finish-edit)
   (wgrep-save-all-buffers)
   (quit-window))
+
+;; avy deadgrep
+
+(defun spacemacs//ace-link--deadgrep-collect ()
+  (let ((candidates (list))
+        (prop 'button)
+        (pt (window-start)))
+    (while (and pt (< pt (window-end)))
+      (when (get-text-property pt prop)
+        (push pt candidates))
+      (setq pt (next-single-property-change pt prop)))
+    (nreverse candidates)))
+
+(defun spacemacs//ace-link--deadgrep-action (pt)
+  (when (number-or-marker-p pt)
+    (goto-char pt)
+    (push-button)))
+
+(defun spacemacs/ace-link-deadgrep ()
+  "Open a visible buttons in an `deadgrep' buffer."
+  (interactive)
+  (let ((pt (avy-with spacemacs/ace-link-deadgrep
+              (avy-process
+               (spacemacs//ace-link--deadgrep-collect)
+               (avy--style-fn avy-style)))))
+    (spacemacs//ace-link--deadgrep-action pt)))
