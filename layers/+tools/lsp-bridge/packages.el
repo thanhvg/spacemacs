@@ -48,4 +48,4 @@
     :load-path "~/git/lsp-bridge"
     :config
     (add-hook 'lsp-bridge-hook
-              #'spacemacs//lsp-bridge-turn-off-incompatible-mode)))
+              #'spacemacs//lsp-bridge-setup)))
