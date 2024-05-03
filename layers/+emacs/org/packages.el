@@ -86,8 +86,14 @@
   (use-package edraw-org
     :defer t
     :after org
-    :config
-    (edraw-org-setup-default)))
+    :init
+    (require 'edraw-org)
+    (edraw-org-setup-default)
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode
+      "di" #'spacemacs/edraw-insert
+      "dh" #'edraw-org-link-show-svg-at-point
+      "dm" #'edraw-org-link-image-mode
+      "de" #'edraw-org-edit-link)))
 
 (defun org/post-init-emoji-cheat-sheet-plus ()
   (add-hook 'org-mode-hook 'spacemacs/delay-emoji-cheat-sheet-hook))
