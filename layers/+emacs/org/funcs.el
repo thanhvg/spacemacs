@@ -140,3 +140,8 @@ For example: To unfold from a magit diff buffer, evaluate the following:
                (and (org-entry-is-done-p) (> n-not-done 0)))
            ;; then prompt to change the state
            (org-todo))))
+
+
+(defun spacemacs/edraw-insert ()
+  (interactive)
+  (insert "[[edraw:]]"))
