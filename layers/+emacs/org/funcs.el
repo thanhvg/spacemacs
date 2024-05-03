@@ -148,3 +148,8 @@ For example: To unfold from a magit diff buffer, evaluate the following:
   "Execute the given function with save excursion."
   (save-excursion
     (apply orig-fun args)))
+
+
+(defun spacemacs/edraw-insert ()
+  (interactive)
+  (insert "[[edraw:]]"))
