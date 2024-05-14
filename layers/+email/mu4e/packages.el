@@ -121,6 +121,8 @@
               (push (buffer-name buffer) buffers))))
         (nreverse buffers)))
     (setq gnus-dired-mail-mode 'mu4e-user-agent)
+    (add-to-list 'mu4e-view-actions '("open in thunderbird" . mu4e/open-in-thunderbird))
+    (add-to-list 'mu4e-headers-actions '("open in thunderbird" . mu4e/open-in-thunderbird))
     (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)))
 
 (defun mu4e/init-mu4e-alert ()
