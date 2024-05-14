@@ -39,14 +39,9 @@
                           (persp-get-by-name
                            mu4e-spacemacs-layout-name)))
       (spacemacs/add-to-hooks 'spacemacs-layouts/add-mu4e-buffer-to-persp
-                              '(mu4e-main-mode-hook
-                                mu4e-headers-mode-hook
-                                mu4e-after-view-message-hook
-                                mu4e-compose-mode-hook))
-      (call-interactively 'mu4e)
-      (define-advice mu4e~stop (:after nil kill-mu4e-layout-after-mu4e~stop)
-        (when mu4e-spacemacs-kill-layout-on-exit
-          (persp-kill mu4e-spacemacs-layout-name))))))
+                              '(mu4e-main-mode-hook))
+      (mu4e)
+      (mu4e-update-index))))
 
 (defun mu4e/init-mu4e ()
   (use-package mu4e
