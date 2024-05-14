@@ -35,3 +35,11 @@
     (or (mu4e-message-contact-field-matches msg :to rx)
         (mu4e-message-contact-field-matches msg :cc rx)
         (mu4e-message-contact-field-matches msg :bcc rx))))
+
+(defun mu4e/open-in-thunderbird (msg)
+  "Open the specified email message in Thunderbird.
+   This function takes a MSG message object as input and extracts the message ID
+   to construct a URL that opens the message in Thunderbird."
+  (let ((process-connection-type nil))
+    (start-process "" nil "thunderbird"
+                   (concat "mid:" (mu4e-message-field msg :message-id)))))
