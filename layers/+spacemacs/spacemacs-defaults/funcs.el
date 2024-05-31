@@ -2092,8 +2092,9 @@ The list is cut of to fit one line if necessary. Each buffer has a key to press 
 
 (defun spacemacs//buffers-hint-ml ()
   "Return buffer list with mapping key.
-The string not longer than half window with."
 
+Only the most recent three buffers are shown
+The string is not longer than a quarter of window width."
   (let ((buffer-list-str
          (mapconcat
           #'identity
@@ -2105,9 +2106,9 @@ The string not longer than half window with."
                'face 'font-lock-constant-face)
               ":"
               (buffer-name it)))
-           (seq-take (cdr (spacemacs//get-recent-buffers)) 10))
+           (seq-take (cdr (spacemacs//get-recent-buffers)) 3))
           " "))
-        (max (max 0 (- (window-width) (length (buffer-name)) 100))))
+        (max (/ (window-width) 4)))
     (if (> (length buffer-list-str) max)
         (substring buffer-list-str 0 max)
       buffer-list-str)))
