@@ -41,6 +41,6 @@
    spacemacs-navigation
    spacemacs-org
    spacemacs-project
-   spacemacs-purpose
+   ;; spacemacs-purpose
    spacemacs-visual
    ))
