@@ -34,6 +34,7 @@
     (emacs-lisp :location built-in)
     evil
     evil-cleverparens
+    evil-collection
     eval-sexp-fu
     flycheck
     (flycheck-elsa :requires flycheck)
@@ -97,6 +98,13 @@
 (defun emacs-lisp/init-edebug ()
   (use-package edebug
     :defer t
+    :config
+    (spacemacs/declare-prefix-for-minor-mode 'edebug-mode "ma" "edebug-actions")
+    (bind-map edebug-global-map
+      :minor-modes (edebug-mode)
+      :keys ((concat dotspacemacs-emacs-leader-key " ma") (concat dotspacemacs-major-mode-emacs-leader-key "a"))
+      :evil-keys ((concat dotspacemacs-leader-key " ma") (concat dotspacemacs-major-mode-leader-key "a"))
+      :evil-states (normal motion visual evilified))
     :init
     ;; key bindings
     (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
@@ -113,6 +121,7 @@
       "c" 'edebug-update-eval-list
       "ee" 'edebug-eval-last-sexp
       "eE" 'edebug-eval-print-last-sexp)
+
     ;; since we evilify `edebug-mode-map' we don't need to intercept it to
     ;; make it work with evil
     (evil-set-custom-state-maps
@@ -122,20 +131,23 @@
      'evil-make-intercept-map
      (delq (assq 'edebug-mode-map evil-intercept-maps)
            evil-intercept-maps))
+
     (evilified-state-evilify-map edebug-mode-map
       :eval-after-load edebug
       :bindings
-      "a" 'edebug-stop
-      "c" 'edebug-go-mode
-      "s" 'edebug-step-mode
-      "S" 'edebug-next-mode)
-    (evilified-state-evilify-map edebug-eval-mode-map
-      :eval-after-load edebug
-      :bindings
-      "a" 'edebug-stop
-      "c" 'edebug-go-mode
-      "s" 'edebug-step-mode
-      "S" 'edebug-next-mode)
+      ;; "a" 'edebug-stop
+      ;; "c" 'edebug-go-mode
+      "H" 'edebug-goto-here
+      "N" 'edebug-next-mode
+      "s" 'edebug-step-mode)
+
+    ;; (evilified-state-evilify-map edebug-eval-mode-map
+    ;;   :eval-after-load edebug
+    ;;   :bindings
+    ;;   "a" 'edebug-stop
+    ;;   "c" 'edebug-go-mode
+    ;;   "s" 'edebug-step-mode
+    ;;   "S" 'edebug-next-mode)
     (advice-add 'edebug-mode :after 'spacemacs//edebug-mode)))
 
 (defun emacs-lisp/post-init-eldoc ()
@@ -306,6 +318,10 @@
 
 (defun emacs-lisp/post-init-evil ()
   (add-hook 'emacs-lisp-mode-hook #'spacemacs//define-elisp-comment-text-object))
+
+(defun emacs-lisp/pre-init-evil-collection ()
+  ;; (push 'edebug spacemacs-evil-collection-allowed-list)
+  )
 
 (defun emacs-lisp/pre-init-evil-cleverparens ()
   (spacemacs|use-package-add-hook evil-cleverparens
