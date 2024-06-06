@@ -49,6 +49,7 @@
     (kaocha-runner :toggle clojure-enable-kaocha-runner)
     org
     popwin
+    shackle
     (sayid :toggle clojure-enable-sayid)
     smartparens
     subword))
@@ -462,6 +463,10 @@
           popwin:special-display-config)
     (push '("*cider-doc*" :dedicated t :position bottom :stick t :noselect nil :height 0.4)
           popwin:special-display-config)))
+
+(defun clojure/post-init-shackle ()
+  (push '("*cider-error*" :align bellow :size 0.4) shackle-rules)
+  (push '("*cider-doc*" :align bellow :size 0.4) shackle-rules))
 
 (defun clojure/post-init-smartparens ()
   (add-hook 'cider-repl-mode-hook #'spacemacs//activate-smartparens)

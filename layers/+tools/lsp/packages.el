@@ -31,6 +31,7 @@
     (lsp-treemacs :requires treemacs)
     (lsp-origami :requires lsp-mode)
     (lsp-sonarlint :toggle lsp-sonarlint)
+    shackle
     popwin))
 
 (defun lsp/init-lsp-sonarlint ()
@@ -116,3 +117,7 @@
           popwin:special-display-config)
     (push '("*Call Hierarchy*" :dedicated t :position bottom :stick t :height 0.4)
           popwin:special-display-config)))
+
+(defun lsp/post-init-shackle ()
+  (push '("*lsp-help*" :align bellow :size 0.4) shackle-rules)
+  (push '("*Call Hierarchy*" :align bellow :size 0.4) shackle-rules))
