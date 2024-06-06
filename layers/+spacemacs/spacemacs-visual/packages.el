@@ -31,7 +31,6 @@
                                        :toggle (boundp 'display-fill-column-indicator))
         (fill-column-indicator :toggle (not (boundp 'display-fill-column-indicator)))
         hl-todo
-        popup
         popwin
         posframe
         (zoom-frm :location local)))
@@ -90,12 +89,6 @@
     ;; global hook activates hl-todo-mode for prog-mode, text-mode
     ;; mode can be explicitly defined using hl-todo-activate-in-modes variable
     (global-hl-todo-mode 1)))
-
-(defun spacemacs-visual/init-popup ()
-  (use-package popup
-    :config
-    (define-key popup-menu-keymap (kbd "C-j") 'popup-next)
-    (define-key popup-menu-keymap (kbd "C-k") 'popup-previous)))
 
 (defun spacemacs-visual/init-posframe ()
   (use-package posframe :defer t))
