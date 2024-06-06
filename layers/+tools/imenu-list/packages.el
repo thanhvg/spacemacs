@@ -34,7 +34,6 @@
 
 (defun imenu-list/init-imenu-list ()
   (use-package imenu-list
-    :defer t
     :init
     (setq imenu-list-focus-after-activation t
           imenu-list-auto-resize t)
