@@ -178,3 +178,7 @@
     :post-config
     (push '("*slime-description*" :dedicated t :position bottom :stick t :height 0.4)
           popwin:special-display-config)))
+
+(defun common-lisp/post-init-shackle ()
+  (push '("*slime-description*" :align bellow :size 0.4) shackle-rules))
+
