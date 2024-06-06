@@ -29,6 +29,7 @@
   '(
     flycheck
     flycheck-pos-tip
+    shackle
     popwin))
 
 (defun syntax-checking/init-flycheck ()
@@ -90,3 +91,6 @@
     :post-config
     (push syntax-checking--buffer-config
           popwin:special-display-config)))
+
+(defun syntax-checking/post-init-shackle ()
+  (push '("^\\*Flycheck.+\\*$" :align bellow :select t :size 0.4) shackle-rules))
