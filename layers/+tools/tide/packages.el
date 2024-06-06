@@ -33,6 +33,7 @@
      :location (recipe
                 :fetcher github
                 :repo "thanhvg/counsel-tide-nav"))
+    shackle
     popwin)
   "The list of Lisp packages required by the tide layer.")
 
@@ -69,3 +70,6 @@
 (defun tide/post-init-popwin ()
   (push '("*tide-documentation*" :dedicated t :position bottom :stick t :noselect t :height 0.3)
         popwin:special-display-config))
+
+(defun tide/post-init-shackle ()
+  (push '("*tide-documentation*":align below :size 0.3) shackle-rules))
