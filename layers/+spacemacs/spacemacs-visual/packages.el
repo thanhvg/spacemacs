@@ -77,9 +77,6 @@
 (defun spacemacs-visual/init-popwin ()
   (use-package popwin
     :config
-    (spacemacs/set-leader-keys "wpm" 'popwin:messages)
-    (spacemacs/set-leader-keys "wpp" 'popwin:close-popup-window)
-
     ;; don't use default value but manage it ourselves
     (setq popwin:special-display-config nil)
 
