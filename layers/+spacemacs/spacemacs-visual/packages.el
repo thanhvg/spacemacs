@@ -31,6 +31,7 @@
         nerd-icons
         popwin
         posframe
+        shackle
         (zoom-frm :location local)))
 
 (defun spacemacs-visual/init-all-the-icons ()
@@ -100,6 +101,30 @@
     (push '("*nosetests*"            :dedicated t :position bottom :stick t :noselect nil            ) popwin:special-display-config)
     (push '("^\*WoMan.+\*$" :regexp t             :position bottom                                   ) popwin:special-display-config)
     (push '("*Google Translate*"     :dedicated t :position bottom :stick t :noselect t   :height 0.4) popwin:special-display-config)))
+
+
+(defun spacemacs-visual/init-shackle ()
+  (use-package shackle
+    :config
+    (setq shackle-rules '((compilation-mode :noselect t)
+                          ("*Process List*"         :noselect t :align bellow :size 0.3)
+                          ("*quickrun*"             :align bellow :size 0.3)
+                          (compilation-mode         :align bellow :size 0.3)
+                          (dap-server-log-mode      :align below :size 0.3)
+                          ("*Shell Command Output*" :align below :size 0.3)
+                          ("*Async Shell Command*"  :align below :size 0.3)
+                          ("*undo-tree*"            :align right :size 0.4)
+                          ("*undo-tree Diff*"       :align below :size 0.3)
+                          ("*ert*"                  :align below :size 0.3)
+                          ("*grep*"                 :align below :size 0.3)
+                          ("*nosetests*"            :align below :size 0.3)
+                          ("^\*WoMan.+\*$"          :align below :size 0.3)
+                          ("*Help*" :select t :align below :size 0.3))
+
+          ;; default is nil so other handlers in `display-buffer-alist' will
+          ;; pick up the work
+          shackle-default-rule nil)
+    (shackle-mode 1)))
 
 (defun spacemacs-visual/init-zoom-frm ()
   (use-package zoom-frm
