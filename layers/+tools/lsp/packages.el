@@ -120,4 +120,5 @@
 
 (defun lsp/post-init-shackle ()
   (push '("*lsp-help*" :align bellow :size 0.4) shackle-rules)
+  (push '("*lsp-java-type-hierarchy*" :align bellow :size 0.4) shackle-rules)
   (push '("*Call Hierarchy*" :align bellow :size 0.4) shackle-rules))
