@@ -180,6 +180,8 @@
     ;; Set syntax highlighting for counsel search results
     (ivy-set-display-transformer 'spacemacs/counsel-search
                                  'counsel-git-grep-transformer)
+    ;; reveal org
+    (add-hook 'counsel-grep-post-action-hook #'spacemacs//invisible-open-permanently)
     ;; Enable better auto completion of counsel-find-file
     ;; by recognizing file at point.
     (setq counsel-find-file-at-point t)))
