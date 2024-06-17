@@ -501,3 +501,16 @@ Closing doesn't kill buffers inside the layout while killing layouts does."
          (buf (marker-buffer marker)))
     (select-window
      (xref--show-pos-in-buf marker (switch-to-buffer-other-window buf)))))
+
+(defun spacemacs//invisible-open-permanently ()
+  "Open overlays which hide the current line.
+Copy of `consult--invisible-open-permanently'. See
+`isearch-open-necessary-overlays' and `isearch-open-overlay-temporary'."
+  (if (and (derived-mode-p 'org-mode) (fboundp 'org-fold-show-set-visibility))
+      ;; New Org 9.6 fold-core API
+      (let ((inhibit-redisplay t)) ;; HACK: Prevent flicker due to premature redisplay
+        (org-fold-show-set-visibility 'canonical))
+    (dolist (ov (overlays-in (pos-bol) (pos-eol)))
+      (when-let (fun (overlay-get ov 'isearch-open-invisible))
+        (when (invisible-p (overlay-get ov 'invisible))
+          (funcall fun ov))))))
