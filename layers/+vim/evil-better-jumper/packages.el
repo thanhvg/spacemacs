@@ -33,6 +33,7 @@
     (global-set-key [remap xref-pop-marker-stack] #'better-jumper-jump-backward)
     :config
     (better-jumper-mode 1)
+    (add-hook 'better-jumper-post-jump-hook #'recenter)
     (spacemacs|hide-lighter better-jumper-mode)
     (spacemacs|hide-lighter better-jumper-local-mode))
 
