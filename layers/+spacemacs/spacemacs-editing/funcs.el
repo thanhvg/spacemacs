@@ -162,3 +162,10 @@ The window scope is determined by `avy-all-windows' (ARG negates it)."
     (avy-with avy-goto-symbol-at-point
       (avy-process 
        (avy--regex-candidates (regexp-quote (thing-at-point 'symbol t)))))))
+
+
+;; origami
+(defun spacemacs//enable-origami-on-server-frame ()
+  "Hook to run in daemon mode."
+  (global-origami-mode)
+  (remove-hook 'server-after-make-frame-hook #'spacemacs//enable-origami-on-server-frame))
