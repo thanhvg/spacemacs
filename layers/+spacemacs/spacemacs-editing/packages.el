@@ -284,7 +284,13 @@
           (lambda (key def)
             (define-key evil-normal-state-map key nil)
             (define-key evil-motion-state-map key def))))
-      (global-origami-mode)
+
+      ;; work around for `origami' face `origami-fold-header-face' usage of
+      ;; `face-attribute' which must be run in a frame. In emacs 30 it will stop
+      ;; daemon from accepting GUI clients
+      (if (daemonp)
+          (add-hook 'server-after-make-frame-hook #'spacemacs//enable-origami-on-server-frame)
+        (global-origami-mode))
       (funcall rebind-normal-to-motion-state-map "za" 'origami-forward-toggle-node)
       (funcall rebind-normal-to-motion-state-map "zc" 'origami-close-node)
       (funcall rebind-normal-to-motion-state-map "zC" 'origami-close-node-recursively)
