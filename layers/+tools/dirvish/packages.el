@@ -46,7 +46,18 @@
       :evil-leader "t C-d")
     (setq dirvish-cache-dir (concat spacemacs-cache-directory "dirvish/")
           dirvish-hide-details t)
-    (setq dirvish-attributes '(all-the-icons file-size collapse subtree-state))
+    (setq dirvish-attributes '(all-the-icons file-size file-time collapse subtree-state))
+
+    ;; Segments
+    ;;; 1. the order of segments *matters* here
+    ;;; 2. it's ok to place raw string inside
+    (setq dirvish-header-line-format
+          '(:left (path) :right (free-space))
+          dirvish-mode-line-format
+          '(:left (sort file-time " " file-size symlink) :right (omit yank index)))
+
+    (setq dirvish-mode-line-height 18
+          dirvish-header-line-height 18)
     ;; (dirvish-peek-mode)
     ;; Dired options are respected except a few exceptions, see *In relation to Dired* section above
     (setq dired-dwim-target t)
