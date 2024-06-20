@@ -92,3 +92,15 @@
 (defun spacemacs//java-setup-lspce ()
   "Setup LSPE Java."
   (lspce-mode))
+
+
+;; quick and dirty stuff
+
+(defun spacemacs/copy-full-qualified-name ()
+  "Coypy package.class.method to kill ring."
+  (interactive)
+  (let* ((package (car (car (cdr (seq-find (lambda (it) (string= "Packages" (car it)))
+                                      (lsp--imenu-create-index))))))
+         (qualified-name (format "%s.%s" package (which-function))))
+    (message "`%s` has been put in kill ring." qualified-name)
+    (kill-new qualified-name)))
