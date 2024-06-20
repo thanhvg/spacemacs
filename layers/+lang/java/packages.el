@@ -141,6 +141,8 @@
       "gku" 'spacemacs/lsp-java-super-type
       "gks" 'spacemacs/lsp-java-sub-type
 
+      "yn" 'spacemacs/copy-full-qualified-name
+
       ;; test
       "tb" 'lsp-jt-browser)))
 
