@@ -70,7 +70,7 @@
   (use-package all-the-icons-completion
     :init
     (all-the-icons-completion-mode)
-    :config 
+    :config
     (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)))
 
 (defun compleseus/pre-init-auto-highlight-symbol ()
@@ -284,7 +284,6 @@
      spacemacs/compleseus-search-projectile
      spacemacs/compleseus-search-default
      spacemacs/compleseus-switch-to-buffer
-     spacemacs/compleseus-search-projectile-auto
      :preview-key (list "C-SPC" "C-M-j" "C-M-k"))
 
     ;; hide magit buffer
