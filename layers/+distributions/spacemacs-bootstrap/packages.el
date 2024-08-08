@@ -582,7 +582,8 @@ Press \\[which-key-toggle-persistent] to hide."
       ('right-then-bottom (which-key-setup-side-window-right-bottom))))
 
   (which-key-mode)
-  (spacemacs|diminish which-key-mode " Ⓚ" " K"))
+  ;; (spacemacs|diminish which-key-mode " Ⓚ" " K")
+  (spacemacs|hide-lighter which-key-mode))
 
 ;; pre packages
 
