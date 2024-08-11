@@ -41,11 +41,26 @@
 ;;; Code:
 
 (defconst lsp-bridge-packages
-  '((lsp-bridge :location built-in)))
+  '((lsp-bridge :location built-in)
+    (acm :location built-in)))
 
 (defun lsp-bridge/init-lsp-bridge ()
   (use-package lsp-bridge
     :load-path "~/git/lsp-bridge"
     :config
-    (add-hook 'lsp-bridge-hook
-              #'spacemacs//lsp-bridge-setup)))
+    (add-hook 'lsp-bridge-mode-hook
+              #'spacemacs//lsp-bridge-setup))
+  (spacemacs|add-toggle lsp-bridge
+    :status lsp-bridge-mode
+    :on (lsp-bridge-mode +1)
+    :off (lsp-bridge-mode -1)
+    :documentation "Enable lp-bridge"
+    :evil-leader "tb"))
+
+(defun lsp-bridge/init-acm ()
+  (use-package acm
+    :after lsp-bridge
+    :load-path "~/git/lsp-bridge"
+    :config
+    (spacemacs--acm-ensure-emulation-alist)
+    (add-hook 'acm-mode-hook 'spacemacs--acm)))
