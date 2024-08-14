@@ -5,9 +5,9 @@
   (when (bound-and-true-p company-mode)
     (company-mode -1))
   (when (bound-and-true-p lsp-completion-mode)
+    ;; (add-to-list 'spacemacs-jump-handlers '(lsp-bridge-find-def :async t))
     (lsp-completion-mode -1))
-  ;; (add-to-list 'spacemacs-jump-handlers '(lsp-bridge-find-def :async t))
-  )
+    (remove-function (local 'indent-region-function) #'lsp-format-region))
 
 
 
