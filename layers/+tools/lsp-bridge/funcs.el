@@ -59,4 +59,7 @@
   (if acm-mode
       (progn (spacemacs--acm-enable-overriding-keymap spacemacs-acm-active-map)
              (spacemacs--acm-install-map))
+    ;; FIXME this assumes spaceline/powerline is active mode line
+    ;; fix acm posframe make mode line to swtich to inactive mode
+    (powerline-set-selected-window)
     (spacemacs--acm-uninstall-map)))
