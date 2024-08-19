@@ -23,7 +23,9 @@
 (defconst dirvish-packages
   '((dirvish :location (recipe
                         :fetcher github
-                        :repo  "alexluigit/dirvish"
+                        ;; :repo  "alexluigit/dirvish"
+                        ;; use fork as the original one has been inactive since 2023
+                        :repo  "hlissner/dirvish"
                         :files (:defaults "extensions/*.el")
                         ;; pin this because divish is still evolving fast
                         ;; there will be problem when dirvish rewrites their git history
