@@ -24,7 +24,10 @@
 (setq sql-packages
       '(
         company
-        ejc-sql
+        (ejc-sql :location (recipe
+                            :fetcher github
+                            :repo "dvzubarev/ejc-sql"
+                            :files (:defaults "project.clj" "src" "snippets")))
         org
         sql
         (sql-indent :location elpa)
