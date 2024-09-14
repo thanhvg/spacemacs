@@ -45,6 +45,7 @@
     org
     (orgit :requires org)
     (orgit-forge :requires (org forge))
+    persp-mode
     smeargle
     transient))
 
@@ -200,9 +201,7 @@
       ("Q" nil :exit t))
     (with-eval-after-load 'git-commit
       (add-hook 'git-commit-mode-hook 'display-fill-column-indicator-mode))
-    (with-eval-after-load 'persp-mode
-      (add-hook 'persp-filter-save-buffers-functions
-                'spacemacs//magit-buffer-p))
+
     :config
     ;; seems to be necessary at the time of release
     (require 'git-rebase)
@@ -371,3 +370,9 @@
       "c" 'forge-post-submit
       "k" 'forge-post-cancel
       "a" 'forge-post-cancel)))
+
+(defun git/pre-init-persp-mode ()
+  (spacemacs|use-package-add-hook persp-mode
+    :post-config
+    (add-to-list 'persp-filter-save-buffers-functions
+                 'spacemacs//magit-buffer-p)))
