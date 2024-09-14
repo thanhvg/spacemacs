@@ -287,7 +287,7 @@
      :preview-key (list "C-SPC" "C-M-j" "C-M-k"))
 
     ;; hide magit buffer
-    (add-to-list 'consult-buffer-filter "magit.*:.*")
+    ;; (add-to-list 'consult-buffer-filter "magit.*:.*")
 
     ;; Optionally configure the narrowing key.
     ;; Both < and C-+ work reasonably well.
