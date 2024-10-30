@@ -49,7 +49,10 @@
     :load-path "~/git/lsp-bridge"
     :config
     (add-hook 'lsp-bridge-mode-hook
-              #'spacemacs//lsp-bridge-setup))
+              #'spacemacs//lsp-bridge-setup)
+    (add-hook 'lsp-before-open-hook
+              #'spacemas//lsp-bridge-hybrid-maybe))
+
   (spacemacs|add-toggle lsp-bridge
     :status lsp-bridge-mode
     :on (lsp-bridge-mode +1)
