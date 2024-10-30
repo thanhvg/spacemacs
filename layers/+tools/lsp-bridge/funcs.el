@@ -6,9 +6,18 @@
     (company-mode -1))
   (when (bound-and-true-p lsp-completion-mode)
     ;; (add-to-list 'spacemacs-jump-handlers '(lsp-bridge-find-def :async t))
+    (setq-local lsp-completion-enable nil)
     (lsp-completion-mode -1))
-    (remove-function (local 'indent-region-function) #'lsp-format-region))
+  (remove-function (local 'indent-region-function) #'lsp-format-region))
 
+(defun spacemas//lsp-bridge-hybrid-maybe ()
+  (when lsp-hybrid
+    (setq-local lsp-completion-enable nil)
+    (when (bound-and-true-p company-mode)
+      (company-mode -1))
+    (lsp-bridge-mode)
+    (message "lsp hybrid enabled.")))
+      
 
 
 ;; extra keymap setting for `acm-mode', inspired by `company-mode''s `company-active-map'
