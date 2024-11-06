@@ -539,18 +539,6 @@
     ;; Tidy shadowed file names
     :hook (rfn-eshadow-update-overlay . vertico-directory-tidy)))
 
-(defun compleseus/init-wgrep ()
-  (evil-define-key 'normal wgrep-mode-map ",," #'spacemacs/wgrep-finish-edit)
-  (evil-define-key 'normal wgrep-mode-map ",c" #'spacemacs/wgrep-finish-edit)
-  (evil-define-key 'normal wgrep-mode-map ",a" #'spacemacs/wgrep-abort-changes)
-  (evil-define-key 'normal wgrep-mode-map ",k" #'spacemacs/wgrep-abort-changes)
-  (evil-define-key 'normal wgrep-mode-map ",q" #'spacemacs/wgrep-abort-changes-and-quit)
-  (evil-define-key 'normal wgrep-mode-map ",s" #'spacemacs/wgrep-save-changes-and-quit)
-  (evil-define-key 'normal wgrep-mode-map ",r" #'wgrep-toggle-readonly-area)
-  (evil-define-key 'normal wgrep-mode-map ",d" #'wgrep-mark-deletion)
-  (evil-define-key 'normal wgrep-mode-map ",f" #'next-error-follow-minor-mode)
-  )
-
 (defun compleseus/init-compleseus-spacemacs-help ()
   (use-package compleseus-spacemacs-help
     :defer t

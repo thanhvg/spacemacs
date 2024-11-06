@@ -58,7 +58,8 @@
 
 (defun spacemacs-misc/post-init-grep ()
   (spacemacs/set-leader-keys-for-major-mode 'grep-mode
-    "w" 'spacemacs/grep-change-to-wgrep-mode))
+    "w" 'spacemacs/grep-change-to-wgrep-mode
+    "f" 'next-error-follow-minor-mode))
 
 (defun spacemacs-misc/init-wgrep ()
   (add-hook 'spacemacs-editing-style-hook #'spacemacs//set-initial-grep-state)
@@ -67,7 +68,8 @@
   (evil-define-key 'normal wgrep-mode-map ",a" #'spacemacs/wgrep-abort-changes)
   (evil-define-key 'normal wgrep-mode-map ",k" #'spacemacs/wgrep-abort-changes)
   (evil-define-key 'normal wgrep-mode-map ",q" #'spacemacs/wgrep-abort-changes-and-quit)
-  (evil-define-key 'normal wgrep-mode-map ",s" #'spacemacs/wgrep-save-changes-and-quit))
+  (evil-define-key 'normal wgrep-mode-map ",s" #'spacemacs/wgrep-save-changes-and-quit)
+  (evil-define-key 'normal wgrep-mode-map ",f" #'next-error-follow-minor-mode))
 
 (defun spacemacs-misc/init-deadgrep ()
   (use-package deadgrep
