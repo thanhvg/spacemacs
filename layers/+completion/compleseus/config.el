@@ -25,12 +25,6 @@
   "Options are `selectrum', and `vertico' to use as completion
   engine.")
 
-(defvar compleseus-use-nerd-icons nil
-  "Use nerd-icons with marginalia to provide icons in the mini-buffer")
-
-(defvar compleseus-use-vertico-posframe nil
-  "Use vertico-posframe to display completions in a separate frame")
-
 (defvar compleseus-buffer-search-restrict-project t
   "If non-nil, `spacemacs/consult-line-multi' and `spacemacs/consult-line-multi-symbol'
 will be restricted to buffers of the current project.
@@ -230,6 +224,3 @@ buffers.")
 It contains all buffers previously displayed in a live window of
 the current window configuration, including buffers from
 different layouts and hidden buffers.")
-
-(defcustom compleseus-consult-preview-keys '("M-." "C-SPC" "C-M-j" "C-M-k")
-  "Default keys that trigger a preview in consult")
