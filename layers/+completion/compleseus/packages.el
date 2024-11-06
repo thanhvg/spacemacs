@@ -37,7 +37,6 @@
     (helm-make :location (recipe :fetcher github
                                  :repo "myrgy/helm-make"
                                  :branch "add_emacs_completion"))
-    (nerd-icons-completion :toggle compleseus-use-nerd-icons)
     orderless
     persp-mode
     savehist
@@ -61,10 +60,7 @@
      :toggle (eq compleseus-engine 'vertico)
      ;; TODO: Remove when https://github.com/minad/vertico/issues/83 solved.
      :location (recipe :fetcher url
-                       :url "https://raw.githubusercontent.com/minad/vertico/main/extensions/vertico-repeat.el"))
-
-    (vertico-posframe :togle (and (eq compleseus-engine 'vertico)
-                                  compleseus-use-vertico-posframe))))
+                       :url "https://raw.githubusercontent.com/minad/vertico/main/extensions/vertico-repeat.el"))))
 
 (defun compleseus/init-all-the-icons-completion ()
   (use-package all-the-icons-completion
@@ -187,9 +183,6 @@
 
     ;; The :init configuration is always executed (Not lazy)
     :init
-    ;; disable automatic preview by default
-    (setq consult-preview-key compleseus-consult-preview-keys)
-
     (define-key read-expression-map (kbd "C-r") #'consult-history)
     (spacemacs/set-leader-keys
       dotspacemacs-emacs-command-key 'execute-extended-command
@@ -205,7 +198,6 @@
       "hm" #'consult-man
       "jm" #'consult-mark
       "jM" #'consult-global-mark
-
       "sb" #'spacemacs/consult-line-multi
       "sB" #'spacemacs/consult-line-multi-symbol
       "ss" #'spacemacs/consult-line
@@ -296,8 +288,6 @@
     ;; Optionally make narrowing help available in the minibuffer.
     ;; You may want to use `embark-prefix-help-command' or which-key instead.
     ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
-    (define-key consult-narrow-map [C-left] #'spacemacs/consult-narrow-cycle-backward)
-    (define-key consult-narrow-map [C-right] #'spacemacs/consult-narrow-cycle-forward)
 
     ;; Make M-n as smart as ivy and helm equivalents
     (setq minibuffer-default-add-function 'spacemacs/minibuffer-default-add-function)
@@ -465,7 +455,6 @@
     (vertico-mode)
 
     :config
-    (define-key vertico-map (kbd "C-.") 'spacemacs/embark-select)
     (setq read-minibuffer-restore-windows nil)
     (define-key minibuffer-local-map (kbd "M-j") #'spacemacs/split-window-dwim)
     (define-key vertico-map (kbd "M-RET") #'vertico-exit-input)
@@ -495,20 +484,6 @@
       "rL" 'vertico-repeat-select
       "sl" 'vertico-repeat-previous
       "sL" 'vertico-repeat-select)))
-
-(defun compleseus/init-vertico-posframe ()
-  (use-package vertico-posframe
-    :after vertico
-    :init
-    (setq vertico-posframe-poshandler 'posframe-poshandler-frame-center)
-    (setq vertico-posframe-width (round (* 0.618 (frame-width))))
-    (setq vertico-posframe-height (round (* 0.618 (frame-height))))
-    (setq vertico-posframe-parameters
-          '((internal-border-width . 2)
-            (left-fringe . 4)
-            (right-fringe . 4)
-            (undecorated . nil)))
-    (vertico-posframe-mode 1)))
 
 (defun compleseus/init-vertico-directory ()
   (use-package vertico-directory
@@ -542,14 +517,6 @@
   (spacemacs|use-package-add-hook savehist
     :post-config
     (add-to-list 'savehist-additional-variables '(vertico-repeat-history . 50))))
-
-(defun compleseus/init-nerd-icons-completion ()
-  (use-package nerd-icons-completion
-    :defer t
-    :after marginalia
-    :hook (marginalia-mode . nerd-icons-completion-marginalia-setup)
-    :init
-    (nerd-icons-completion-mode)))
 
 (defun compleseus/pre-init-company ()
   (spacemacs|use-package-add-hook company

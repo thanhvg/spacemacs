@@ -169,13 +169,6 @@ This solves the problem: Binding a key to: `find-file' calls: `ido-find-file'"
    (completing-read "Layouts:" (persp-names))))
 
 ;; vertico
-(defun spacemacs/embark-select ()
-  "Select the current candidate in the vertico buffer
-to act on with `embark-act-all', and move to the next candidate."
-  (interactive)
-  (embark-select)
-  (vertico-next))
-
 (defun spacemacs/embark-preview ()
   "Previews candidate in vertico buffer, unless it's a consult command"
   (interactive)
@@ -227,30 +220,6 @@ to act on with `embark-act-all', and move to the next candidate."
     ((eq major-mode 'org-mode) 'consult-org-heading)
     (t 'consult-imenu))))
 
-(defun spacemacs/consult-narrow-cycle-backward ()
-  "Cycle backward through the narrowing keys."
-  (interactive)
-  (when consult--narrow-keys
-    (consult-narrow
-     (if consult--narrow
-         (let ((idx (seq-position consult--narrow-keys
-                                  (assq consult--narrow consult--narrow-keys))))
-           (unless (eq idx 0)
-             (car (nth (1- idx) consult--narrow-keys))))
-       (caar (last consult--narrow-keys))))))
-
-(defun spacemacs/consult-narrow-cycle-forward ()
-  "Cycle forward through the narrowing keys."
-  (interactive)
-  (when consult--narrow-keys
-    (consult-narrow
-     (if consult--narrow
-         (let ((idx (seq-position consult--narrow-keys
-                                  (assq consult--narrow consult--narrow-keys))))
-           (unless (eq idx (1- (length consult--narrow-keys)))
-             (car (nth (1+ idx) consult--narrow-keys))))
-       (caar consult--narrow-keys)))))
-
 (defun spacemacs/consult-company ()
   "Complete using `company-candidates'."
   (interactive)
@@ -267,18 +236,3 @@ to act on with `embark-act-all', and move to the next candidate."
   (require 'embark)
   (let ((embark-after-export-hook '(spacemacs/grep-change-to-wgrep-mode)))
     (embark-export)))
-
-(defvar compleseus--previous-preview-keys nil
-  "variable to store the former value of preview keys or nil if the preview
- has not been toggled on")
-
-(defun spacemacs/consult-toggle-preview ()
-  "Toggle auto-preview mode for compleseus buffers"
-  (interactive)
-  (if (eq compleseus--previous-preview-keys nil)
-      (setq compleseus--previous-preview-keys consult-preview-key
-            consult-preview-key '(:debounce 0.5 any))
-    (setq consult-preview-key compleseus--previous-preview-keys
-          compleseus--previous-preview-keys nil)
-    )
-  )
