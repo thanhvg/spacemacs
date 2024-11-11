@@ -178,4 +178,34 @@ Suitable for `imenu-create-index-function'."
                  collect (cons (buffer-substring (point-at-bol) (point-at-eol)) (point))
                  and do (forward-line 1))))))
 
+
+(defun spacemacs/eww-list-bookmarks (it)
+  "Open a selected bookmark in EWW.
+
+This function prompts the user to select a bookmark from the list of
+saved EWW bookmarks. The user is presented with a completion list
+that shows both the title and the URL of each bookmark. Once a
+bookmark is selected, the function retrieves the corresponding URL
+and opens it in the EWW browser.
+
+IT is the string representation of the selected bookmark, which
+includes both the title and the URL formatted as 'Title - URL'.
+If the selected bookmark is found, the function uses the EWW
+browser to navigate to the associated URL."
+  (interactive (list (completing-read "Select "
+                                      (progn
+                                        (eww-read-bookmarks t)
+                                        (mapcar
+                                         (lambda (bm)
+                                           (format "%s - %s"
+                                                   (plist-get bm :title)
+                                                   (plist-get bm :url)))
+                                         eww-bookmarks)))))
+
+  (when-let* ((the-bm (seq-find (lambda (bm)
+                                  (string= it (format "%s - %s"
+                                                      (plist-get bm :title)
+                                                      (plist-get bm :url))))
+                                eww-bookmarks)))
+    (eww (plist-get the-bm :url))))
 ;;; funcs.el ends here
