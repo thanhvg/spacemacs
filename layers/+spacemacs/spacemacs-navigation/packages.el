@@ -22,7 +22,9 @@
 
 
 (setq spacemacs-navigation-packages
-      '(ace-link
+      '((ace-link
+         :location (recipe :fetcher github
+                           :repo "thanhvg/ace-link"))
         ace-window
         auto-highlight-symbol
         centered-cursor-mode
@@ -56,6 +58,8 @@
       (define-key help-mode-map "o" 'ace-link-help))
     (with-eval-after-load 'woman
       (define-key woman-mode-map "o" 'link-hint-open-link))
+    (with-eval-after-load 'dictionary
+      (define-key dictionary-mode-map "o" 'ace-link-button))
     (with-eval-after-load 'eww
       (define-key eww-link-keymap "o" 'ace-link-eww)
       (define-key eww-mode-map "o" 'ace-link-eww))))
