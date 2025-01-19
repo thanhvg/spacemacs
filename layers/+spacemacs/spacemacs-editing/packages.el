@@ -96,21 +96,34 @@
     (defun spacemacs/avy-goto-url ()
       "Use avy to go to an URL in the buffer."
       (interactive)
-      (avy-jump "https?://"))
+      (avy-with spacemacs/avy-goto-url
+        (avy-jump "https?://")))
     (defun spacemacs/avy-open-url ()
       "Use avy to select an URL in the buffer and open it."
       (interactive)
       (save-excursion
-        (spacemacs/avy-goto-url)
-        (browse-url-at-point)))
-    (defun spacemacs/avy-action-define (pt)
+        (avy-with spacemacs/avy-open-url 
+          (spacemacs/avy-goto-url)
+          (browse-url-at-point))))
+    (defun avy-action-define (pt)
       (save-excursion
         (goto-char pt)
         (dictionary-lookup-definition))
       (select-window
        (cdr (ring-ref avy-ring 0)))
       t)
-    (setf (alist-get ?= avy-dispatch-alist) 'spacemacs/avy-action-define)))
+    (setf (alist-get ?= avy-dispatch-alist) 'avy-action-define)
+
+    (defun avy-action-embark (pt)
+      (unwind-protect
+          (save-excursion
+            (goto-char pt)
+            (embark-act))
+        (select-window
+         (cdr (ring-ref avy-ring 0))))
+      t)
+
+    (setf (alist-get ?o avy-dispatch-alist) 'avy-action-embark)))
 
 (defun spacemacs-editing/init-clean-aindent-mode ()
   (use-package clean-aindent-mode
