@@ -103,7 +103,15 @@
       (interactive)
       (save-excursion
         (spacemacs/avy-goto-url)
-        (browse-url-at-point)))))
+        (browse-url-at-point)))
+    (defun spacemacs/avy-action-define (pt)
+      (save-excursion
+        (goto-char pt)
+        (dictionary-lookup-definition))
+      (select-window
+       (cdr (ring-ref avy-ring 0)))
+      t)
+    (setf (alist-get ?= avy-dispatch-alist) 'spacemacs/avy-action-define)))
 
 (defun spacemacs-editing/init-clean-aindent-mode ()
   (use-package clean-aindent-mode
