@@ -842,7 +842,6 @@ Headline^^            Visit entry^^               Filter^^                    Da
     (setq org-project-capture-default-backend
           (make-instance 'org-project-capture-projectile-backend))))
 
-
 (defun org/pre-init-ox-epub ()
   (spacemacs|use-package-add-hook org :post-config (require 'ox-epub)))
 (defun org/init-ox-epub ())
