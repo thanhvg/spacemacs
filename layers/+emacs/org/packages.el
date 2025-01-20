@@ -821,28 +821,33 @@ Headline^^            Visit entry^^               Filter^^                    Da
 
 (defun org/init-org-project-capture ()
   (use-package org-project-capture
-    :commands (org-project-capture-location-for-project)
+    :after org-capture
     :init
     (spacemacs/set-leader-keys
-      "aop" 'spacemacs/org-project-capture-capture
-      "po" 'spacemacs/org-project-capture-goto-todos)
-    :config
-    (if (and (stringp org-project-capture-projects-file) (file-name-absolute-p org-project-capture-projects-file))
+      "aop" 'org-project-capture/capture
+      "po" 'org-project-capture/goto-todos)
+    (if (file-name-absolute-p org-projectile-file)
         (progn
-          (setq org-project-capture-projects-file org-project-capture-projects-file)
-          (push (org-project-capture-project-todo-entry :empty-lines 1)
-                org-capture-templates)
-          (org-project-capture-single-file))
-      (progn
-        (setq org-project-capture-per-project-filepath org-project-capture-projects-file)
-        (org-project-capture-per-project)))))
+          (setq org-project-capture-projects-file org-projectile-file))
+      (org-project-capture-per-project)
+      (setq org-project-capture-per-project-filepath org-projectile-file))
+    :config
+    (push (org-project-capture-project-todo-entry :empty-lines 1)
+          org-capture-templates)
+    (push (org-project-capture-project-todo-entry
+           :capture-character "n"
+           :capture-template "* %?\n%i\n%a"
+           :capture-heading "Project Note"
+           :empty-lines 1)
+          org-capture-templates)))
 
 (defun org/init-org-projectile ()
   (use-package org-projectile
-    :after org-project-capture ; backend for projectile after org-project-capture
+    :after org-project-capture
     :config
     (setq org-project-capture-default-backend
           (make-instance 'org-project-capture-projectile-backend))))
+
 
 (defun org/pre-init-ox-epub ()
   (spacemacs|use-package-add-hook org :post-config (require 'ox-epub)))
