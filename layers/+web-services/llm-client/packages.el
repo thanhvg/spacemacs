@@ -42,6 +42,10 @@
   (use-package gptel
     :defer t
     :ensure t
+    :config
+    (spacemacs/set-leader-keys-for-minor-mode 'gptel-mode
+      "ge" 'gptel-end-of-response
+      "gm" 'gptel-menu)
     :init
     ;; evilify gptel-context-buffer-mode-map
     (require 'gptel-context)
@@ -56,16 +60,16 @@
       "p"       #'gptel-context-previous
       "d"       #'gptel-context-flag-deletion)
     ;; set up keybindings
-    (spacemacs/declare-prefix "$g" "Gptel")
+    (spacemacs/declare-prefix "yg" "Gptel")
     (spacemacs/set-leader-keys
-      "$gg" 'gptel                          ; Start a new GPTel session
-      "$gs" 'spacemacs//gptel-send-wrapper  ; Send a message to GPTel
-      "$gq" 'spacemacs//gptel-abort-wrapper ; Abort any active GPTel process
-      "$gm" 'gptel-menu                     ; Open the GPTel menu
-      "$gc" 'gptel-add                      ; Add context
-      "$gf" 'gptel-add-file                 ; Add a file
-      "$go" 'gptel-org-set-topic            ; Set topic in Org-mode
-      "$gp" 'gptel-org-set-properties)))    ; Set properties in Org-mode
+      "ygg" 'gptel                          ; Start a new GPTel session
+      "ygs" 'spacemacs//gptel-send-wrapper  ; Send a message to GPTel
+      "ygq" 'spacemacs//gptel-abort-wrapper ; Abort any active GPTel process
+      "ygm" 'gptel-menu                     ; Open the GPTel menu
+      "ygc" 'gptel-add                      ; Add context
+      "ygf" 'gptel-add-file                 ; Add a file
+      "ygo" 'gptel-org-set-topic            ; Set topic in Org-mode
+      "ygp" 'gptel-org-set-properties)))    ; Set properties in Org-mode
 
 (defun llm-client/post-init-org ()
   "Set up Org-mode keybindings for GPTel."
