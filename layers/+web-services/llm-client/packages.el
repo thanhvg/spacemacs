@@ -25,6 +25,9 @@
 (defconst llm-client-packages
   '((ellama :toggle llm-client-enable-ellama)
     (gptel :toggle llm-client-enable-gptel)
+    (aidermacs :location
+           (recipe :fetcher github
+                   :repo "MatthewZMD/aidermacs" :files ("*.el")))
     org
     window-purpose))
 
@@ -95,3 +98,9 @@
         (when purpose-mode-was-enabled
           (purpose-mode 1)))))
   (advice-add 'gptel :around #'llm-client/disable-purpose-mode-around-for-gptel))
+
+(defun llm-client/init-aidermacs ()
+  (use-package aidermacs
+    :config
+    (spacemacs/set-leader-keys
+      "yw" 'aidermacs-transient-menu)))
