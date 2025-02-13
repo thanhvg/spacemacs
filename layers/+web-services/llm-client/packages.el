@@ -63,16 +63,16 @@
       "p"       #'gptel-context-previous
       "d"       #'gptel-context-flag-deletion)
     ;; set up keybindings
-    (spacemacs/declare-prefix "yg" "Gptel")
+    (spacemacs/declare-prefix "ag" "Gptel")
     (spacemacs/set-leader-keys
-      "ygg" 'gptel                          ; Start a new GPTel session
-      "ygs" 'spacemacs//gptel-send-wrapper  ; Send a message to GPTel
-      "ygq" 'spacemacs//gptel-abort-wrapper ; Abort any active GPTel process
-      "ygm" 'gptel-menu                     ; Open the GPTel menu
-      "ygc" 'gptel-add                      ; Add context
-      "ygf" 'gptel-add-file                 ; Add a file
-      "ygo" 'gptel-org-set-topic            ; Set topic in Org-mode
-      "ygp" 'gptel-org-set-properties)))    ; Set properties in Org-mode
+      "agg" 'gptel                          ; Start a new GPTel session
+      "ags" 'spacemacs//gptel-send-wrapper  ; Send a message to GPTel
+      "agq" 'spacemacs//gptel-abort-wrapper ; Abort any active GPTel process
+      "agm" 'gptel-menu                     ; Open the GPTel menu
+      "agc" 'gptel-add                      ; Add context
+      "agf" 'gptel-add-file                 ; Add a file
+      "ago" 'gptel-org-set-topic            ; Set topic in Org-mode
+      "agp" 'gptel-org-set-properties)))    ; Set properties in Org-mode
 
 (defun llm-client/post-init-org ()
   "Set up Org-mode keybindings for GPTel."
@@ -101,4 +101,4 @@
   (use-package aidermacs
     :config
     (spacemacs/set-leader-keys
-      "yw" 'aidermacs-transient-menu)))
+      "aa" 'aidermacs-transient-menu)))
