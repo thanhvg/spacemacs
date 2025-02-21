@@ -25,9 +25,10 @@
 (defconst llm-client-packages
   '((ellama :toggle llm-client-enable-ellama)
     (gptel :toggle llm-client-enable-gptel)
-    (aidermacs :location
-           (recipe :fetcher github
-                   :repo "MatthewZMD/aidermacs" :files ("*.el")))
+    (aidermacs :location built-in)
+    ;; (aidermacs :location
+    ;;        (recipe :fetcher github
+    ;;                :repo "MatthewZMD/aidermacs" :files ("*.el")))
     org
     window-purpose))
 
@@ -99,6 +100,7 @@
 
 (defun llm-client/init-aidermacs ()
   (use-package aidermacs
+    :load-path "~/git/aidermacs"
     :config
     (spacemacs/set-leader-keys
       "aa" 'aidermacs-transient-menu)))
