@@ -45,8 +45,11 @@ There are 3 possible values:
 (defvar treemacs-lock-width nil
   "When non-nil the treemacs window will not be manually resizable by default.")
 
-(defvar treemacs-use-icons-dired t
+(defvar treemacs-use-icons-dired nil
   "When non-nil use `treemacs-icons-dired'")
+
+(defvar treemacs-use-nerds-icons t
+  "When non-nil use `treemacs-nerd-icons'")
 
 (defvar treemacs-use-all-the-icons-theme nil
   "Enable the treemacs supported `all-the-icons' theme")
