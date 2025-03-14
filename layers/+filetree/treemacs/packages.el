@@ -28,6 +28,7 @@
     treemacs
     (treemacs-evil :toggle (memq dotspacemacs-editing-style '(vim hybrid)))
     (treemacs-icons-dired :toggle treemacs-use-icons-dired)
+    (treemacs-nerd-icons :toggle treemacs-use-nerds-icons)
     (treemacs-all-the-icons :toggle treemacs-use-all-the-icons-theme)
     (treemacs-magit :requires magit)
     (treemacs-persp :requires persp-mode)
@@ -71,7 +72,8 @@
       "C-c C-p"   "treemacs-projects"
       "C-c C-p c" "treemacs-projects-collapse")
     :config
-    (spacemacs/define-evil-state-face "treemacs" "MediumPurple1")
+    (treemacs-resize-icons 20)
+    ;; (spacemacs/define-evil-state-face "treemacs" "MediumPurple1")
     ;; minor modes are enabled by default, so they must be explicitly
     ;; turned off
     (if (eq treemacs-use-follow-mode t)
@@ -135,3 +137,15 @@
   (use-package treemacs-magit
     :after treemacs magit
     :defer t))
+
+(defun treemacs/init-treemacs-nerd-icons ()
+  (use-package treemacs-nerd-icons
+    :after treemacs
+
+    ;; HACK: Because `lsp-treemacs' mutates Treemacs' default theme, and
+    ;;   `treemacs-nerd-icons' reads from it to populate its nerd-icons theme,
+    ;;   load order is important to ensure they don't step on each other's toes.
+    ;; :init (with-eval-after-load (if (configuration-layer/layer-used-p 'lsp) 'lsp-treemacs 'treemacs)
+    ;;         (require 'treemacs-nerd-icons))
+
+    :config (treemacs-load-theme "nerd-icons")))
