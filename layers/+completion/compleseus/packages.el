@@ -392,8 +392,6 @@
         (let ((completion-styles '(basic partial-completion orderless)))
           (apply orig-fun args))))
 
-    (setq orderless-component-separator "[ &]")
-
     ;; should be all in with orderless other wise the results are inconsistent.
     ;; (setq completion-styles '(basic partial-completion orderless)
     (setq completion-styles '(orderless)
