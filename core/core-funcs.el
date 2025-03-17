@@ -344,7 +344,7 @@ only switches between the current layout's buffers."
             ;; find buffer of the same persp in window, and don't try
             ;; `other-buffer'
             (setq predicate (lambda (buffer) (member buffer buffer-list))
-                  default (list nil nil nil))))
+                  default (list (with-persp-buffer-list () (other-buffer)) nil nil))))
 
         (seq-find (lambda (it)
                     (let ((buffer (car it)))
