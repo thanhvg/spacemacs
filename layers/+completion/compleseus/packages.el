@@ -42,29 +42,7 @@
     persp-mode
     savehist
     (selectrum :toggle (eq compleseus-engine 'selectrum))
-    (vertico
-     :toggle (eq compleseus-engine 'vertico)
-     ;; TODO remove when `vertico-repeat' on ELPA
-     :location (recipe :fetcher github
-                       :repo "minad/vertico"))
-    (vertico-directory
-     :toggle (eq compleseus-engine 'vertico)
-     ;; TODO remove when it's on ELPA
-     :location (recipe :fetcher url
-                       :url "https://raw.githubusercontent.com/minad/vertico/main/extensions/vertico-directory.el"))
-    (vertico-quick
-     :toggle (eq compleseus-engine 'vertico)
-     ;; TODO remove when it's on ELPA
-     :location (recipe :fetcher url
-                       :url "https://raw.githubusercontent.com/minad/vertico/main/extensions/vertico-quick.el"))
-    (vertico-repeat
-     :toggle (eq compleseus-engine 'vertico)
-     ;; TODO: Remove when https://github.com/minad/vertico/issues/83 solved.
-     :location (recipe :fetcher url
-                       :url "https://raw.githubusercontent.com/minad/vertico/main/extensions/vertico-repeat.el"))
-
-    (vertico-posframe :togle (and (eq compleseus-engine 'vertico)
-                                  compleseus-use-vertico-posframe))))
+    (vertico :toggle (eq compleseus-engine 'vertico))))
 
 (defun compleseus/init-all-the-icons-completion ()
   (use-package all-the-icons-completion
@@ -452,6 +430,9 @@
     ;; cleans ~/foo/bar/// to /, and ~/foo/bar/~/ to ~/.
     (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)
 
+    ;; vertico directory
+    (add-hook 'rfn-eshadow-update-overlay #'vertico-directory-tidy)
+
     ;; Enable recursive minibuffers
     (setq enable-recursive-minibuffers t)
 
@@ -467,8 +448,23 @@
 
     :config
     (define-key vertico-map (kbd "C-.") 'spacemacs/embark-select)
+
+    ;; vertico-quick
+    (define-key vertico-map "\M-q" #'vertico-quick-insert)
+    (define-key vertico-map "\C-q" #'vertico-quick-exit)
+
+    ;; vertico-repeat
+    (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
+    (spacemacs/set-leader-keys
+      "rl" 'vertico-repeat-previous
+      "rL" 'vertico-repeat-select
+      "sl" 'vertico-repeat-previous
+      "sL" 'vertico-repeat-select)
+
     (setq read-minibuffer-restore-windows nil)
+    (keymap-global-set "M-S" #'vertico-suspend)
     (define-key minibuffer-local-map (kbd "M-j") #'spacemacs/split-window-dwim)
+    (define-key vertico-map (kbd "C-h") #'vertico-directory-delete-char)
     (define-key vertico-map (kbd "M-RET") #'vertico-exit-input)
     (define-key vertico-map (kbd "C-SPC") #'spacemacs/embark-preview)
     (define-key vertico-map (kbd "C-j") #'vertico-next)
@@ -478,24 +474,6 @@
     (define-key vertico-map (kbd "C-M-k") #'spacemacs/previous-candidate-preview)
     (define-key vertico-map (kbd "C-S-k") #'vertico-previous-group)
     (define-key vertico-map (kbd "C-r") #'consult-history)))
-
-(defun compleseus/init-vertico-quick ()
-  (use-package vertico-quick
-    :after vertico
-    :init
-    (define-key vertico-map "\M-q" #'vertico-quick-insert)
-    (define-key vertico-map "\C-q" #'vertico-quick-exit)))
-
-(defun compleseus/init-vertico-repeat ()
-  (use-package vertico-repeat
-    :after vertico
-    :init
-    (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
-    (spacemacs/set-leader-keys
-      "rl" 'vertico-repeat-previous
-      "rL" 'vertico-repeat-select
-      "sl" 'vertico-repeat-previous
-      "sL" 'vertico-repeat-select)))
 
 (defun compleseus/init-vertico-posframe ()
   (use-package vertico-posframe
