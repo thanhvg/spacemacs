@@ -99,11 +99,12 @@
   (use-package edebug
     :defer t
     :config
-    (spacemacs/declare-prefix-for-minor-mode 'edebug-mode "ma" "edebug-actions")
+    ;; TODO while this won't work and if if is ran after bind-map it will clear bind-map
+    ;; (spacemacs/declare-prefix-for-minor-mode 'edebug-mode "ma" "edebug-actions")
     (bind-map edebug-global-map
       :minor-modes (edebug-mode)
-      :keys ((concat dotspacemacs-emacs-leader-key " ma") (concat dotspacemacs-major-mode-emacs-leader-key "a"))
-      :evil-keys ((concat dotspacemacs-leader-key " ma") (concat dotspacemacs-major-mode-leader-key "a"))
+      :keys ((concat dotspacemacs-emacs-leader-key " ma") (concat dotspacemacs-major-mode-emacs-leader-key " a"))
+      :evil-keys ((concat dotspacemacs-leader-key " ma") (concat dotspacemacs-major-mode-leader-key " a"))
       :evil-states (normal motion visual evilified))
     :init
     ;; key bindings
