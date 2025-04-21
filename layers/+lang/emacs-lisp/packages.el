@@ -253,7 +253,7 @@
   (use-package macrostep
     :defer t
     :init
-    (evil-define-key 'normal macrostep-keymap "q" 'macrostep-collapse-all)
+    (evil-define-key 'normal macrostep-mode-map "q" 'macrostep-collapse-all)
     (spacemacs|define-transient-state macrostep
       :title "MacroStep Transient State"
       :doc "\n[_e_] expand [_c_] collapse [_n_/_N_] next/previous [_q_] quit"
