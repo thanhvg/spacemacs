@@ -24,7 +24,11 @@
 
 (defconst llm-client-packages
   '((ellama :toggle llm-client-enable-ellama)
+    embark
     (gptel :toggle llm-client-enable-gptel)
+    (gptel-quick :toggle llm-client-enable-gptel
+                 :location (recipe :fetcher github
+                                   :repo "/karthink/gptel-quick" :files ("*.el")))
     (aidermacs :location built-in)
     ;; (aidermacs :location
     ;;        (recipe :fetcher github
@@ -76,6 +80,15 @@
       "agf" 'gptel-add-file                 ; Add a file
       "ago" 'gptel-org-set-topic            ; Set topic in Org-mode
       "agp" 'gptel-org-set-properties)))    ; Set properties in Org-mode
+
+(defun llm-client/init-gptel-quick ()
+  (use-package gptel-quick
+    :defer t))
+
+(defun llm-client/pre-init-embark ()
+  (spacemacs|use-package-add-hook embark
+    :post-config
+    (keymap-set embark-general-map "?" #'gptel-quick)))
 
 (defun llm-client/post-init-org ()
   "Set up Org-mode keybindings for GPTel."
