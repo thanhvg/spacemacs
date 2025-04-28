@@ -66,6 +66,7 @@
     ;; set up keybindings
     (spacemacs/declare-prefix "$g" "Gptel")
     (spacemacs/set-leader-keys
+      "$gd" 'spacemacs/gptel-add-code-doc		; code doc gen
       "$gg" 'gptel                          ; Start a new GPTel session
       "$gs" 'spacemacs//gptel-send-wrapper  ; Send a message to GPTel
       "$gq" 'spacemacs//gptel-abort-wrapper ; Abort any active GPTel process
