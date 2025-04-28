@@ -25,6 +25,7 @@
 (defconst llm-client-packages
   '((ellama :toggle llm-client-enable-ellama)
     embark
+    evedel
     (gptel :toggle llm-client-enable-gptel)
     (gptel-quick :toggle llm-client-enable-gptel
                  :location (recipe :fetcher github
@@ -88,6 +89,47 @@
   (spacemacs|use-package-add-hook embark
     :post-config
     (keymap-set embark-general-map "?" #'gptel-quick)))
+
+(defun llm-client/init-evedel ()
+  "Initialize the evedel package.
+
+This function configures the `evedel` package for use with Spacemacs.
+It sets `evedel-empty-tag-query-matches-all` to `nil` and defines
+Spacemacs leader key bindings for various `evedel` functions.
+
+`evedel` is used for managing directives and references within Emacs,
+particularly in the context of literate programming and documentation.
+
+Key bindings are set under the `SPC y e` prefix (where `SPC` is the
+Spacemacs leader key).  For example, `SPC y e r` calls
+`evedel-create-reference`.
+"
+  (use-package evedel
+    :defer t
+    :config
+    (customize-set-variable 'evedel-empty-tag-query-matches-all nil)
+    :init
+    (spacemacs/set-leader-keys
+      "yer" 'evedel-create-reference
+      "yed" 'evedel-create-directive
+      "yes" 'evedel-save-instructions
+      "yel" 'evedel-load-instructions
+      "yep" 'evedel-process-directives
+      "yem" 'evedel-modify-directive
+      "yeC" 'evedel-modify-reference-commentary
+      "yek" 'evedel-delete-instructions
+      "yec" 'evedel-convert-instructions
+      "yen" 'evedel-next-instruction
+      "yep" 'evedel-previous-instruction
+      "ye." 'evedel-cycle-instructions-at-point
+      "yet" 'evedel-add-tags
+      "yeT" 'evedel-remove-tags
+      "yeD" 'evedel-modify-directive-tag-query
+      "yeP" 'evedel-preview-directive-prompt
+      "yeu" 'evedel-directive-undo
+      "yeU" (lambda ()
+              (interactive)
+              (evedel-directive-undo t)))))
 
 (defun llm-client/post-init-org ()
   "Set up Org-mode keybindings for GPTel."
