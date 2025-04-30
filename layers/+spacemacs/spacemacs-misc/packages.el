@@ -27,6 +27,8 @@
         dumb-jump
         deadgrep
         grep
+        (timeout :location (recipe :fetcher github
+                                   :repo "/karthink/timeout" :files ("*.el")))
         wgrep))
 
 (defun spacemacs-misc/init-dumb-jump ()
@@ -78,6 +80,10 @@
     (spacemacs/set-leader-keys "sj" #'deadgrep)
     :config
     (evil-define-key 'normal deadgrep-mode-map "o" #'spacemacs/ace-link-deadgrep)))
+
+(defun spacemacs-misc/init-timeout ()
+  (use-package timeout
+    :defer t))
 
 (defun spacemacs-misc/pre-init-evil-collection ()
   (add-to-list 'spacemacs-evil-collection-allowed-list 'deadgrep))
