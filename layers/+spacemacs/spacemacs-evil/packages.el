@@ -46,7 +46,7 @@
         evil-visual-mark-mode
         evil-visualstar
         (hs-minor-mode :location built-in)
-        vi-tilde-fringe
+        ;; vi-tilde-fringe
         (term-cursor :location (recipe
                                :fetcher github
                                :repo "denrat/term-cursor.el"))
@@ -407,26 +407,26 @@
     :init
     (global-term-cursor-mode)))
 
-(defun spacemacs-evil/init-vi-tilde-fringe ()
-  (spacemacs|do-after-display-system-init
-    (use-package vi-tilde-fringe
-      :init
-      (global-vi-tilde-fringe-mode)
-      (spacemacs|add-toggle vi-tilde-fringe
-        :mode global-vi-tilde-fringe-mode
-        :documentation
-        "Globally display a ~ on empty lines in the fringe."
-        :evil-leader "T~")
-      ;; don't enable it on some special buffers
-      (with-current-buffer spacemacs-buffer-name
-        (spacemacs/disable-vi-tilde-fringe))
-      (add-hook 'which-key-init-buffer-hook 'spacemacs/disable-vi-tilde-fringe)
-      ;; after a major mode is loaded, check if the buffer is read only
-      ;; if so, disable vi-tilde-fringe-mode
-      (add-hook 'after-change-major-mode-hook
-                'spacemacs/disable-vi-tilde-fringe-read-only)
-      ;; TODO move this hook if/when we have a layer for eww
-      (spacemacs/add-to-hooks 'spacemacs/disable-vi-tilde-fringe
-                              '(eww-mode-hook))
-      :config
-      (spacemacs|hide-lighter vi-tilde-fringe-mode))))
+;; (defun spacemacs-evil/init-vi-tilde-fringe ()
+;;   (spacemacs|do-after-display-system-init
+;;     (use-package vi-tilde-fringe
+;;       :init
+;;       (global-vi-tilde-fringe-mode)
+;;       (spacemacs|add-toggle vi-tilde-fringe
+;;         :mode global-vi-tilde-fringe-mode
+;;         :documentation
+;;         "Globally display a ~ on empty lines in the fringe."
+;;         :evil-leader "T~")
+;;       ;; don't enable it on some special buffers
+;;       (with-current-buffer spacemacs-buffer-name
+;;         (spacemacs/disable-vi-tilde-fringe))
+;;       (add-hook 'which-key-init-buffer-hook 'spacemacs/disable-vi-tilde-fringe)
+;;       ;; after a major mode is loaded, check if the buffer is read only
+;;       ;; if so, disable vi-tilde-fringe-mode
+;;       (add-hook 'after-change-major-mode-hook
+;;                 'spacemacs/disable-vi-tilde-fringe-read-only)
+;;       ;; TODO move this hook if/when we have a layer for eww
+;;       (spacemacs/add-to-hooks 'spacemacs/disable-vi-tilde-fringe
+;;                               '(eww-mode-hook))
+;;       :config
+;;       (spacemacs|hide-lighter vi-tilde-fringe-mode))))
