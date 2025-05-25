@@ -51,7 +51,7 @@
     multi-line
     (undo-tree :toggle (eq 'undo-tree dotspacemacs-undo-system))
     (undo-fu :toggle (eq 'undo-fu dotspacemacs-undo-system))
-    (undo-fu-session :toggle (not (eq 'undo-tree dotspacemacs-undo-system)))
+    (undo-fu-session :toggle 'nil)
     (vundo :toggle (not (eq 'undo-tree dotspacemacs-undo-system)))
     multifiles
     (unkillable-scratch :toggle dotspacemacs-scratch-buffer-unkillable)
