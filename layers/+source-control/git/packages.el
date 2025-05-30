@@ -24,6 +24,12 @@
 (defconst git-packages
   '(
     (code-review :location (recipe :fetcher github :repo "doomelpa/code-review"))
+    (difftastic :location (recipe :fetcher github
+                                  :repo "pkryger/difftastic.el"
+                                  :files ("difftastic.el")))
+    (difftastic-bindings :location (recipe :fetcher github
+                                           :repo "pkryger/difftastic.el"
+                                           :files ("difftastic-bindings.el")))
     emojify
     evil-collection
     evil-surround
@@ -49,6 +55,30 @@
     smeargle
     transient))
 
+(defun git/init-difftastic ()
+  (use-package difftastic
+    :after magit))
+
+(defun git/init-difftastic-bindings ()
+  (use-package difftastic-bindings
+    :after difftastic
+    :init (setq difftastic-bindings-alist
+                '((((prefixes .  ((magit-diff (-1 -1) magit-diff))))
+                   .
+                   (("M-d" difftastic-magit-diff "Difftastic diff (dwim)")
+                    ("M-c" difftastic-magit-show "Difftastic show")))
+                  (((prefixes . ((magit-blame "b" magit-blame)))
+                    (keymaps . ((magit-blame-read-only-mode-map . magit-blame))))
+                   .
+                   (("M-d" difftastic-magit-show "Difftastic show")))
+                  (((prefixes . ((magit-file-dispatch (0 1 -1) magit-files))))
+                   .
+                   (("M-d" difftastic-magit-diff-buffer-file "Difftastic")))
+                  (((keymaps . ((dired-mode-map . dired))))
+                   .
+                   (("M-=" difftastic-dired-diff)))))
+
+    :config (difftastic-bindings-mode)))
 
 (defun git/pre-init-golden-ratio ()
   (spacemacs|use-package-add-hook golden-ratio
