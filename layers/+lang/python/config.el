@@ -51,7 +51,7 @@ If `nil' then `anaconda' is the default backend unless the `lsp' layer is used."
            (eq python-lsp-server 'pylsp))
       'lsp
     'yapf)
-  "The formatter to use. Possible values are `yapf', `black', `ruff' and `lsp'.
+  "The formatter to use. Possible values are `yapf', `black' and `lsp'.
 The default formatter is `yapf' unless both the `lsp' layer is used,
 and `python-lsp-server' is `pylsp' (pyright does not support formatting).")
 
@@ -87,7 +87,6 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
 
 (defvar python-sort-imports-on-save nil
   "If non-nil, automatically sort imports on save.")
-(put 'python-sort-imports-on-save 'safe-local-variable 'booleanp)
 
 (defvar python-enable-importmagic nil
   "If non-nil, enable the importmagic feature.")
@@ -104,6 +103,8 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
 (defvar spacemacs--python-poetry-modes nil
   "List of major modes where to add poetry support.")
 
+(defvar spacemacs--python-shell-interpreter-origin nil
+  "Origin python-shell-interpreter value.")
 ;; inferior-python-mode needs these variables to be defined.  The python
 ;; package declares them but does not initialize them.
 (defvar python-shell--interpreter nil)
