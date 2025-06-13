@@ -26,7 +26,7 @@
     company
     dap-mode
     (company-go :requires company
-                :toggle (eq go-backend 'go-mode))
+                :toggle (eq go-backend 'go-ts-mode))
     eldoc
     flycheck
     (flycheck-golangci-lint :toggle (and go-use-golangci-lint
@@ -37,7 +37,7 @@
     go-gen-test
     go-guru
     go-impl
-    go-mode
+    go-ts-mode
     go-rename
     go-tag
     godoctor
@@ -48,7 +48,7 @@
     :defer t
     :init (spacemacs|add-company-backends
             :backends company-go
-            :modes go-mode
+            :modes go-ts-mode
             :variables company-go-show-annotation t)))
 
 (defun go/post-init-company ()
@@ -56,14 +56,14 @@
 
 (defun go/pre-init-dap-mode ()
   (when (eq go-backend 'lsp)
-    (add-to-list 'spacemacs--dap-supported-modes 'go-mode))
+    (add-to-list 'spacemacs--dap-supported-modes 'go-ts-mode))
   (add-hook 'go-mode-local-vars-hook #'spacemacs//go-setup-dap))
 
 (defun go/post-init-eldoc ()
   (add-hook 'go-mode-local-vars-hook #'spacemacs//go-setup-eldoc))
 
 (defun go/post-init-flycheck ()
-  (spacemacs/enable-flycheck 'go-mode))
+  (spacemacs/enable-flycheck 'go-ts-mode))
 
 (defun go/init-flycheck-golangci-lint ()
   (use-package flycheck-golangci-lint
@@ -80,15 +80,15 @@
 (defun go/init-go-fill-struct ()
   (use-package go-fill-struct
     :defer t
-    :init (spacemacs/set-leader-keys-for-major-mode 'go-mode
+    :init (spacemacs/set-leader-keys-for-major-mode 'go-ts-mode
             "rs" 'go-fill-struct)))
 
 (defun go/init-go-gen-test ()
   (use-package go-gen-test
     :defer t
     :init
-    (spacemacs/declare-prefix-for-mode 'go-mode "mtg" "generate")
-    (spacemacs/set-leader-keys-for-major-mode 'go-mode
+    (spacemacs/declare-prefix-for-mode 'go-ts-mode "mtg" "generate")
+    (spacemacs/set-leader-keys-for-major-mode 'go-ts-mode
       "tgg" 'go-gen-test-dwim
       "tgf" 'go-gen-test-exported
       "tgF" 'go-gen-test-all)))
@@ -97,8 +97,8 @@
   (use-package go-impl
     :defer t
     :init
-    (spacemacs/declare-prefix-for-mode 'go-mode "mf" "guru")
-    (spacemacs/set-leader-keys-for-major-mode 'go-mode
+    (spacemacs/declare-prefix-for-mode 'go-ts-mode "mf" "guru")
+    (spacemacs/set-leader-keys-for-major-mode 'go-ts-mode
       "f<" 'go-guru-callers
       "f>" 'go-guru-callees
       "fc" 'go-guru-peers
@@ -115,11 +115,11 @@
 (defun go/init-go-impl ()
   (use-package go-impl
     :defer t
-    :init (spacemacs/set-leader-keys-for-major-mode 'go-mode
+    :init (spacemacs/set-leader-keys-for-major-mode 'go-ts-mode
             "ri" 'go-impl)))
 
-(defun go/init-go-mode ()
-  (use-package go-mode
+(defun go/init-go-ts-mode ()
+  (use-package go-ts-mode
     :hook ((go-mode-local-vars . spacemacs//go-set-tab-width)
            (go-mode-local-vars . spacemacs//go-setup-backend)
            (go-mode-local-vars . spacemacs//go-setup-format))
@@ -131,17 +131,17 @@
       :status go-test-verbose
       :on (setq go-test-verbose t)
       :off (setq go-test-verbose nil)
-      :evil-leader-for-mode (go-mode . "tv"))
+      :evil-leader-for-mode (go-ts-mode . "tv"))
     :config
-    (spacemacs/declare-prefix-for-mode 'go-mode "me" "playground")
-    (spacemacs/declare-prefix-for-mode 'go-mode "mg" "goto")
-    (spacemacs/declare-prefix-for-mode 'go-mode "mh" "help")
-    (spacemacs/declare-prefix-for-mode 'go-mode "mi" "imports")
-    (spacemacs/declare-prefix-for-mode 'go-mode "mr" "refactoring")
-    (spacemacs/declare-prefix-for-mode 'go-mode "mt" "test")
-    (spacemacs/declare-prefix-for-mode 'go-mode "mT" "toggle")
-    (spacemacs/declare-prefix-for-mode 'go-mode "mx" "execute")
-    (spacemacs/set-leader-keys-for-major-mode 'go-mode
+    (spacemacs/declare-prefix-for-mode 'go-ts-mode "me" "playground")
+    (spacemacs/declare-prefix-for-mode 'go-ts-mode "mg" "goto")
+    (spacemacs/declare-prefix-for-mode 'go-ts-mode "mh" "help")
+    (spacemacs/declare-prefix-for-mode 'go-ts-mode "mi" "imports")
+    (spacemacs/declare-prefix-for-mode 'go-ts-mode "mr" "refactoring")
+    (spacemacs/declare-prefix-for-mode 'go-ts-mode "mt" "test")
+    (spacemacs/declare-prefix-for-mode 'go-ts-mode "mT" "toggle")
+    (spacemacs/declare-prefix-for-mode 'go-ts-mode "mx" "execute")
+    (spacemacs/set-leader-keys-for-major-mode 'go-ts-mode
       "="  'gofmt
       "eb" 'go-play-buffer
       "ed" 'go-download-play
@@ -163,20 +163,20 @@
 (defun go/init-go-rename ()
   (use-package go-rename
     :defer t
-    :init (spacemacs/set-leader-keys-for-major-mode 'go-mode
+    :init (spacemacs/set-leader-keys-for-major-mode 'go-ts-mode
             "rN" 'go-rename)))
 
 (defun go/init-go-tag ()
   (use-package go-tag
     :defer t
-    :init (spacemacs/set-leader-keys-for-major-mode 'go-mode
+    :init (spacemacs/set-leader-keys-for-major-mode 'go-ts-mode
             "rf" 'go-tag-add
             "rF" 'go-tag-remove)))
 
 (defun go/init-godoctor ()
   (use-package godoctor
     :defer t
-    :init (spacemacs/set-leader-keys-for-major-mode 'go-mode
+    :init (spacemacs/set-leader-keys-for-major-mode 'go-ts-mode
             "rd" 'godoctor-godoc
             "re" 'godoctor-extract
             "rn" 'godoctor-rename
