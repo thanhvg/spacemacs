@@ -703,9 +703,9 @@ to `auto', tags may not be properly aligned. "
      `(linum-relative-current-face ((,class (:foreground ,comp))))
 
 ;;;;; lsp-mode
-     `(lsp-face-highlight-read ((,class (:background ,yellow-bg))))
-     `(lsp-face-highlight-write ((,class (:background ,green-bg-s))))
-     `(lsp-face-highlight-textual ((,class (:background ,green-bg))))
+     ;; `(lsp-face-highlight-read ((,class (:background ,yellow-bg))))
+     ;; `(lsp-face-highlight-write ((,class (:background ,green-bg-s))))
+     ;; `(lsp-face-highlight-textual ((,class (:background ,green-bg))))
 
 ;;;;; lsp-ui
      `(lsp-ui-doc-background ((,class (:background ,bg2))))
