@@ -455,10 +455,13 @@ to `auto', tags may not be properly aligned. "
      `(evil-goggles-undo-redo-remove-face ((,class (:background ,red-bg-s :foreground ,red))))
 
 ;;;;; evil-mc
-     `(evil-mc-cursor-bar-face ((,class (:foreground ,aqua))))
-     `(evil-mc-cursor-default-face ((,class (:background ,aqua :foreground ,bg4))))
-     `(evil-mc-cursor-hbar-face ((,class (:foreground ,aqua))))
+     ;; `(evil-mc-cursor-bar-face ((,class (:foreground ,aqua))))
+     ;; `(evil-mc-cursor-default-face ((,class (:background ,aqua :foreground ,bg4))))
+     ;; `(evil-mc-cursor-hbar-face ((,class (:foreground ,aqua))))
      `(evil-mc-region-face ((,class (:inherit highlight))))
+     `(evil-mc-cursor-bar-face ((,class (:background ,aqua :height 0.3))))
+     `(evil-mc-cursor-default-face ((,class (:background ,aqua :inverse-video nil))))
+     `(evil-mc-cursor-hbar-face ((,class (:underline (:color ,aqua)))))
 
 ;;;;; flycheck
      `(flycheck-error
