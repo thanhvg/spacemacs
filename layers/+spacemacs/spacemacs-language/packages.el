@@ -35,7 +35,7 @@
 
 (defun spacemacs-language/init-dictionary ()
   (spacemacs/set-leader-keys
-    "xww" 'dictionary-lookup-definition))
+    "xww" 'spacemacs/dictionary-search))
 
 (defun spacemacs-language/init-google-translate ()
   (use-package google-translate
