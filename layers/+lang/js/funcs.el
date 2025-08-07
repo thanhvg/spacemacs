@@ -1,6 +1,6 @@
-;;; funcs.el --- Javascript Layer functions File for Spacemacs
+;;; funcs.el --- Javascript Layer functions File for Spacemacs  -*- lexical-binding: t; -*-
 ;;
-;; Copyright (c) 2012-2020 Sylvain Benner & Contributors
+;; Copyright (c) 2012-2020 Sylvain Benner & Contributor1s
 ;;
 ;; Author: Thanh Vuong <thanhvg@gmail.com>
 ;; URL: https://github.com/thanhvg

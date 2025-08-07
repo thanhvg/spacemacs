@@ -1,4 +1,4 @@
-;;; config.el --- Spacemacs-evil Layer Configuration File for Spacemacs
+;;; config.el --- Spacemacs-evil Layer Configuration File for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2022 Sylvain Benner & Contributors
 ;;
