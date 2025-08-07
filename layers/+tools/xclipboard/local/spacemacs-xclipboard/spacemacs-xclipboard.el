@@ -1,4 +1,4 @@
-;;; spacemacs-xclipboard.el --- Add support for xclipboard in the terminal  -*- lexical-binding: nil; -*-
+;;; spacemacs-xclipboard.el --- Add support for xclipboard in the terminal  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

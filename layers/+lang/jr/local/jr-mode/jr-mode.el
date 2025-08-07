@@ -1,4 +1,4 @@
-;; -*- lexical-binding: nil; -*-
+;; -*- lexical-binding: t; -*-
 
 ;; Template taken from http://cc-mode.sourceforge.net/derived-mode-ex.el
 ;; Author:     Bryan Bell

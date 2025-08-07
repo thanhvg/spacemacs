@@ -1,4 +1,4 @@
-;;; packages.el --- Spacemacs Navigation Layer packages File  -*- lexical-binding: nil; -*-
+;;; packages.el --- Spacemacs Navigation Layer packages File  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

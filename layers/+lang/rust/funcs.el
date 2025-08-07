@@ -1,4 +1,4 @@
-;;; funcs.el --- rust Layer functions File for Spacemacs  -*- lexical-binding: nil; -*-
+;;; funcs.el --- rust Layer functions File for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

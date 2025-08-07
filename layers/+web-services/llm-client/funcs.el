@@ -1,4 +1,4 @@
-;; -*- lexical-binding: nil; -*-
+;; -*- lexical-binding: t; -*-
 (defun spacemacs//gptel-send-wrapper ()
   "Wrapper function for gptel-send that sets the flag."
   (interactive)

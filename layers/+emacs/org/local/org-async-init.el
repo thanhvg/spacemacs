@@ -1,4 +1,4 @@
-;; -*- lexical-binding: nil; -*-
+;; -*- lexical-binding: t; -*-
 (require 'package)
 (setq package-enable-at-startup nil)
 (package-initialize)

@@ -1,4 +1,4 @@
-;;; funcs.el --- docker Layer functions File for Spacemacs  -*- lexical-binding: nil; -*-
+;;; funcs.el --- docker Layer functions File for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

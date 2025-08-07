@@ -1,4 +1,4 @@
-;;; packages.el --- Djvu Layer Packages File for Spacemacs  -*- lexical-binding: nil; -*-
+;;; packages.el --- Djvu Layer Packages File for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2021-2025 Sylvain Benner & Contributors
 ;;

@@ -1,4 +1,4 @@
-;;; config.el --- (const eaf configuration file  -*- lexical-binding: nil; -*-
+;;; config.el --- (const eaf configuration file  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2021-2025 Sylvain Benner & Contributors
 ;;

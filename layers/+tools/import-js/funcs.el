@@ -1,4 +1,4 @@
-;;; funcs.el --- import-js Layer packages file for Spacemacs  -*- lexical-binding: nil; -*-
+;;; funcs.el --- import-js Layer packages file for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;
