@@ -1,4 +1,4 @@
-;;; packages.el --- Spacemacs Editing Layer packages File  -*- lexical-binding: nil; -*-
+;;; packages.el --- Spacemacs Editing Layer packages File  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;
@@ -135,12 +135,11 @@
 (defun spacemacs-editing/init-dired-quick-sort ()
   (use-package dired-quick-sort
     :defer t
-    :init
+    :config
     (define-advice dired-noselect (:before (&rest _) quick-sort-setup)
       (let ((dired-quick-sort-suppress-setup-warning 'message))
         (dired-quick-sort-setup))
       (advice-remove 'dired-noselect 'dired-noselect@quick-sort-setup))
-    :config
     (evil-define-key 'normal dired-mode-map "s" 'hydra-dired-quick-sort/body)))
 
 (defun spacemacs-editing/init-drag-stuff ()
