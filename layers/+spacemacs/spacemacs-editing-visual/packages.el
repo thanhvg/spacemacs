@@ -1,4 +1,4 @@
-;;; packages.el --- Spacemacs Editing Visual Layer packages File  -*- lexical-binding: nil; -*-
+;;; packages.el --- Spacemacs Editing Visual Layer packages File  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

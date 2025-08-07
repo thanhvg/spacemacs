@@ -1,4 +1,4 @@
-;;; holy-mode.el --- Enter the church of Emacs  -*- lexical-binding: nil; -*-
+;;; holy-mode.el --- Enter the church of Emacs  -*- lexical-binding: t; -*-
 
 ;; Copyright (c) 2015-2025 Sylvain Benner
 ;;

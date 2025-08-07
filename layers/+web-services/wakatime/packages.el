@@ -1,4 +1,4 @@
-;; -*- lexical-binding: nil; -*-
+;; -*- lexical-binding: t; -*-
 (setq wakatime-packages '(wakatime-mode))
 
 (defun wakatime/init-wakatime-mode ()

@@ -1,4 +1,4 @@
-;;; spacemacs-whitespace-cleanup.el --- Cleanup whitspace automatically.  -*- lexical-binding: nil; -*-
+;;; spacemacs-whitespace-cleanup.el --- Cleanup whitspace automatically.  -*- lexical-binding: t; -*-
 
 ;; Author: Sylvain Benner <sylvain.benner@gmail.com>
 ;; Keywords: editing, whitespace, spacemacs

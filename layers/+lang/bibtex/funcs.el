@@ -1,4 +1,4 @@
-;; -*- lexical-binding: nil; -*-
+;; -*- lexical-binding: t; -*-
 (defun spacemacs/bibtex-find-bib-file ()
   (interactive)
   (pop-to-buffer

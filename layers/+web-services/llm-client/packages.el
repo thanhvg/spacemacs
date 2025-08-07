@@ -1,4 +1,4 @@
-;;; packages.el --- Large Language Model Client for Spacemacs  -*- lexical-binding: nil; -*-
+;;; packages.el --- Large Language Model Client for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

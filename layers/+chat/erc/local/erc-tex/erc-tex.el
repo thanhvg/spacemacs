@@ -1,4 +1,4 @@
-;;; erc-tex.el --- LaTeX mathematical expressions rendering for ERC  -*- lexical-binding: nil; -*-
+;;; erc-tex.el --- LaTeX mathematical expressions rendering for ERC  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2009-2024 David Vazquez
 

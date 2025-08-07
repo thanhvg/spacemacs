@@ -1,4 +1,4 @@
-;;; init.el --- Spacemacs Initialization File -*- no-byte-compile: t; lexical-binding: nil; -*-
+;;; init.el --- Spacemacs Initialization File -*- no-byte-compile: t; lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

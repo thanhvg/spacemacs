@@ -1,4 +1,4 @@
-;;; funcs.el --- Version control functions File  -*- lexical-binding: nil; -*-
+;;; funcs.el --- Version control functions File  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

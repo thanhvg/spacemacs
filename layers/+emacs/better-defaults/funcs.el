@@ -1,4 +1,4 @@
-;;; funcs.el --- Better Emacs Defaults Layer functions File  -*- lexical-binding: nil; -*-
+;;; funcs.el --- Better Emacs Defaults Layer functions File  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

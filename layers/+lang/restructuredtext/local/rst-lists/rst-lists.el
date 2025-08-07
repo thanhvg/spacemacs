@@ -1,4 +1,4 @@
-;;; rst-lists.el --- Build Sphinx projects.  -*- lexical-binding: nil; -*-
+;;; rst-lists.el --- Build Sphinx projects.  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2012-2024 Wei-Wei Guo.
 
