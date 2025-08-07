@@ -24,6 +24,7 @@
 
 (defconst xclipboard-packages
   '((spacemacs-xclipboard :location local)
+    clipetty
     (cliphist :toggle xclipboard-enable-cliphist)))
 
 (defun xclipboard/init-cliphist ()
@@ -39,3 +40,9 @@
     :init (spacemacs/set-leader-keys
             "xp" 'spacemacs/xclipboard-paste
             "xy" 'spacemacs/xclipboard-copy)))
+
+(defun xclipboard/init-clipetty ()
+  (use-package clipetty
+    :defer t
+    :init (spacemacs/set-leader-keys
+             "xk" 'clipetty-kill-ring-save)))
