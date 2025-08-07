@@ -1,4 +1,4 @@
-;;; packages.el --- evil-textobj-tree-sitter layer packages file for Spacemacs.
+;;; packages.el --- evil-textobj-tree-sitter layer packages file for Spacemacs.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2024 Sylvain Benner & Contributors
 ;;

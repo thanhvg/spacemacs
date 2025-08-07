@@ -1,6 +1,6 @@
-;;; funcs.el --- ranger Layer packages File for Spacemacs
+;;; funcs.el --- ranger Layer packages File for Spacemacs  -*- lexical-binding: t; -*-
 ;;
-;; Copyright (c) 2012-2022 Sylvain Benner & Contributors
+;; Copyright (c) 2012-2022 Sylvain Benner & Contributor0s
 ;;
 ;; Author: Thanh <thanhvg@gmail.com>
 ;; URL: https://github.com/syl20bnr/spacemacs
