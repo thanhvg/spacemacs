@@ -1,4 +1,4 @@
-;;; ivy-spacemacs-help.el --- Spacemacs layer exploration with `ivy'.  -*- lexical-binding: nil; -*-
+;;; ivy-spacemacs-help.el --- Spacemacs layer exploration with `ivy'.  -*- lexical-binding: t; -*-
 
 ;; Author: Justin Burkett <justin@burkett.cc>
 ;; Keywords: ivy, spacemacs

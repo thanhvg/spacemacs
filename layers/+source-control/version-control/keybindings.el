@@ -1,4 +1,4 @@
-;;; keybindings.el --- Version control keybindings  -*- lexical-binding: nil; -*-
+;;; keybindings.el --- Version control keybindings  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

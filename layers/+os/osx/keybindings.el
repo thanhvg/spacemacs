@@ -1,4 +1,4 @@
-;;; keybindings.el --- OSX Layer keybindings File for Spacemacs  -*- lexical-binding: nil; -*-
+;;; keybindings.el --- OSX Layer keybindings File for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

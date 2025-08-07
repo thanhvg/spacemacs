@@ -1,4 +1,4 @@
-;;; early-init.el --- Spacemacs Early Init File -*- no-byte-compile: t; lexical-binding: nil; -*-
+;;; early-init.el --- Spacemacs Early Init File -*- no-byte-compile: t; lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2020-2025 Sylvain Benner & Contributors
 ;;

@@ -1,4 +1,4 @@
-;;; org-export-ftest.el --- Spacemacs Org Export Functional Test File  -*- lexical-binding: nil; -*-
+;;; org-export-ftest.el --- Spacemacs Org Export Functional Test File  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

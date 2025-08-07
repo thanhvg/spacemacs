@@ -1,4 +1,4 @@
-;;; packages.el --- evil-better-jumper Layer Packages File for Spacemacs.  -*- lexical-binding: nil; -*-
+;;; packages.el --- evil-better-jumper Layer Packages File for Spacemacs.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

@@ -1,4 +1,4 @@
-;;; config.el --- Language Server Protocol Layer config file for Spacemacs  -*- lexical-binding: nil; -*-
+;;; config.el --- Language Server Protocol Layer config file for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

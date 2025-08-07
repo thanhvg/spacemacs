@@ -1,4 +1,4 @@
-;;; packages.el --- Protocol Buffers Layer packages File for Spacemacs  -*- lexical-binding: nil; -*-
+;;; packages.el --- Protocol Buffers Layer packages File for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

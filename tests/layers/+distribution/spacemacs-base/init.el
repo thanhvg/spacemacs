@@ -1,4 +1,4 @@
-;; -*- lexical-binding: nil; -*-
+;; -*- lexical-binding: t; -*-
 (defun dotspacemacs/layers ()
   (setq-default
    dotspacemacs-distribution 'spacemacs-base))
