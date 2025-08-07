@@ -1,4 +1,4 @@
-;;; hybrid-mode.el --- Put one foot in the church of Emacs  -*- lexical-binding: nil; -*-
+;;; hybrid-mode.el --- Put one foot in the church of Emacs  -*- lexical-binding: t; -*-
 
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

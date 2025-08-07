@@ -1,4 +1,4 @@
-;;; funcs.el --- ipython-notebook Layer function File for Spacemacs  -*- lexical-binding: nil; -*-
+;;; funcs.el --- ipython-notebook Layer function File for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

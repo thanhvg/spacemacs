@@ -1,4 +1,4 @@
-;;; funcs.el --- restclient Layer functions File  -*- lexical-binding: nil; -*-
+;;; funcs.el --- restclient Layer functions File  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

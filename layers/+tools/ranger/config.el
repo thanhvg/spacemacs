@@ -1,4 +1,4 @@
-;;; config.el --- ranger Layer config File for Spacemacs  -*- lexical-binding: nil; -*-
+;;; config.el --- ranger Layer config File for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2021 Sylvain Benner
 ;; Copyright (c) 2020-2025 Sylvain Benner & Contributors

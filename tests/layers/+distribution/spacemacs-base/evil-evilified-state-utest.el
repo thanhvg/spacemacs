@@ -1,4 +1,4 @@
-;;; evil-evilified-state-utest.el --- Spacemacs Unit Test File  -*- lexical-binding: nil; -*-
+;;; evil-evilified-state-utest.el --- Spacemacs Unit Test File  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;

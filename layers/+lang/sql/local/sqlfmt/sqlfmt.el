@@ -1,4 +1,4 @@
-;; -*- lexical-binding: nil; -*-
+;; -*- lexical-binding: t; -*-
 (defgroup sqlfmt nil
   "Easy sqlfmt invocation in Emacs"
   :group 'sql)

@@ -1,4 +1,4 @@
-;; -*- lexical-binding: nil; -*-
+;; -*- lexical-binding: t; -*-
 (setq vim-empty-lines-packages
       '(
         vim-empty-lines-mode

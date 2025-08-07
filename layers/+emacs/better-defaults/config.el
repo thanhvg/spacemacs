@@ -1,4 +1,4 @@
-;;; config.el --- Better Emacs Defaults Layer configuration variables File  -*- lexical-binding: nil; -*-
+;;; config.el --- Better Emacs Defaults Layer configuration variables File  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;
