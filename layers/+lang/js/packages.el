@@ -1,4 +1,4 @@
-;;; packages.el --- JS Layer packages File for Spacemacs
+;;; packages.el --- JS Layer packages File for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2020 Sylvain Benner & Contributors
 ;;

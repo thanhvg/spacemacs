@@ -1,4 +1,4 @@
-;;; packages.el --- lspce layer packages file for Spacemacs.
+;;; packages.el --- lspce layer packages file for Spacemacs.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2022 Sylvain Benner & Contributors
 ;;
