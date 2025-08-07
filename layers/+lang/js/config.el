@@ -1,4 +1,4 @@
-;;; config.el --- Javascript Layer configuration File for Spacemacs
+;;; config.el --- Javascript Layer configuration File for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2020 Sylvain Benner & Contributors
 ;;

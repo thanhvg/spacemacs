@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (defun spacemacs/node-nodejs-repl-set-key-bindings (mode)
   (spacemacs/declare-prefix-for-mode mode "ms" "nodejs-repl")
   (spacemacs/set-leader-keys-for-major-mode mode

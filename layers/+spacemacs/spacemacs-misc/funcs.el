@@ -1,4 +1,4 @@
-;; wgrep
+;; wgrep  -*- lexical-binding: t; -*-
 
 (defun spacemacs/grep-change-to-wgrep-mode ()
   (interactive)
