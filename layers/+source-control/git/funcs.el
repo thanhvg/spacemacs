@@ -1,4 +1,4 @@
-;;; funcs.el --- Colors Layer functions File  -*- lexical-binding: t; -*-
+;;; funcs.el --- Colors Layer functions File  -*- lexical-binding: nil; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;
