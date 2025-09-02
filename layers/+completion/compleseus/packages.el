@@ -368,7 +368,7 @@
       ;; when lsp is on stay away
       (if (bound-and-true-p lsp-completion-mode)
           (apply orig-fun args)
-        (let ((completion-styles '(basic partial-completion orderless)))
+        (let ((completion-styles '(basic partial-completion)))
           (apply orig-fun args))))
 
     ;; should be all in with orderless other wise the results are inconsistent.
