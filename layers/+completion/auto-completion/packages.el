@@ -23,6 +23,12 @@
 
 (defconst auto-completion-packages
       '(
+        ;; corfu and friends
+        corfu
+        cape 
+        ;; corfu-history
+        ;; corfu-popupinfo
+
         auto-yasnippet
         company
         (company-posframe :toggle auto-completion-use-company-posframe)
@@ -38,6 +44,90 @@
         smartparens
         yasnippet
         yasnippet-snippets))
+
+(defun auto-completion/init-corfu ()
+  (use-package corfu
+    :config
+    (setq
+     corfu-auto t
+     corfu-auto-delay 0.1
+     corfu-auto-prefix 2
+     ;; global-corfu-modes
+     ;; '((not erc-mode
+     ;;        circe-mode
+     ;;        help-mode
+     ;;        gud-mode
+     ;;        vterm-mode)
+     ;;   t)
+     corfu-cycle t
+     corfu-preselect 'prompt
+     corfu-count 16
+     corfu-max-width 120
+     corfu-on-exact-match nil
+     corfu-quit-at-boundary 'separator
+     corfu-quit-no-match corfu-quit-at-boundary
+     tab-always-indent 'complete)
+    
+    (add-to-list 'completion-category-overrides `(lsp-capf (styles ,@completion-styles)))
+    ;; (add-to-list 'corfu-auto-commands #'lispy-colon)
+    ;; (add-to-list 'corfu-continue-commands #'+corfu/move-to-minibuffer)
+    ;; (add-to-list 'corfu-continue-commands #'+corfu/smart-sep-toggle-escape)
+    (add-hook 'evil-insert-state-exit-hook #'corfu-quit)))
+
+(defun auto-completion/init-cape ()
+  (use-package cape
+                :defer t
+                :init
+                ;; (add-hook! 'prog-mode-hook
+                ;;            (defun +corfu-add-cape-file-h ()
+                ;;              (add-hook 'completion-at-point-functions #'cape-file -10 t)))
+                ;; ;; (add-hook! '(org-mode-hook markdown-mode-hook)
+                ;; ;;            (defun +corfu-add-cape-elisp-block-h ()
+                ;; ;;              (add-hook 'completion-at-point-functions #'cape-elisp-block 0 t)))
+                ;; ;; Enable Dabbrev completion basically everywhere as a fallback.
+                ;; (when (modulep! +dabbrev)
+                ;;   (setq cape-dabbrev-check-other-buffers t)
+                ;;   ;; Set up `cape-dabbrev' options.
+                ;;   (add-hook! '(prog-mode-hook
+                ;;                text-mode-hook
+                ;;                conf-mode-hook
+                ;;                comint-mode-hook
+                ;;                minibuffer-setup-hook
+                ;;                eshell-mode-hook)
+                ;;              (defun +corfu-add-cape-dabbrev-h ()
+                ;;                (add-hook 'completion-at-point-functions #'cape-dabbrev 20 t)))
+                ;;   (after! dabbrev
+                ;;           (setq dabbrev-friend-buffer-function #'+corfu-dabbrev-friend-buffer-p
+                ;;                 dabbrev-ignored-buffer-regexps
+                ;;                 '("\\` "
+                ;;                   "\\(?:\\(?:[EG]?\\|GR\\)TAGS\\|e?tags\\|GPATH\\)\\(<[0-9]+>\\)?")
+                ;;                 dabbrev-upcase-means-case-search t)
+                ;;           (add-to-list 'dabbrev-ignored-buffer-modes 'pdf-view-mode)
+                ;;           (add-to-list 'dabbrev-ignored-buffer-modes 'doc-view-mode)
+                ;;           (add-to-list 'dabbrev-ignored-buffer-modes 'tags-table-mode)))
+
+                ;; Make these capfs composable.
+                ;; (advice-add #'lsp-completion-at-point :around #'cape-wrap-noninterruptible)
+                ;; (advice-add #'lsp-completion-at-point :around #'cape-wrap-nonexclusive)
+                ;; (advice-add #'comint-completion-at-point :around #'cape-wrap-nonexclusive)
+                ;; (advice-add #'eglot-completion-at-point :around #'cape-wrap-nonexclusive)
+                ;; (advice-add #'pcomplete-completions-at-point :around #'cape-wrap-nonexclusive)
+                ;; From the `cape' readme. Without this, Eshell autocompletion is broken on
+
+                ))
+
+;; (defun auto-completion/init-corfu-history ()
+;;   (use-package corfu-history
+;;     :hook ((corfu-mode . corfu-history-mode))
+;;     :config
+;;     (with-eval-after-load 'savehist
+;;       (add-to-list 'savehist-additional-variables 'corfu-history))))
+
+;; (defun auto-completion/init-corfu-popupinfo ()
+;;   (use-package corfu-popupinfo
+;;     :hook ((corfu-mode . corfu-popupinfo-mode))
+;;     :config
+;;     (setq corfu-popupinfo-delay '(0.5 . 1.0))))
 
 (defun auto-completion/init-auto-yasnippet ()
   (use-package auto-yasnippet
