@@ -406,3 +406,11 @@ Disable smartparens and remember its initial state."
  Restore the initial state of smartparens."
   (when spacemacs--smartparens-enabled-initially
     (spacemacs//activate-smartparens)))
+
+
+(defun spacemacs//corfu-mode-setup ()
+  "This runs when `corfu-mode' is on or off."
+  (if corfu-mode
+      (progn
+        (add-hook 'completion-at-point-functions #'cape-dabbrev 99 t)
+        (add-hook 'completion-at-point-functions #'cape-file 100 t))))
