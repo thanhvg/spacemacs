@@ -47,7 +47,15 @@
 
 (defun auto-completion/init-corfu ()
   (use-package corfu
+    :bind
+    (:map corfu-map
+          ("RET" . corfu-complete) ;; TODO I want same behavior as company's RET auto select the first one
+          ("C-," . corfu-insert-separator)
+          ("C-j" . corfu-next)
+          ("C-k" . corfu-previous))
     :config
+    ;; may want to look at company solution
+    (define-key evil-insert-state-map (kbd "C-k") nil)
     (setq
      corfu-auto t
      corfu-auto-delay 0.1
@@ -72,7 +80,8 @@
     ;; (add-to-list 'corfu-auto-commands #'lispy-colon)
     ;; (add-to-list 'corfu-continue-commands #'+corfu/move-to-minibuffer)
     ;; (add-to-list 'corfu-continue-commands #'+corfu/smart-sep-toggle-escape)
-    (add-hook 'evil-insert-state-exit-hook #'corfu-quit)))
+    (add-hook 'evil-insert-state-exit-hook #'corfu-quit)
+    (add-hook 'corfu-mode-hook #'spacemacs//corfu-mode-setup)))
 
 (defun auto-completion/init-cape ()
   (use-package cape
