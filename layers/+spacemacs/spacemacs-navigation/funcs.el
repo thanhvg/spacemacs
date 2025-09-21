@@ -546,3 +546,56 @@ debug-init and load the given list of packages."
                            "(require 'use-package)"
                            load-packages-string ")"))
              args))))
+
+(defun spacemacs//winum-other-window-prefix (num)
+  "Display the buffer of the next command in a new window NUM."
+  (display-buffer-override-next-command
+   (lambda (buffer alist)
+     (let ((alist (append '((inhibit-same-window . t)) alist))
+           window type)
+       (setq window (window--display-buffer buffer (winum-get-window-by-number num) 'reuse alist))
+       (cons window 'reuse)))
+   nil "[other-window]")
+  (message "Display next command buffer in a window num %s ..." num))
+
+
+(defun spacemacs/winum-other-window-prefix-1 ()
+  (interactive)
+  (spacemacs//winum-other-window-prefix 1))
+
+(defun spacemacs/winum-other-window-prefix-2 ()
+  (interactive)
+  (spacemacs//winum-other-window-prefix 2))
+
+(defun spacemacs/winum-other-window-prefix-3 ()
+  (interactive)
+  (spacemacs//winum-other-window-prefix 3))
+
+(defun spacemacs/winum-other-window-prefix-4 ()
+  (interactive)
+  (spacemacs//winum-other-window-prefix 4))
+
+(defun spacemacs/winum-other-window-prefix-5 ()
+  (interactive)
+  (spacemacs//winum-other-window-prefix 5))
+
+(defun spacemacs/winum-other-window-prefix-6 ()
+  (interactive)
+  (spacemacs//winum-other-window-prefix 6))
+
+(defun spacemacs/winum-other-window-prefix-7 ()
+  (interactive)
+  (spacemacs//winum-other-window-prefix 7))
+
+(defun spacemacs/winum-other-window-prefix-8 ()
+  (interactive)
+  (spacemacs//winum-other-window-prefix 8))
+
+(defun spacemacs/winum-other-window-prefix-9 ()
+  (interactive)
+  (spacemacs//winum-other-window-prefix 9))
+
+
+(defun spacemacs/winum-other-window-prefix-0 ()
+  (interactive)
+  (spacemacs//winum-other-window-prefix 10))

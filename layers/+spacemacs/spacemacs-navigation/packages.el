@@ -481,6 +481,18 @@
     (define-key winum-keymap (kbd "M-7") 'winum-select-window-7)
     (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
     (define-key winum-keymap (kbd "M-9") 'winum-select-window-9)
+
+    (define-key winum-keymap (kbd "M-I 1") 'spacemacs/winum-other-window-prefix-1)
+    (define-key winum-keymap (kbd "M-I 2") 'spacemacs/winum-other-window-prefix-2)
+    (define-key winum-keymap (kbd "M-I 3") 'spacemacs/winum-other-window-prefix-3)
+    (define-key winum-keymap (kbd "M-I 4") 'spacemacs/winum-other-window-prefix-4)
+    (define-key winum-keymap (kbd "M-I 5") 'spacemacs/winum-other-window-prefix-5)
+    (define-key winum-keymap (kbd "M-I 6") 'spacemacs/winum-other-window-prefix-6)
+    (define-key winum-keymap (kbd "M-I 7") 'spacemacs/winum-other-window-prefix-7)
+    (define-key winum-keymap (kbd "M-I 8") 'spacemacs/winum-other-window-prefix-8)
+    (define-key winum-keymap (kbd "M-I 9") 'spacemacs/winum-other-window-prefix-9)
+    (define-key winum-keymap (kbd "M-I 0") 'spacemacs/winum-other-window-prefix-0)
+
     (winum-mode)))
 
 (defun spacemacs-navigation/init-disable-mouse ()
