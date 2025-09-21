@@ -49,6 +49,9 @@
     overseer
     rainbow-identifiers
     semantic
+    (semel :location (recipe
+                          :fetcher github
+                          :repo "eshelyaron/semel"))
     smartparens
     srefactor
     emr))
@@ -425,3 +428,12 @@
     :config
     (evilified-state-evilify-map inspector-mode-map
       :mode inspector-mode)))
+
+(defun emacs-lisp/init-semel ()
+  (use-package semel
+    :defer t
+    :init
+    (add-hook 'emacs-lisp-mode-hook #'semel-mode)
+    (add-hook 'emacs-lisp-mode-hook #'cursor-sensor-mode)
+    :config
+    (set-face-attribute 'semel-variable-at-point nil :inherit 'highlight)))
