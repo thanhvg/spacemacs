@@ -1038,7 +1038,7 @@ Headline^^            Visit entry^^               Filter^^                    Da
       'org-mode
       "rf" #'verb-send-request-on-point
       "rs" #'verb-send-request-on-point-other-window
-      "rr" #'verb-send-request-on-point-other-window-stay
+      "rr" #'verb-send-request-on-point-display
       "rm" #'verb-send-request-on-point-no-window
       "rk" #'verb-kill-all-response-buffers
       "re" #'verb-export-request-on-point
