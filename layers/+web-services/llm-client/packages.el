@@ -30,6 +30,7 @@
     (gptel-quick :toggle llm-client-enable-gptel
                  :location (recipe :fetcher github
                                    :repo "/karthink/gptel-quick" :files ("*.el")))
+    gptel-magit
     minuet
     aider
     (aidermacs :location built-in)
@@ -226,3 +227,6 @@ Spacemacs leader key).  For example, `SPC y e r` calls
     (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 64)
     (minuet-set-optional-options minuet-openai-options :max_tokens 64)))
 
+(defun llm-client/init-gptel-magit ()
+  (use-package gptel-magit
+    :hook (magit-mode . gptel-magit-install)))
