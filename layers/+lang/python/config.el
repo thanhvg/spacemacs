@@ -1,4 +1,4 @@
-;;; config.el --- Python Layer Configuration File for Spacemacs  -*- lexical-binding: nil; -*-
+;;; config.el --- Python Layer Configuration File for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;
@@ -51,7 +51,7 @@ If `nil' then `anaconda' is the default backend unless the `lsp' layer is used."
            (eq python-lsp-server 'pylsp))
       'lsp
     'yapf)
-  "The formatter to use. Possible values are `yapf', `black', `ruff' and `lsp'.
+  "The formatter to use. Possible values are `yapf', `black' and `lsp'.
 The default formatter is `yapf' unless both the `lsp' layer is used,
 and `python-lsp-server' is `pylsp' (pyright does not support formatting).")
 
@@ -87,22 +87,9 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
 
 (defvar python-sort-imports-on-save nil
   "If non-nil, automatically sort imports on save.")
-(put 'python-sort-imports-on-save 'safe-local-variable 'booleanp)
-
-(defvar python-virtualenv-management 'pyvenv
-  "The management backend for virtualenv, Possible value is `pet' or `pyvenv'")
 
 (defvar python-enable-importmagic nil
   "If non-nil, enable the importmagic feature.")
-
-(defvar python-enable-tools '(pip pipenv poetry)
-  "List of Python package management tools to enable in Spacemacs.
-
-Possible values:
-- `pip`: Enable pip package management functionality
-- `pipenv`: Enable pipenv virtual environment and package management
-- `poetry`: Enable Poetry package and dependency management
-- `uv`: Enable uv package and dependency management")
 
 (defvar spacemacs--python-pyenv-modes nil
   "List of major modes where to add pyenv support.")
@@ -122,3 +109,6 @@ Possible values:
 ;; package declares them but does not initialize them.
 (defvar python-shell--interpreter nil)
 (defvar python-shell--interpreter-args nil)
+
+(defvar python-use-ts-mode nil
+  "When true use `python-ts-mode'.")
