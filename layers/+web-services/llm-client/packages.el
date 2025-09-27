@@ -43,6 +43,10 @@
   (use-package gptel
     :defer t
     :ensure t
+    :config
+    (spacemacs/set-leader-keys-for-minor-mode 'gptel-mode
+      "ge" 'gptel-end-of-response
+      "gm" 'gptel-menu)
     :init
     ;; evilify gptel-context-buffer-mode-map
     (evilified-state-evilify-map gptel-context-buffer-mode-map
