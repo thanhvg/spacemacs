@@ -33,10 +33,7 @@
     gptel-magit
     minuet
     aider
-    (aidermacs :location built-in)
-    ;; (aidermacs :location
-    ;;        (recipe :fetcher github
-    ;;                :repo "MatthewZMD/aidermacs" :files ("*.el")))
+    aidermacs
     org
     window-purpose))
 
@@ -160,7 +157,6 @@ Spacemacs leader key).  For example, `SPC y e r` calls
 
 (defun llm-client/init-aidermacs ()
   (use-package aidermacs
-    :load-path "~/git/aidermacs"
     :config
     (spacemacs/set-leader-keys
       "aa" 'aidermacs-transient-menu)))
