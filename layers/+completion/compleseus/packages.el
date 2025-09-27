@@ -407,20 +407,6 @@
         (let ((completion-styles '(basic partial-completion orderless)))
           (apply orig-fun args))))
 
-    ;; The separator `&' is only useful for in-buffer completion with company,
-    ;; where a space cannot be used. Note that `&' conflicts with annotation
-    ;; matching (see `orderless-affix-dispatch-alist') in the minibuffer.
-    (define-advice company-capf (:around (orig-fun &rest args) spacemacs//set-orderless-component-separator)
-      (if (and (stringp company-prefix)
-               (> (length company-prefix) 0)
-               (eq (aref company-prefix 0) ?&))
-          ;; Strings that start with `&' should not trigger orderless. Most likely the
-          ;; user wants to type something like &optional or &rest, where orderless
-          ;; just incurs unnecessary typing delays.
-          (apply orig-fun args)
-        (let ((orderless-component-separator "&"))
-          (apply orig-fun args))))
-
     ;; should be all in with orderless other wise the results are inconsistent.
     ;; (setq completion-styles '(basic partial-completion orderless)
     (setq completion-styles '(orderless)
