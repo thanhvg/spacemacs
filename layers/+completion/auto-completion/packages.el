@@ -49,7 +49,7 @@
   (use-package corfu
     :bind
     (:map corfu-map
-          ("RET" . corfu-complete) ;; TODO I want same behavior as company's RET auto select the first one
+          ("RET" . corfu-complete)
           ("C-," . corfu-insert-separator)
           ("C-j" . corfu-next)
           ("C-k" . corfu-previous))
@@ -60,21 +60,8 @@
      corfu-auto t
      corfu-auto-delay 0.1
      corfu-auto-prefix 2
-     ;; global-corfu-modes
-     ;; '((not erc-mode
-     ;;        circe-mode
-     ;;        help-mode
-     ;;        gud-mode
-     ;;        vterm-mode)
-     ;;   t)
-     corfu-cycle t
-     corfu-preselect 'prompt
-     corfu-count 16
-     corfu-max-width 120
-     corfu-on-exact-match nil
-     corfu-quit-at-boundary 'separator
-     corfu-quit-no-match corfu-quit-at-boundary
-     tab-always-indent 'complete)
+     ;; tab-always-indent 'complete
+     corfu-cycle t)
     
     (add-to-list 'completion-category-overrides `(lsp-capf (styles ,@completion-styles)))
     ;; (add-to-list 'corfu-auto-commands #'lispy-colon)
