@@ -31,21 +31,16 @@
   - [[#importmagic][Importmagic]]
   - [[#pyvenv-pyenv-pipenv-and-poetry][Pyvenv, pyenv, pipenv and poetry]]
 - [[#management-of-python-versions-and-virtual-environments][Management of Python versions and virtual environments]]
-  - [[#manage-virtual-environments-with-pet-mode][Manage virtual environments with pet-mode]]
-  - [[#manage-virtual-environments-with-pyvenv-legacy-inactively-maintained][Manage virtual environments with pyvenv (legacy, inactively maintained)]]
+  - [[#manage-virtual-environments-with-pyvenv][Manage virtual environments with pyvenv]]
     - [[#automatic-activation-of-local-virtual-environment][Automatic activation of local virtual environment]]
   - [[#manage-multiple-python-versions-with-pyenv][Manage multiple Python versions with pyenv]]
     - [[#automatic-activation-of-local-pyenv-version][Automatic activation of local pyenv version]]
   - [[#manage-environments-and-packages-with-pipenv][Manage environments and packages with pipenv]]
   - [[#manage-environments-and-packages-with-poetry][Manage environments and packages with Poetry]]
-  - [[#manage-environments-and-packages-with-uv][Manage environments and packages with uv]]
 - [[#key-bindings][Key bindings]]
   - [[#inferior-repl-process][Inferior REPL process]]
   - [[#running-python-script-in-shell][Running Python Script in shell]]
   - [[#testing][Testing]]
-    - [[#cross-runner-bindings][Cross-runner bindings]]
-    - [[#pytest-only-bindings][Pytest-only bindings]]
-    - [[#nose-only-bindings][Nose-only bindings]]
   - [[#refactoring][Refactoring]]
   - [[#pip-package-management][Pip package management]]
   - [[#live-coding][Live coding]]
@@ -65,9 +60,9 @@ This layer adds support for the Python language.
 - Code Navigation
 - Documentation Lookup using [[https://github.com/proofit404/anaconda-mode][anaconda-mode]] and [[https://github.com/tsgates/pylookup][pylookup]]
 - Test Runners using [[https://github.com/ionrock/pytest-el][pytest]] or [[https://github.com/syl20bnr/nose.el][nose.el]]
-- Virtual Environment using [[https://github.com/jorgenschaefer/pyvenv][pyvenv]] and [[https://github.com/yyuu/pyenv][pyenv]] as well as [[https://github.com/pypa/pipenv][pipenv]], [[https://github.com/galaunay/poetry.el][poetry]], and [[https://github.com/astral-sh/uv][UV]]
+- Virtual Environment using [[https://github.com/jorgenschaefer/pyvenv][pyvenv]] and [[https://github.com/yyuu/pyenv][pyenv]] as well as [[https://github.com/pypa/pipenv][pipenv]] and [[https://github.com/galaunay/poetry.el][poetry]]
 - semantic mode is enabled
-- PEP8 compliant formatting via [[https://github.com/google/yapf][YAPF]], [[https://github.com/ambv/black][black]], or [[https://github.com/astral-sh/ruff][ruff]]
+- PEP8 compliant formatting via [[https://github.com/google/yapf][YAPF]] or [[https://github.com/ambv/black][black]]
 - PEP8 checks with [[https://pypi.python.org/pypi/flake8][flake8]] or [[https://pypi.python.org/pypi/pylint/1.6.4][pylint]]
 - Suppression of unused import with [[https://github.com/myint/autoflake][autoflake]]
 - Use the ~%~ key to jump between blocks with [[https://github.com/redguardtoo/evil-matchit][evil-matchit]]
@@ -229,8 +224,8 @@ directory local variable in your project root. ~SPC f v d~ in Spacemacs. See
 The root of the project is detected with a =.git= directory or a =setup.cfg= file.
 
 ** Buffer formatting
-One of [[https://github.com/google/yapf][YAPF]], [[https://github.com/ambv/black][black]], [[https://github.com/astral-sh/ruff][ruff]] or =lsp= may be selected as the formatter, via
-=python-formatter=, as =yapf=, =black=, =ruff= or =lsp= respectively.
+One of [[https://github.com/google/yapf][YAPF]], [[https://github.com/ambv/black][black]] or =lsp= may be selected as the formatter, via
+=python-formatter=, as =yapf=, =black= or =lsp= respectively.
 
 #+BEGIN_SRC emacs-lisp
   (setq-default dotspacemacs-configuration-layers '(
@@ -248,7 +243,7 @@ The key binding ~SPC m =~ invokes the selected formatter on the current buffer
 when in non LSP python mode otherwise ~SPC m ==~ is used.
 
 Note that a specific formatter may also be invoked unconditionally via
-=yapfify-buffer=, =blacken-buffer=, =ruff-format-buffer= or =lsp-format-buffer=, provided
+=yapfify-buffer=, =blacken-buffer= or =lsp-format-buffer=, provided
 these are installed.
 
 ** Automatic buffer formatting on save
@@ -361,27 +356,7 @@ This will allow you to use [[https://github.com/pwalsh/pipenv.el][pipenv]] bindi
 You can add to the other two lists analogously.
 
 * Management of Python versions and virtual environments
-** Manage virtual environments with pet-mode
-To enable the [[https://github.com/wyuenho/emacs-pet][pet-mode]], set the variable ~python-virtualenv-management~ to
-~pet~, for example:
-
-#+BEGIN_SRC emacs-lisp
-  (setq-default dotspacemacs-configuration-layers '(
-    (python :variables python-virtualenv-management 'pet)))
-#+END_SRC
-
-In general virtual environments are automatically used when active using
-~pet-mode~, following additional packages are high recommended to enable full
-~pet-mode~ features:
-
-| Package   | Description                                   |
-|-----------+-----------------------------------------------|
-| ~dasel~   | an application to query data structures [[https://github.com/TomWright/dasel][dasel]] |
-| ~sqlite3~ | a lightwait and serverless database [[https://www.sqlite.org/][sqlite]]    |
-
-Independent of this you can activate and switch virtual environments manually with below tools.
-
-** Manage virtual environments with pyvenv (legacy, inactively maintained)
+** Manage virtual environments with pyvenv
 A virtual environment provides isolation of your Python package versions. For a
 general overview see [[http://docs.python-guide.org/en/latest/dev/virtualenvs/][this site]]. [[http://virtualenvwrapper.readthedocs.io/en/latest/index.html][Virtualenvwrapper]] which is also explained in the
 previous link, is a program which manages your virtual environments in a central
@@ -474,37 +449,6 @@ It provides the following key bindings:
 | ~SPC m v o a~ | Activate the virtualenv associated to the current poetry project    |
 | ~SPC m v o t~ | Toggle the virtualenv associated to the current poetry project      |
 
-** Manage environments and packages with uv
-[[https://github.com/astral-sh/uv][UV]] is a fast Python package installer and resolver written in Rust. It's designed
-to be a drop-in replacement for pip and pip-tools, offering significantly faster
-package installation and dependency resolution.
-
-Spacemacs integration for UV is provided by the [[https://github.com/borgstad/uv.el][uv.el]] package.
-It provides the following key bindings:
-
-| Key binding | Description                        |
-|-------------+------------------------------------|
-| ~SPC m u v~ | Open the main UV transient menu    |
-| ~SPC m u a~ | Add regular dependencies           |
-| ~SPC m u d~ | Remove dependencies                |
-| ~SPC m u l~ | Lock project dependencies          |
-| ~SPC m u e~ | Edit pyproject.toml file           |
-| ~SPC m u b~ | Build the package                  |
-| ~SPC m u p~ | Publish the package                |
-| ~SPC m u n~ | Create a new Python project        |
-| ~SPC m u i~ | Initialize a new UV project        |
-| ~SPC m u r~ | Run commands in the UV environment |
-
-To enable UV support, add ~uv~ to your ~python-enable-tools~ list:
-
-#+BEGIN_SRC elisp
-  (setq-default dotspacemacs-configuration-layers
-                '((python :variables python-enable-tools '(uv))))
-#+END_SRC
-
-*Note:* You need to install the ~uv~ command-line tool first. See the
-[[https://github.com/astral-sh/uv][UV documentation]] for installation instructions.
-
 * Key bindings
 ** Inferior REPL process
 Start a Python or iPython inferior REPL process with ~SPC m s i~.
@@ -551,48 +495,22 @@ compilation command.
 Test commands start with ~m t~. To use the secondary test runner call the
 function with a prefix argument, for example ~SPC u SPC m t a~.
 
-*** Cross-runner bindings
-These bindings work with whichever runner(s) you enabled via ~python-test-runner~.
+| No Debug    | Description                                              |
+|-------------+----------------------------------------------------------|
+| ~SPC m t a~ | launch all tests of the project                          |
+| ~SPC m t b~ | launch all tests of the current buffer (same as module)  |
+| ~SPC m t l~ | launch last tests                                        |
+| ~SPC m t m~ | launch all tests of the current module                   |
+| ~SPC m t s~ | launch all tests of the current suite (only with =nose=) |
+| ~SPC m t t~ | launch the current test (function)                       |
 
-| No Debug    | Description                                   |
-|-------------+-----------------------------------------------|
-| ~SPC m t a~ | launch all tests of the project               |
-| ~SPC m t m~ | launch all tests of the current module (file) |
-| ~SPC m t t~ | launch the current test (function)            |
-| ~SPC m t l~ | re-run the last test command                  |
-| ~SPC m t f~ | re-run the tests that last failed             |
-
-| Debug       | Description                                          |
-|-------------+------------------------------------------------------|
-| ~SPC m t A~ | launch all tests of the project in debug mode        |
-| ~SPC m t M~ | launch all tests of the current module in debug mode |
-| ~SPC m t T~ | launch the current test (function) in debug mode     |
-| ~SPC m t F~ | re-run the tests that last failed in debug mode      |
-
-#+BEGIN_QUOTE
-  The previous buffer-oriented bindings ~SPC m t b~ and ~SPC m t B~ were redundant.
-  Use ~SPC m t m~ and ~SPC m t M~ instead.
-#+END_QUOTE
-
-*** Pytest-only bindings
-These are available only when ~pytest~ is enabled in ~python-test-runner~.
-
-| Binding     | Description                              |
-|-------------+------------------------------------------|
-| ~SPC m t D~ | pytest dispatch/transient (if available) |
-
-#+BEGIN_QUOTE
-  Tip: For ad-hoc flags (e.g. ~--pdb~, ~-k expr~, ~-x~), use the universal argument:
-  ~SPC u~ before a test command to be prompted for extra CLI args.
-#+END_QUOTE
-
-*** Nose-only bindings
-These are available only when ~nose~ is enabled (either as primary or secondary).
-
-| Binding     | Description                                                            |
+| Debug       | Description                                                            |
 |-------------+------------------------------------------------------------------------|
-| ~SPC m t s~ | launch all tests of the current suite (only with =nose=)               |
+| ~SPC m t A~ | launch all tests of the project in debug mode                          |
+| ~SPC m t B~ | launch all tests of the current buffer (module) in debug mode          |
+| ~SPC m t M~ | launch all tests of the current module in debug mode                   |
 | ~SPC m t S~ | launch all tests of the current suite in debug mode (only with =nose=) |
+| ~SPC m t T~ | launch the current test (function) in debug mode                       |
 
 ** Refactoring
 
