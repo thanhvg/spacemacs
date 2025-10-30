@@ -1,4 +1,4 @@
-;;; funcs.el --- Python Layer functions File for Spacemacs  -*- lexical-binding: nil; -*-
+;;; funcs.el --- Python Layer functions File for Spacemacs  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2012-2025 Sylvain Benner & Contributors
 ;;
@@ -143,7 +143,7 @@ compatibility."
           (not (executable-find "pyenv")))      ; or no pyenv
       (cl-some (lambda (dir)
                  (let ((exec-path (list dir)))
-                   (cl-find-if 'executable-find commands)))
+                   (cl-some 'executable-find commands)))
                exec-path)
 
     (let ((pyenv-vers (split-string (string-trim (shell-command-to-string "pyenv version-name")) ":")))
@@ -154,7 +154,7 @@ compatibility."
            (cl-some
             (lambda (ver)
               (cond ((string-match ver pyenv-cmd) pyenv-cmd)
-                    ((string-match ver "system") (and (executable-find cmd) cmd))))
+                    ((string-match ver "system") (executable-find cmd))))
             pyenv-vers)))
        commands))))
 
@@ -277,72 +277,6 @@ location of \".venv\" file, then relative to pyvenv-workon-home()."
 
 ;; Tests
 
-;; python-pytest adapters
-
-(defun spacemacs/around-python-pytest--get-buffer (fn &rest args)
-  "Adjust the caller's next-error-last-buffer"
-  (let ((buffer (apply fn args)))
-    (unless (eq buffer (current-buffer))
-      (setq-local next-error-last-buffer buffer))
-
-    buffer))
-
-(defun spacemacs//python-pytest-one (&rest pytest-args)
-  "Runs the correct python-pytest- function to run test the thing at point."
-
-  ;; python-pytest uses either python-pytest-run-def-at-point-treesit or
-  ;; python-pytest-run-def-or-class-at-point-dwim via transient :if / :if-not rules.
-  ;;
-  ;; Sadly, the treesit version does not accept parameters, so we have to
-  ;; replicate its behavior here, ugh
-  (require 'python-pytest)
-  (if (python-pytest--use-treesit-p)
-      (python-pytest--run
-        :args pytest-args
-        :file (buffer-file-name)
-        :node-id (python-pytest--node-id-def-at-point-treesit)
-        :edit current-prefix-arg)
-    (python-pytest-run-def-or-class-at-point-dwim (buffer-file-name)
-                                                  (python-pytest--node-id-def-or-class-at-point)
-                                                  pytest-args)))
-
-(defun spacemacs/python-pytest-one ()
-  "Runs pytest on the thing at point"
-  (spacemacs//python-pytest-one))
-
-(defun spacemacs/python-pytest-one-pdb ()
-  "Runs pytest on the thing at point with PDB enabled"
-  (spacemacs//python-pytest-one "--pdb"))
-
-(defun spacemacs/python-pytest-test-module ()
-  "Tests the current module"
-  (python-pytest-file (buffer-file-name) nil))
-
-(defun spacemacs/python-pytest-all-pdb ()
-  "Runs current project's tests with PDB enabled"
-  (python-pytest '("--pdb")))
-
-(defun spacemacs/python-pytest-module-pdb ()
-  "Runs the tests in the current module with PDB enabled"
-  (python-pytest-file (buffer-file-name) '("--pdb")))
-
-(defun spacemacs/python-pytest-last-failed-pdb ()
-  "Re-executes the failing tests with PDB enabled"
-  (python-pytest-last-failed '("--pdb")))
-
-;; Forward declare to silence byte-compiler and allow early local binding.
-(defvar python-pytest-project-root-override nil
-  "Directory to use as project root for python-pytest, or nil.")
-
-(defun spacemacs//python-pytest-set-root-from-setup-cfg ()
-  "If a setup.cfg is found above `default-directory', set pytest root to that dir.
-Unset the override when not found."
-  (let* ((dir (locate-dominating-file default-directory "setup.cfg"))
-         (root (and dir (file-name-as-directory (expand-file-name dir)))))
-    (setq-local python-pytest-project-root-override root)))
-
-;; Test Dispatchers
-
 (defun spacemacs//python-get-main-testrunner ()
   "Get the main test runner."
   (if (listp python-test-runner) (car python-test-runner) python-test-runner))
@@ -371,129 +305,85 @@ to be called for each testrunner. "
 (defun spacemacs/python-test-last (arg)
   "Re-run the last test command"
   (interactive "P")
-  (spacemacs//python-call-correct-test-function
-   arg
-   '((pytest . python-pytest-repeat)
-     (nose   . nosetests-again))))
+  (spacemacs//python-call-correct-test-function arg '((pytest . pytest-again)
+                                                      (nose . nosetests-again))))
 
 (defun spacemacs/python-test-last-failed (arg)
   "Re-run the tests that last failed."
   (interactive "P")
-  (spacemacs//python-call-correct-test-function
-   arg
-   '((pytest . python-pytest-last-failed))))
+  (spacemacs//python-call-correct-test-function arg '((pytest . pytest-last-failed))))
 
 (defun spacemacs/python-test-pdb-last-failed (arg)
   "Re-run the tests that last failed in debug mode."
   (interactive "P")
-  (spacemacs//python-call-correct-test-function
-   arg
-   '((pytest . spacemacs/python-pytest-last-failed-pdb))))
+  (spacemacs//python-call-correct-test-function arg '((pytest . pytest-pdb-last-failed))))
 
 (defun spacemacs/python-test-all (arg)
   "Run all tests."
   (interactive "P")
-  (spacemacs//python-call-correct-test-function
-   arg
-   '((pytest . python-pytest)
-     (nose   . nosetests-all))))
+  (spacemacs//python-call-correct-test-function arg '((pytest . pytest-all)
+                                                      (nose . nosetests-all))))
 
 (defun spacemacs/python-test-pdb-all (arg)
   "Run all tests in debug mode."
   (interactive "P")
-  (spacemacs//python-call-correct-test-function
-   arg
-   '((pytest . spacemacs/python-pytest-all-pdb)
-     (nose   . nosetests-pdb-all))))
+  (spacemacs//python-call-correct-test-function arg '((pytest . pytest-pdb-all)
+                                                      (nose . nosetests-pdb-all))))
 
 (defun spacemacs/python-test-module (arg)
   "Run all tests in the current module."
   (interactive "P")
-  (spacemacs//python-call-correct-test-function
-   arg
-   '((pytest . spacemacs/python-pytest-test-module)
-     (nose   . nosetests-module))))
+  (spacemacs//python-call-correct-test-function arg '((pytest . pytest-module)
+                                                      (nose . nosetests-module))))
 
 (defun spacemacs/python-test-pdb-module (arg)
   "Run all tests in the current module in debug mode."
   (interactive "P")
   (spacemacs//python-call-correct-test-function
    arg
-   '((pytest . spacemacs/python-pytest-module-pdb)
-     (nose   . nosetests-pdb-module))))
+   '((pytest . pytest-pdb-module)
+     (nose . nosetests-pdb-module))))
 
 (defun spacemacs/python-test-suite (arg)
   "Run all tests in the current suite."
   (interactive "P")
-  (spacemacs//python-call-correct-test-function
-   arg
-   '((nose . nosetests-suite))))
-;; Note: pytest has no separate 'suite' concept here; we keep it nose-only.
+  (spacemacs//python-call-correct-test-function arg '((nose . nosetests-suite))))
 
 (defun spacemacs/python-test-pdb-suite (arg)
   "Run all tests in the current suite in debug mode."
   (interactive "P")
-  (spacemacs//python-call-correct-test-function
-   arg
-   '((nose . nosetests-pdb-suite))))
+  (spacemacs//python-call-correct-test-function arg '((nose . nosetests-pdb-suite))))
 
 (defun spacemacs/python-test-one (arg)
   "Run current test."
   (interactive "P")
-  (spacemacs//python-call-correct-test-function
-   arg
-   '((pytest . spacemacs/python-pytest-one)
-     (nose   . nosetests-one))))
+  (spacemacs//python-call-correct-test-function arg '((pytest . pytest-one)
+                                                      (nose . nosetests-one))))
 
 (defun spacemacs/python-test-pdb-one (arg)
   "Run current test in debug mode."
   (interactive "P")
-
-  (spacemacs//python-call-correct-test-function
-   arg
-   '((pytest . spacemacs/python-pytest-one-pdb)
-     (nose   . nosetests-pdb-one))))
-
-(defun spacemacs/python-test-dispatch (arg)
-  "Runner-agnostic dispatch (pytest-only). ARG selects secondary runner (not supported here)."
-  (interactive "P")
-  (spacemacs//python-call-correct-test-function
-   arg
-   '((pytest . python-pytest-dispatch))))
-
-(defun spacemacs//python-runner-enabled-p (runner)
-  "Return non-nil if RUNNER is enabled in `python-test-runner`."
-  (memq runner (flatten-list (list python-test-runner))))
+  (spacemacs//python-call-correct-test-function arg '((pytest . pytest-pdb-one)
+                                                      (nose . nosetests-pdb-one))))
 
 (defun spacemacs//bind-python-testing-keys ()
-  "Bind the keys for testing in Python, conditionally per runner."
-  (spacemacs/declare-prefix-for-mode 'python-mode "mt" "test")
-
-  ;; Generic keys: these wrappers support both runners (or gracefully select secondary with C-u)
-  (spacemacs/set-leader-keys-for-major-mode 'python-mode
-    "ta" 'spacemacs/python-test-all
+  "Bind the keys for testing in Python."
+  (spacemacs/declare-prefix-for-mode (spacemacs//python-mode) "mt" "test")
+  (spacemacs/set-leader-keys-for-major-mode (spacemacs//python-mode)
     "tA" 'spacemacs/python-test-pdb-all
-    "tm" 'spacemacs/python-test-module
-    "tM" 'spacemacs/python-test-pdb-module
-    "tt" 'spacemacs/python-test-one
-    "tT" 'spacemacs/python-test-pdb-one
+    "ta" 'spacemacs/python-test-all
+    "tB" 'spacemacs/python-test-pdb-module
+    "tb" 'spacemacs/python-test-module
     "tl" 'spacemacs/python-test-last
     "tf" 'spacemacs/python-test-last-failed
-    "tF" 'spacemacs/python-test-pdb-last-failed)
+    "tF" 'spacemacs/python-test-pdb-last-failed
+    "tT" 'spacemacs/python-test-pdb-one
+    "tt" 'spacemacs/python-test-one
+    "tM" 'spacemacs/python-test-pdb-module
+    "tm" 'spacemacs/python-test-module
+    "tS" 'spacemacs/python-test-pdb-suite
+    "ts" 'spacemacs/python-test-suite))
 
-  ;; Pytest-only convenience (dispatch/transient)
-  (when (spacemacs//python-runner-enabled-p 'pytest)
-    (spacemacs/set-leader-keys-for-major-mode 'python-mode
-      "tD" 'spacemacs/python-test-dispatch))
-
-  ;; Nose-only: suite commands
-  (when (spacemacs//python-runner-enabled-p 'nose)
-    (spacemacs/set-leader-keys-for-major-mode 'python-mode
-      "ts" 'spacemacs/python-test-suite
-      "tS" 'spacemacs/python-test-pdb-suite)))
-
-
-;; Utils
 (defun spacemacs//python-sort-imports ()
   ;; py-isort-before-save checks the major mode as well, however we can prevent
   ;; it from loading the package unnecessarily by doing our own check
@@ -501,14 +391,13 @@ to be called for each testrunner. "
              (derived-mode-p 'python-mode))
     (py-isort-before-save)))
 
-
 
 ;; Formatters
 
 (defun spacemacs//bind-python-formatter-keys ()
   "Bind the python formatter keys.
 Bind formatter to '==' for LSP and '='for all other backends."
-  (spacemacs/set-leader-keys-for-major-mode 'python-mode
+  (spacemacs/set-leader-keys-for-major-mode (spacemacs//python-mode)
     (if (eq python-backend 'lsp)
         "=="
       "=")
@@ -520,7 +409,6 @@ Bind formatter to '==' for LSP and '='for all other backends."
   (pcase python-formatter
     ('yapf (yapfify-buffer))
     ('black (blacken-buffer))
-    ('ruff (ruff-format-buffer))
     ('lsp (lsp-format-buffer))
     (code (message "Unknown formatter: %S" code))))
 
@@ -714,3 +602,9 @@ If region is not active then send line."
     "c" 'comint-clear-buffer
     "r" 'pyvenv-restart-python
     "vw" 'pyvenv-workon))
+
+(defun spacemacs//python-mode ()
+  "Return desired python mode."
+  (if python-use-ts-mode
+      'python-ts-mode
+    'python-mode))

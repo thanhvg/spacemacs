@@ -1,4 +1,4 @@
-;;; pylookup.el --- Look up python documents (reference) in Emacs  -*- lexical-binding: nil; -*-
+;;; pylookup.el --- Look up python documents (reference) in Emacs  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2010-2024 Taesoo Kim
 
