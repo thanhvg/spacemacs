@@ -23,7 +23,7 @@
 
 (defconst git-packages
   '(
-    (code-review :location (recipe :fetcher github :repo "doomelpa/code-review"))
+    (code-review :location (recipe :fetcher github :repo "doomelpa/code-review") :toggle git-enable-forge)
     (difftastic :location (recipe :fetcher github
                                   :repo "pkryger/difftastic.el"
                                   :files ("difftastic.el")))
