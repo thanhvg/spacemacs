@@ -38,15 +38,14 @@
       (spray-mode t)
       (internal-show-cursor (selected-window) nil))
     (spacemacs/set-leader-keys "ars" 'speed-reading/start-spray)
+    (spacemacs/set-leader-keys "arr" 'spread-reading/spray-region)
 
     (define-advice spray-quit (:after (&rest _) speed-reading//quit-spray)
       "Correctly quit spray."
       (internal-show-cursor (selected-window) t)
       (evil-normal-state))
     :config
-    (define-key spray-mode-map (kbd "h") 'spray-backward-word)
-    (define-key spray-mode-map (kbd "l") 'spray-forward-word)
-    (define-key spray-mode-map (kbd "q") 'spray-quit)))
+    (define-key spray-mode-map (kbd "o") 'spray-start/stop)))
 
 (defun speed-reading/post-init-which-key ()
   (push '((nil . "\\`speed-reading/\\(.+\\)\\'") . (nil . "\\1"))
