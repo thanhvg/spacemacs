@@ -134,6 +134,9 @@ Spacemacs leader key).  For example, `SPC y e r` calls
 
 (defun llm-client/post-init-org ()
   "Set up Org-mode keybindings for GPTel."
+  (use-package gptel-org
+    :commands (gptel-org-set-topic gptel-org-set-properties)
+    :after org)
   (spacemacs/declare-prefix-for-mode 'org-mode "m$g" "Gptel")
   (spacemacs/set-leader-keys-for-major-mode 'org-mode
     "$go" 'gptel-org-set-topic
