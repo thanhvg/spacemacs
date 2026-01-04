@@ -26,6 +26,7 @@
     company
     company-emoji
     (edraw-org
+     :toggle nil ;; disabled because advice around org link slow org mode
      :location (recipe :fetcher github :repo "misohena/el-easydraw"))
     emoji-cheat-sheet-plus
     evil-org
