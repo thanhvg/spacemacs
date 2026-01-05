@@ -24,6 +24,7 @@
 (setq speed-reading-packages
       '(
         spray
+        (quickread :location (recipe :fetcher github :repo "thanhvg/emacs-quickread"))
         which-key
         ))
 
@@ -50,3 +51,13 @@
 (defun speed-reading/post-init-which-key ()
   (push '((nil . "\\`speed-reading/\\(.+\\)\\'") . (nil . "\\1"))
         which-key-replacement-alist))
+
+(defun speed-reading/init-quickread ()
+  (use-package quickread
+    :init
+    (spacemacs/set-leader-keys "arb" 'speed-reading/start-quickread)
+    :config
+    (map-keymap (lambda (event function)
+                  (evil-define-minor-mode-key 'normal 'quickread-mode (vector event) function))
+                quickread-mode-map)
+    (add-hook 'quickread-mode-hook #'spacemacs//restore-cursor)))
