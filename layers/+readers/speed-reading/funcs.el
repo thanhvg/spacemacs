@@ -30,3 +30,14 @@ The temporary buffer will be killed when spray-mode is quit
 
       ;; Activate spray-mode in the temporary buffer.
       (speed-reading/start-spray))))
+
+(defun speed-reading/start-quickread ()
+  "Start quickread speed reading on current buffer at current point."
+  (interactive)
+  (evil-normal-state)
+  (quickread-mode t)
+  (internal-show-cursor (selected-window) nil))
+
+(defun spacemacs//restore-cursor ()
+  (unless quickread-mode
+    (internal-show-cursor (selected-window) t)))
