@@ -58,6 +58,6 @@
     (spacemacs/set-leader-keys "arb" 'speed-reading/start-quickread)
     :config
     (map-keymap (lambda (event function)
-                  (evil-define-minor-mode-key 'normal 'quickread-mode (vector event) function))
+                  (evil-define-minor-mode-key '(normal motion) 'quickread-mode (vector event) function))
                 quickread-mode-map)
     (add-hook 'quickread-mode-hook #'spacemacs//restore-cursor)))
