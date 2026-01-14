@@ -241,9 +241,9 @@
      consult-bookmark
      consult-recent-file
      consult-xref
-     consult--source-recent-file
-     consult--source-project-recent-file
-     consult--source-bookmark
+     consult-source-recent-file
+     consult-source-project-recent-file
+     consult-source-bookmark
      consult-yank-pop
      spacemacs/compleseus-search-auto
      spacemacs/compleseus-search-dir
