@@ -21,8 +21,4 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-(configuration-layer/declare-layer-dependencies
- (append '(spacemacs-org)
-         (when (bound-and-true-p org-enable-mermaid-support)
-           '(mermaid))))
-
+(configuration-layer/declare-layer-dependencies '(spacemacs-org))
