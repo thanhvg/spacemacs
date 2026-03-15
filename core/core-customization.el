@@ -140,20 +140,20 @@ Thus it returns t when VAL is valid and nil otherwise."
       (or (validate-value val type nil) t)
     (user-error "%s is not a Spacemacs customization variable" var-symbol)))
 
-(defun spacemacs-customization//group-variables (group-symbol)
-  "Given customization group symbol get its variables."
+(defun spacemacs-customization//group-variables (group)
+  "Given customization group name GROUP, get its variables."
   (let (ret-val)
     (cl-labels ((rec (gs)
                      (cl-dolist (el (get gs 'custom-group))
                        (cl-case (cadr el)
                          (custom-variable (push (car el) ret-val))
                          (custom-group (rec (car el)))))))
-      (rec group-symbol))
+      (rec group))
     ret-val))
 
-(defun spacemacs-customization//validate-group-vars (group-symbol)
-  "Given customization group symbol validate its variables."
-  (dolist (var (spacemacs-customization//group-variables group-symbol))
+(defun spacemacs-customization//validate-group-vars (group)
+  "Given customization group name GROUP, validate its variables."
+  (dolist (var (spacemacs-customization//group-variables group))
     (let ((val (symbol-value var))
           (type (custom-variable-type var)))
       (condition-case err (validate-value val type)
@@ -172,8 +172,8 @@ Thus it returns t when VAL is valid and nil otherwise."
   (spacemacs-customization//validate-group-vars 'spacemacs-dotspacemacs-layers))
 
 (defun spacemacs-customization//create-layer-group (layer-name category-name)
-  "Create customization group heirarchy for the LAYER-NAME configurations.
-Layers customization group symbol is returned."
+  "Create customization group hierarchy for the LAYER-NAME configurations.
+The layer's customization group symbol is returned."
   (let* ((category-group-name (format "spacemacs-layers-%s" category-name))
          (layer-group-name (format "%s-%s" category-group-name layer-name))
          (category-group-symbol (intern category-group-name)))
