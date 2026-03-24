@@ -71,6 +71,10 @@
     (org-appear :toggle org-enable-appear-support)
     (org-transclusion :toggle org-enable-transclusion-support)
     helm
+    (org-fc
+     :location (recipe :fetcher git
+                       :url "https://git.sr.ht/~l3kn/org-fc"
+                       :files (:defaults "awk" "demo.org")))
     (ox-asciidoc :toggle org-enable-asciidoc-support)))
 
 (defun org/post-init-company ()
@@ -408,47 +412,47 @@ Will work on both org-mode and any mode that accepts plain html."
       "xu" (spacemacs|org-emphasize spacemacs/org-underline ?_)
       "xv" (spacemacs|org-emphasize spacemacs/org-verbatim ?=))
 
-      (spacemacs/set-root-leader-keys-for-mode 'org-mode nil
-        "nb" 'org-narrow-to-block
-        "ns" 'org-narrow-to-subtree
-        "ne" 'org-narrow-to-element)
+    (spacemacs/set-root-leader-keys-for-mode 'org-mode nil
+      "nb" 'org-narrow-to-block
+      "ns" 'org-narrow-to-subtree
+      "ne" 'org-narrow-to-element)
 
-      ;; Add global evil-leader mappings. Used to access org-agenda
-      ;; functionalities – and a few others commands – from any other mode.
-      (spacemacs/declare-prefix
-        "ao"  "org"
-        "aof" "feeds"
-        "aoC" (org-clocks-prefix))
-      ;; org-agenda
-      (unless (when-let ((pkg (configuration-layer/get-package 'helm-org-rifle)))
-                ;; TODO: `configuration-layer/package-used-p' doesn't check
-                ;; :toggle status.  When it is fixed, we can use it again.
-                (cfgl-package-used-p pkg))
-        (spacemacs/set-leader-keys "ao/" 'org-occur-in-agenda-files))
-      (spacemacs/set-leader-keys
-        "ao#" 'org-agenda-list-stuck-projects
-        "aoa" 'org-agenda-list
-        "aoo" 'org-agenda
-        "aoc" 'org-capture
-        "aoe" 'org-store-agenda-views
-        "aofi" 'org-feed-goto-inbox
-        "aofu" 'org-feed-update-all
-        ;; Clock
-        ;; These keybindings should match those under the "mC" prefix (above)
-        "aoCc" 'org-clock-cancel
-        "aoCg" 'org-clock-goto
-        "aoCi" 'org-clock-in
-        "aoCI" 'org-clock-in-last
-        "aoCj" 'spacemacs/org-clock-jump-to-current-clock
-        "aoCo" 'org-clock-out
-        "aoCr" 'org-resolve-clocks
+    ;; Add global evil-leader mappings. Used to access org-agenda
+    ;; functionalities – and a few others commands – from any other mode.
+    (spacemacs/declare-prefix
+      "ao"  "org"
+      "aof" "feeds"
+      "aoC" (org-clocks-prefix))
+    ;; org-agenda
+    (unless (when-let ((pkg (configuration-layer/get-package 'helm-org-rifle)))
+              ;; TODO: `configuration-layer/package-used-p' doesn't check
+              ;; :toggle status.  When it is fixed, we can use it again.
+              (cfgl-package-used-p pkg))
+      (spacemacs/set-leader-keys "ao/" 'org-occur-in-agenda-files))
+    (spacemacs/set-leader-keys
+      "ao#" 'org-agenda-list-stuck-projects
+      "aoa" 'org-agenda-list
+      "aoo" 'org-agenda
+      "aoc" 'org-capture
+      "aoe" 'org-store-agenda-views
+      "aofi" 'org-feed-goto-inbox
+      "aofu" 'org-feed-update-all
+      ;; Clock
+      ;; These keybindings should match those under the "mC" prefix (above)
+      "aoCc" 'org-clock-cancel
+      "aoCg" 'org-clock-goto
+      "aoCi" 'org-clock-in
+      "aoCI" 'org-clock-in-last
+      "aoCj" 'spacemacs/org-clock-jump-to-current-clock
+      "aoCo" 'org-clock-out
+      "aoCr" 'org-resolve-clocks
 
-        "aol" 'org-store-link
-        "aom" 'org-tags-view
-        "aos" 'org-search-view
-        "aot" 'org-todo-list
-        ;; SPC C- capture/colors
-        "Cc" 'org-capture)
+      "aol" 'org-store-link
+      "aom" 'org-tags-view
+      "aos" 'org-search-view
+      "aot" 'org-todo-list
+      ;; SPC C- capture/colors
+      "Cc" 'org-capture)
 
     (define-key global-map "\C-cl" 'org-store-link)
     (define-key global-map "\C-ca" 'org-agenda)
@@ -1131,3 +1135,46 @@ Headline^^            Visit entry^^               Filter^^                    Da
           org-roam-ui-follow t
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t)))
+
+(defun org/init-org-fc ()
+  (use-package org-fc
+    :after org
+    :init
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode
+      "Fi" 'org-fc-type-normal-init
+      "Fc" 'org-fc-type-cloze-init
+      "Fd" 'org-fc-type-double-init
+      "Fd" 'org-fc-dashboard
+      "Ft" 'org-fc-type-text-input-init
+      "Ff" 'org-fc-review
+      "Fu" 'org-fc-update
+      "FU" 'org-fc-update-all
+      "Fe" 'org-fc-review-early)
+    :config
+    (spacemacs/set-leader-keys-for-minor-mode 'org-fc-review-flip-mode
+      "ff" 'org-fc-review-flip
+      "fs" 'org-fc-review-suspend-card
+      "fE" 'org-fc-review-edit
+      "fq" 'org-fc-review-quit)
+
+    ;; disable default key maps to avoid conflict with evil insert mode
+    ;; must set the reference itself because it was already processed by the defin-minor-mode
+    (setcdr org-fc-review-rate-mode-map nil)
+    (setcdr org-fc-review-flip-mode-map nil)
+
+    (spacemacs/set-leader-keys-for-minor-mode 'org-fc-review-rate-mode
+      "fa" 'org-fc-review-rate-again
+      "fh" 'org-fc-review-rate-hard
+      "fg" 'org-fc-review-rate-good
+      "fe" 'org-fc-review-rate-easy
+      "fE" 'org-fc-review-edit
+      "fs" 'org-fc-review-suspend-card
+      "fq" 'org-fc-review-quit)
+
+
+    (evil-define-key 'normal org-fc-dashboard-mode-map
+       (kbd "r") 'org-fc-dashboard-review
+       (kbd "q") 'quit-window
+       (kbd "n") 'org-fc-dashboard-section-next
+       (kbd "p") 'org-fc-dashboard-section-previous
+       (kbd "TAB") 'org-fc-dashboard-section-toggle)))
