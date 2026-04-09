@@ -473,6 +473,10 @@ Will work on both org-mode and any mode that accepts plain html."
                 (kbd (concat dotspacemacs-major-mode-emacs-leader-key " '"))
                 'org-edit-src-exit)
 
+    (define-key org-mode-map
+                (kbd "C-c i")
+                outline-mode-prefix-map)
+
     ;; Evilify the calendar tool on C-c .
     (unless (eq 'emacs dotspacemacs-editing-style)
       (define-key org-read-date-minibuffer-local-map (kbd "M-h") #'org-calendar-backward-day)
