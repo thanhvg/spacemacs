@@ -153,3 +153,18 @@ For example: To unfold from a magit diff buffer, evaluate the following:
 (defun spacemacs/edraw-insert ()
   (interactive)
   (insert "[[edraw:]]"))
+
+
+(defun spacemacs/org-link-remove-description ()
+  "Remove link description.
+This can be helpful if the link points at a image file. Remove the description will trigger inline display of the image."
+  (interactive)
+  (when (org-in-regexp org-link-bracket-re 1)
+    (let ((remove (list (match-beginning 0) (match-end 0)))
+          (link (org-link-unescape (match-string-no-properties 1))))
+      (when remove (apply #'delete-region remove))
+      (insert (org-link-make-string-for-buffer link "")))))
+
+
+  
+

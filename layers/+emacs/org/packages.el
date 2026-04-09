@@ -406,6 +406,7 @@ Will work on both org-mode and any mode that accepts plain html."
       "xb" (spacemacs|org-emphasize spacemacs/org-bold ?*)
       "xc" (spacemacs|org-emphasize spacemacs/org-code ?~)
       "xi" (spacemacs|org-emphasize spacemacs/org-italic ?/)
+      "xl" 'spacemacs/org-link-remove-description
       "xo" 'org-open-at-point
       "xr" (spacemacs|org-emphasize spacemacs/org-clear ? )
       "xs" (spacemacs|org-emphasize spacemacs/org-strike-through ?+)
