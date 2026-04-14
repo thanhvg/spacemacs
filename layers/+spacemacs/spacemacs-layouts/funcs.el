@@ -343,8 +343,8 @@ Available PROPS:
   (spacemacs//update-custom-layouts)
   (spacemacs/custom-layouts-transient-state/body))
 
-(defun spacemacs//custom-layouts-ms-documentation ()
-  "Return the docstring for the custom perspectives transient-state."
+(defun spacemacs//custom-layouts-ts-documentation ()
+  "Return the docstring for the custom perspectives transient state."
   (if spacemacs--custom-layout-alist
       (mapconcat (lambda (custom-persp)
                    (format "[%s] %s"
@@ -364,7 +364,7 @@ format so they are supported by the
              (func-name (spacemacs//custom-layout-func-name name)))
         (push (list binding func-name :exit t) bindings)))
     (eval `(spacemacs|define-transient-state custom-layouts
-             :doc (concat (spacemacs//custom-layouts-ms-documentation))
+             :doc (concat (spacemacs//custom-layouts-ts-documentation))
              :bindings
              ,@bindings))))
 

@@ -243,7 +243,6 @@ Equivalent to: autoflake --remove-all-unused-imports --in-place <FILE>"
                                        (line-beginning-position)
                                        (line-end-position)))))))
     (cond ((member version (pyenv-mode-versions))
-           (setenv "VIRTUAL_ENV" version)
            (pyenv-mode-set version))
           (t (message "pyenv: version `%s' is not installed (set by %s)"
                       version file-path)))))

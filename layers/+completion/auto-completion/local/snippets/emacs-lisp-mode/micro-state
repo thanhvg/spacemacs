@@ -1,12 +1,10 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: micro-state
-# key: micro
+# name: transient-state
+# key: dts
 # binding: direct-keybinding
 # --
-(spacemacs|define-micro-state ${1:micro-state-name}
+(spacemacs|define-transient-state ${1:transient-state-name}
     ${2::doc (spacemacs//$1-ms-documentation)}
-    ${3::use-minibuffer t}
-    ${4::evil-leader "${5:Leader-key}"}
     :bindings
     ${}
     )

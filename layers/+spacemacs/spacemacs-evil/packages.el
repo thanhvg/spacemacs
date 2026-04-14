@@ -45,7 +45,7 @@
         (evil-unimpaired :location (recipe :fetcher local))
         evil-visual-mark-mode
         evil-visualstar
-        (hs-minor-mode :location built-in)
+        (hideshow :location built-in)
         ;; vi-tilde-fringe
         (term-cursor :location (recipe
                                :fetcher github
@@ -355,8 +355,10 @@
     (define-key evil-visual-state-map (kbd "#")
                 'evil-visualstar/begin-search-backward)))
 
-(defun spacemacs-evil/init-hs-minor-mode ()
-  (add-hook 'prog-mode-hook 'spacemacs//enable-hs-minor-mode))
+(defun spacemacs-evil/init-hideshow ()
+  (add-hook 'prog-mode-hook 'spacemacs//enable-hs-minor-mode)
+  (with-eval-after-load 'hideshow
+    (spacemacs|hide-lighter hs-minor-mode)))
 
 (defun spacemacs-evil/init-term-cursor ()
   (use-package term-cursor

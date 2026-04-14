@@ -86,9 +86,8 @@ A COUNT argument matches the indentation to the next COUNT lines."
   :type '(repeat symbol)
   :group 'spacemacs)
 
-(defcustom spacemacs-yank-indent-modes '(latex-mode)
-  "Modes in which to indent regions that are yanked (or yank-popped).
-Only modes that don't derive from `prog-mode' should be listed here."
+(defcustom spacemacs-yank-indent-modes '(prog-mode latex-mode)
+  "Modes in which to indent regions that are yanked (or yank-popped)."
   :type '(repeat symbol)
   :group 'spacemacs)
 
@@ -1665,26 +1664,34 @@ Compare them on count first,and in case of tie sort them alphabetically."
   (if (<= (- end beg) spacemacs-yank-indent-threshold)
       (indent-region beg end nil)))
 
+;; This advice assumes that the advised function interactive spec passes
+;; `current-prefix-arg' as its first argument.
 (defun spacemacs//yank-indent-region (yank-func &rest args)
-  "Indent yanked text, unless `major-mode' is in `spacemacs-indent-sensitive-modes'.
+  "Indent text yanked by YANK-FUNC.
 
-With prefix \\[universal-argument], don't indent."
-  (evil-start-undo-step)
-  (prog1
-      (let ((prefix (car args))
-            (enable (and (not (member major-mode spacemacs-indent-sensitive-modes))
-                         (or (derived-mode-p 'prog-mode)
-                             (member major-mode spacemacs-yank-indent-modes)))))
-        (when (and enable (equal '(4) prefix))
-          (setq args (cdr args)))
-        (prog1
-            (apply yank-func args)
-          (when (and enable (not (equal '(4) prefix)))
-            (let ((transient-mark-mode nil)
-                  (save-undo buffer-undo-list))
-              (spacemacs/yank-advised-indent-function (region-beginning)
-                                                      (region-end))))))
-    (evil-end-undo-step)))
+Indentation is only applied if the major mode is derived from a mode in
+`spacemacs-yank-indent-modes' and not derived from a mode in
+`spacemacs-indent-sensitive-modes'.
+
+With prefix \\[universal-argument], never indent.
+
+ARGS is passed through unchanged to YANK-FUNC, except if the first
+argument is \\='(4) (a single prefix argument), in which case the first
+argument is changed to nil.  If the indentation would not be enabled
+based on the major mode, ARGS (including the prefix argument) is passed
+through unchanged."
+  (evil-with-single-undo
+    (let ((enable (and (not (derived-mode-p spacemacs-indent-sensitive-modes))
+                       (derived-mode-p spacemacs-yank-indent-modes))))
+      (when (and enable (equal '(4) (car args)))
+        (setf (car args) nil
+              enable nil))
+      (prog1
+          (apply yank-func args)
+        (when enable
+          (let ((transient-mark-mode nil))
+            (spacemacs/yank-advised-indent-function (region-beginning)
+                                                    (region-end))))))))
 
 (dolist (func '(yank yank-pop evil-paste-before evil-paste-after))
   (advice-add func :around #'spacemacs//yank-indent-region))

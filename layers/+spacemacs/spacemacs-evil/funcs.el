@@ -32,8 +32,7 @@
 (defun spacemacs//enable-hs-minor-mode ()
   "Enable hs-minor-mode for code folding."
   (ignore-errors
-    (hs-minor-mode)
-    (spacemacs|hide-lighter hs-minor-mode)))
+    (hs-minor-mode)))
 
 (defun spacemacs//iedit-insert-state-hybrid (style)
   "If STYLE is hybrid, update `evil-iedit-insert-state' definition to enable
@@ -137,4 +136,3 @@ Otherwise, revert to the default behavior (i.e. enable `evil-insert-state')."
   (interactive "p")
   (let ((evilnc-invert-comment-line-by-line nil))
     (evilnc-comment-or-uncomment-paragraphs arg)))
-

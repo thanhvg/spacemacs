@@ -252,16 +252,14 @@ Each pair KEYn FUNCTIONn is defined in MAP after the evilification of it."
          (defkey (when bindings `(evil-define-key 'evilified ,map ,@bindings)))
          (body
           `(,@(evilified-state--define-pre-bindings map pre-bindings)
-            ;; we need to work on a local copy of the evilified keymap to
-            ;; prevent the original keymap from being mutated.
-            (setq evil-evilified-state-map (copy-keymap ,evilified-map))
-            (let* ((sorted-map (evilified-state--sort-keymap
-                                evil-evilified-state-map))
+            (let* ((evilified-map-local (copy-keymap ,evilified-map))
+                   (sorted-map (evilified-state--sort-keymap
+                                evilified-map-local))
                    processed)
               (mapc (lambda (map-entry)
                       (unless (member (car map-entry) processed)
                         (setq processed (evilified-state--evilify-event
-                                         ,map ',map evil-evilified-state-map
+                                         ,map ',map evilified-map-local
                                          (car map-entry) (cdr map-entry)))))
                     sorted-map)
               (unless ,(null defkey)
