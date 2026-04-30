@@ -32,6 +32,7 @@
     elisp-demos
     elisp-slime-nav
     (emacs-lisp :location built-in)
+    elisp-refs
     evil
     evil-cleverparens
     evil-collection
@@ -180,6 +181,17 @@
     (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
       (let ((jumpl (intern (format "spacemacs-jump-handlers-%S" mode))))
         (add-to-list jumpl 'elisp-def)))))
+
+(defun emacs-lisp/init-elisp-refs ()
+  (use-package elisp-refs
+    :defer t
+    :init
+    (spacemacs/set-leader-keys-for-major-mode 'emacs-lisp-mode
+      "gf" 'elisp-refs-function 
+      "gm" 'elisp-refs-macro 
+      "gv" 'elisp-refs-variable 
+      "gS" 'elisp-refs-special 
+      "gs" 'elisp-refs-symbol)))
 
 (defun emacs-lisp/init-elisp-demos ()
   (use-package elisp-demos
