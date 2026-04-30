@@ -53,12 +53,14 @@
     (undo-fu :toggle (eq 'undo-fu dotspacemacs-undo-system))
     (undo-fu-session :toggle 'nil)
     (vundo :toggle (not (eq 'undo-tree dotspacemacs-undo-system)))
+    (kirigami :toggle (eq 'kirigami dotspacemacs-folding-method))
     multifiles
     (unkillable-scratch :toggle dotspacemacs-scratch-buffer-unkillable)
     uuidgen
     (vimish-fold :toggle (eq 'vimish dotspacemacs-folding-method))
     (evil-vimish-fold :toggle (eq 'vimish dotspacemacs-folding-method))
     (evil-easymotion :toggle (memq dotspacemacs-editing-style '(vim hybrid)))
+    treesit-fold
     ws-butler))
 
 ;; Initialization of packages
@@ -709,3 +711,29 @@ See variable `undo-fu-session-directory'." dir))
     "," 'occur-cease-edit)
   (spacemacs/set-leader-keys-for-major-mode 'occur-edit-mode
     "c" 'occur-cease-edit))
+
+(defun spacemacs-editing/init-kirigami ()
+  (use-package kirigami
+    :init
+    ;; Configure Kirigami to replace the default Evil-mode folding key bindings
+    (with-eval-after-load 'evil
+      (define-key evil-normal-state-map "zo" 'kirigami-open-fold)
+      (define-key evil-normal-state-map "zO" 'kirigami-open-fold-rec)
+      (define-key evil-normal-state-map "zc" 'kirigami-close-fold)
+      (define-key evil-normal-state-map "za" 'kirigami-toggle-fold)
+      (define-key evil-normal-state-map "zr" 'kirigami-open-folds)
+      (define-key evil-normal-state-map "zm" 'kirigami-close-folds))))
+
+(defun spacemacs-editing/init-treesit-fold ()
+  (use-package treesit-fold
+    :commands (treesit-fold-close
+               treesit-fold-close-all
+               treesit-fold-open
+               treesit-fold-toggle
+               treesit-fold-open-all
+               treesit-fold-mode
+               global-treesit-fold-mode
+               treesit-fold-open-recursively
+               treesit-fold-line-comment-mode)
+    :custom
+    (treesit-fold-line-count-show t)))

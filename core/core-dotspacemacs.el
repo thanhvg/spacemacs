@@ -368,7 +368,7 @@ Point size is recommended, because it's device independent. (default 10.0)"
 
 (spacemacs|defc dotspacemacs-folding-method 'evil
   "Code folding method. Possible values are `evil', `origami' and `vimish'."
-  '(choice (const evil) (const origami) (const vimish))
+  '(choice (const evil) (const origami) (const vimish) (const kirigami))
   'spacemacs-dotspacemacs-init)
 
 (spacemacs|defc dotspacemacs-undo-system 'undo-redo
