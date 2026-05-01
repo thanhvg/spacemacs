@@ -60,6 +60,7 @@
 (defun java/init-java-ts-mode ()
   (add-to-list 'major-mode-remap-alist
                '(java-mode . java-ts-mode))
+  (add-hook 'java-ts-mode-hook #'treesit-fold-mode)
   (add-hook 'java-ts-mode-local-vars-hook #'spacemacs//java-setup-backend)
   (put 'java-backend 'safe-local-variable 'symbolp))
 

@@ -43,6 +43,7 @@
 
 (defun js/pre-init-js-doc ()
   (spacemacs/add-to-hooks #'spacemacs/node-js-doc-require js-modes-hooks)
+  (spacemacs/add-to-hooks #'treesit-fold-mode js-modes-hooks)
   (spacemacs|use-package-add-hook js-doc
     :post-init (dolist (mode js-modes)
                    (spacemacs/node-js-doc-set-key-bindings mode))))

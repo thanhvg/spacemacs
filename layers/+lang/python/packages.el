@@ -364,6 +364,7 @@
     :mode (("SConstruct\\'" . python-mode) ("SConscript\\'" . python-mode))
     :init
     (when python-use-ts-mode
+      (add-hook 'python-ts-mode-hook #'treesit-fold-mode)
       (add-to-list 'major-mode-remap-alist
                '(python-mode . python-ts-mode)))
     (spacemacs/register-repl 'python

@@ -122,7 +122,8 @@
   (use-package go-ts-mode
     :hook ((go-mode-local-vars . spacemacs//go-set-tab-width)
            (go-mode-local-vars . spacemacs//go-setup-backend)
-           (go-mode-local-vars . spacemacs//go-setup-format))
+           (go-mode-local-vars . spacemacs//go-setup-format)
+           (go-ts-mode-hook . treesit-fold-mode))
     :init
     ;; get go packages much faster
     (setq go-packages-function 'spacemacs/go-packages-gopkgs)

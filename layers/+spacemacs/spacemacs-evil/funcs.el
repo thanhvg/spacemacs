@@ -30,9 +30,10 @@
 `hybrid-mode' is active.")
 
 (defun spacemacs//enable-hs-minor-mode ()
-  "Enable hs-minor-mode for code folding."
-  (ignore-errors
-    (hs-minor-mode)))
+  "Enable hs-minor-mode for code folding when not using tree-sitter backed modes."
+  (unless (string-match-p "-ts-" (symbol-name major-mode))
+    (ignore-errors
+      (hs-minor-mode))))
 
 (defun spacemacs//iedit-insert-state-hybrid (style)
   "If STYLE is hybrid, update `evil-iedit-insert-state' definition to enable
