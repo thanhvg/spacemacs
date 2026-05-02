@@ -169,3 +169,20 @@ The window scope is determined by `avy-all-windows' (ARG negates it)."
   "Hook to run in daemon mode."
   (global-origami-mode)
   (remove-hook 'server-after-make-frame-hook #'spacemacs//enable-origami-on-server-frame))
+
+
+(defun spacemacs//treesit-get-continuous-region-of-same-node(node node-name offset)
+  (when-let* ((node-p ( lambda (n) (and n (string= node-name (treesit-node-type n)))))
+              (current (treesit-parent-until node node-p t)))
+    (let ((first current)
+          (last current))
+      ;; Search backwards
+      (while-let ((prev (treesit-node-prev-sibling first))
+                  ((funcall node-p prev)))
+        (setq first prev))
+      ;; Search forwards
+      (while-let ((next (treesit-node-next-sibling last))
+                  ((funcall node-p next)))
+        (setq last next))
+      ;; Return range
+      (treesit-fold--cons-add (cons (treesit-node-start first) (treesit-node-end last)) offset))))

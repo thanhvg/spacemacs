@@ -34,6 +34,7 @@
                          :branch "dev"
                          :repo "thanhvg/lsp-java"))
     org
+    treesit-fold
     smartparens))
 
 (defun java/pre-init-dap-mode ()
@@ -155,3 +156,30 @@
       "mcc" 'mvn-compile
       "mcC" 'mvn-clean
       "mcr" 'spacemacs/mvn-clean-compile)))
+
+(defun java/pre-init-treesit-fold ()
+  (spacemacs|use-package-add-hook treesit-fold
+    :post-config
+    (setf (alist-get
+           'java-ts-mode treesit-fold-range-alist)
+          '((switch_block                    . treesit-fold-range-seq)
+            (block                           . treesit-fold-range-seq)
+            (element_value_array_initializer . treesit-fold-range-seq)
+            (module_body                     . treesit-fold-range-seq)
+            (enum_body                       . treesit-fold-range-seq)
+            (class_body                      . treesit-fold-range-seq)
+            (constructor_body                . treesit-fold-range-seq)
+            (annotation_type_body            . treesit-fold-range-seq)
+            (interface_body                  . treesit-fold-range-seq)
+            (array_initializer               . treesit-fold-range-seq)
+            (block_comment                   . treesit-fold-range-block-comment)
+            (import_declaration              . (lambda (node offset)
+                                                 (spacemacs//treesit-get-continuous-region-of-same-node
+                                                  node
+                                                  "import_declaration"
+                                                  (cons 6 0))))
+            (line_comment                   . (lambda (node offset)
+                                                (spacemacs//treesit-get-continuous-region-of-same-node
+                                                 node
+                                                 "line_comment"
+                                                 (cons 2 0))))))))

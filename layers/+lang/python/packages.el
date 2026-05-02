@@ -52,6 +52,7 @@
     semantic
     sphinx-doc
     smartparens
+    treesit-fold
     xcscope
     window-purpose
     (yapfify :toggle (eq 'yapf python-formatter))
@@ -366,7 +367,7 @@
     (when python-use-ts-mode
       (add-hook 'python-ts-mode-hook #'treesit-fold-mode)
       (add-to-list 'major-mode-remap-alist
-               '(python-mode . python-ts-mode)))
+                   '(python-mode . python-ts-mode)))
     (spacemacs/register-repl 'python
                              'spacemacs/python-start-or-switch-repl "python")
     (spacemacs//bind-python-repl-keys)
@@ -501,3 +502,32 @@
     :regexp-purposes '(("^\\*Anaconda" . help)
                        ("^\\*Pydoc" . help)
                        ("^\\*live-py" . logs)))))
+
+(defun python/pre-init-treesit-fold ()
+  (spacemacs|use-package-add-hook treesit-fold
+    :post-config
+    (setf (alist-get
+           'python-ts-mode treesit-fold-range-alist)
+          '((block . treesit-fold-range-seq)
+            (function_definition      . treesit-fold-range-python-def)
+            (class_definition         . treesit-fold-range-python-def)
+            (list                     . treesit-fold-range-seq)
+            (dictionary               . treesit-fold-range-seq)
+            (parenthesized_expression . treesit-fold-range-seq)
+            (expression_statement     . treesit-fold-range-python-expression-statement)
+            ;; (module . treesit-fold-range-seq)
+            (import_statement . (lambda (node offset)
+                                  (spacemacs//treesit-get-continuous-region-of-same-node
+                                   node
+                                   "import_statement"
+                                   (cons 6 0))))
+            (import_from_statement . (lambda (node offset)
+                                       (spacemacs//treesit-get-continuous-region-of-same-node
+                                        node
+                                        "import_from_statement"
+                                        (cons 4 0))))
+            (comment . (lambda (node offset)
+                         (spacemacs//treesit-get-continuous-region-of-same-node
+                          node
+                          "comment"
+                          (cons 1 0))))))))
