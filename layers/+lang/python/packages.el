@@ -508,14 +508,15 @@
     :post-config
     (setf (alist-get
            'python-ts-mode treesit-fold-range-alist)
-          '((block . treesit-fold-range-seq)
+          '(;;(block . treesit-fold-range-seq)
             (function_definition      . treesit-fold-range-python-def)
             (class_definition         . treesit-fold-range-python-def)
             (list                     . treesit-fold-range-seq)
             (dictionary               . treesit-fold-range-seq)
             (parenthesized_expression . treesit-fold-range-seq)
             (expression_statement     . treesit-fold-range-python-expression-statement)
-            ;; (module . treesit-fold-range-seq)
+            (for_statement            . spacemacs//python-treesit-sub-block)
+            (with_statement            . spacemacs//python-treesit-sub-block)
             (import_statement . (lambda (node offset)
                                   (spacemacs//treesit-get-continuous-region-of-same-node
                                    node

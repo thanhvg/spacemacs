@@ -607,3 +607,11 @@ If region is not active then send line."
   (if python-use-ts-mode
       'python-ts-mode
     'python-mode))
+
+
+(defun spacemacs//python-treesit-sub-block (node offset)
+  (when-let* ((body (treesit-node-child-by-field-name node "body"))
+              ;; find the colon: 
+              (beg (treesit-node-start (treesit-node-prev-sibling body)))
+              (end (treesit-node-end node)))
+    (treesit-fold--cons-add (cons beg end) (cons 1 0) offset)))
