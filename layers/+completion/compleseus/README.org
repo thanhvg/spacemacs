@@ -7,7 +7,6 @@
   - [[#features][Features:]]
 - [[#install][Install]]
   - [[#configuration][Configuration]]
-    - [[#completion-engine][Completion engine]]
     - [[#preview-keys][Preview keys]]
 - [[#key-bindings][Key bindings]]
   - [[#narrowing][Narrowing]]
@@ -16,7 +15,7 @@
 
 * Description
 This layer implements completion provided by combining the following packages:
-- =selectrum= or =vertico=: vertical completion user interface
+- =vertico=: vertical completion user interface
 - =consult=: useful commands using ~completing-read~
 - =embark=: provides minibuffer actions
 - =marginalia=: annotations to completion candidates
@@ -37,16 +36,6 @@ commented out in the =dotspacemacs-configuration-layers= list. Or add
 layer that's listed last.
 
 ** Configuration
-*** Completion engine
-You can configure the completion engine by setting =compleseus-engine= to either
-=vertico= (default) or =selectrum= by editing the =compleseus-engine= variable
-like below to use =selectrum= as opposed to the default of =vertico=:
-
-#+BEGIN_SRC emacs-lisp
-  (compleseus :variables
-              compleseus-engine 'selectrum)
-#+END_SRC
-
 *** Preview keys
 You can set the keys that will by default trigger a preview in consult commands.
 This can be set to a list of keys, with an optional debounce property. For instance

@@ -184,8 +184,6 @@ to act on with `embark-act-all', and move to the next candidate."
   (vertico-previous (or n 1))
   (spacemacs/embark-preview))
 
-;; selectrum
-
 (defun spacemacs/selectrum-next-candidate-preview (&optional n)
   "Go forward N candidates and preview"
   (interactive)

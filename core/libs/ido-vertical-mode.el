@@ -1,4 +1,4 @@
-;;; ido-vertical-mode.el --- Makes ido-mode display vertically  -*- lexical-binding: t; -*-
+;;; ido-vertical-mode.el --- Makes ido-mode display vertically -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2013, 2014  Steven Degutis
 

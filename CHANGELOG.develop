@@ -807,6 +807,8 @@ Other:
     (thanks to mark30247)
   - Fixed evil undo in =spacemacs-base= (thanks to duianto)
   - Fix macOS GUI full screen button wreck caused by GUI setup in early-init.el
+  - Fixed installation of =solarized-selenized-*= themes by mapping them to
+    the =solarized-theme= package (thanks to Sven Koschnicke)
 - Other:
   - New function =configuration-layer/message= to display message in
     =*Messages*= buffer (thanks to Sylvain Benner)

@@ -389,7 +389,7 @@ Features:
 [[file:+completion/compleseus/README.org][+completion/compleseus/README.org]]
 
 This layer implements completion provided by combining the following packages:
-- =selectrum= or =vertico=: vertical completion user interface
+- =vertico=: vertical completion user interface
 - =consult=: useful commands using ~completing-read~
 - =embark=: provides minibuffer actions
 - =marginalia=: annotations to completion candidates

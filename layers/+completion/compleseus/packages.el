@@ -38,8 +38,8 @@
     orderless
     persp-mode
     savehist
-    (selectrum :toggle (eq compleseus-engine 'selectrum))
-    (vertico :toggle (eq compleseus-engine 'vertico))))
+    (vertico :location elpa)
+    (vertico-posframe :toggle compleseus-use-vertico-posframe)))
 
 (defun compleseus/init-all-the-icons-completion ()
   (use-package all-the-icons-completion
@@ -148,7 +148,7 @@
 
     ;; Enable automatic preview at point in the *Completions* buffer.
     ;; This is relevant when you use the default completion UI,
-    ;; and not necessary for Selectrum, Vertico etc.
+    ;; and not necessary for Vertico etc.
     :hook (completion-list-mode . consult-preview-at-point-mode)
 
     ;; The :init configuration is always executed (Not lazy)
@@ -380,22 +380,6 @@
           completion-category-overrides '((file (styles basic partial-completion))))
     :config
     (add-to-list 'orderless-style-dispatchers #'orderless-kwd-dispatch)))
-
-(defun compleseus/init-selectrum ()
-  (use-package selectrum
-    :init
-    (selectrum-mode)
-    (spacemacs/set-leader-keys
-      "rl" 'selectrum-repeat
-      "sl" 'selectrum-repeat)
-    :config
-    ;; TODO can we just use `minibuffer-mode-map'?
-    (define-key selectrum-minibuffer-map (kbd "C-j") 'selectrum-next-candidate)
-    (define-key selectrum-minibuffer-map (kbd "C-r") 'consult-history)
-    (define-key selectrum-minibuffer-map (kbd "C-k") 'selectrum-previous-candidate)
-    (define-key selectrum-minibuffer-map (kbd "C-M-k") #'spacemacs/selectrum-previous-candidate-preview)
-    (define-key selectrum-minibuffer-map (kbd "C-M-j") #'spacemacs/selectrum-next-candidate-preview)
-    (define-key selectrum-minibuffer-map (kbd "C-SPC") #'spacemacs/embark-preview)))
 
 (defun compleseus/init-vertico ()
   (use-package vertico

@@ -21,10 +21,6 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-(defvar compleseus-engine 'vertico
-  "Options are `selectrum', and `vertico' to use as completion
-  engine.")
-
 (defvar compleseus-use-nerd-icons nil
   "Use nerd-icons with marginalia to provide icons in the mini-buffer")
 
