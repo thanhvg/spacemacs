@@ -26,7 +26,9 @@
     (comint :location built-in)
     company
     company-native-complete
+    comint-mime
     consult
+    drepl
     eat
     esh-help
     (eshell :location built-in)
@@ -248,7 +250,7 @@
 
   (when (configuration-layer/layer-used-p 'compleseus)
     (with-eval-after-load 'shell
-        (define-key shell-mode-map (kbd "M-r") 'spacemacs/shell-history)))
+      (define-key shell-mode-map (kbd "M-r") 'spacemacs/shell-history)))
   (with-eval-after-load 'centered-cursor-mode
     (add-hook 'shell-mode-hook 'spacemacs//inhibit-global-centered-cursor-mode)))
 
@@ -449,3 +451,18 @@
     :bind (("C-c $" . vterm-extra-dispatcher)
            :map vterm-mode-map
            (("C-c C-e" . vterm-extra-edit-command-in-new-buffer)))))
+
+(defun shell/init-comint-mime ()
+  (use-package comint-mime
+    :defer t
+    :init
+    (add-hook 'inferior-python-mode-hook 'comint-mime-setup)))
+
+(defun shell/init-drepl ()
+  ;; if no defer then don't need use-package
+  ;; enable for code cell
+  ;; (setf (alist-get 'python-ts-mode code-cells-eval-region-commands) 'drepl-eval-region)
+  ;; (setf (alist-get 'python-mode code-cells-eval-region-commands) 'drepl-eval-region)
+  ;; might need to bind tab to completion-at-point
+  (use-package drepl
+    :defer t))
