@@ -436,25 +436,16 @@
     (define-key vertico-map (kbd "C-k") #'vertico-previous)
     (define-key vertico-map (kbd "C-M-k") #'spacemacs/previous-candidate-preview)
     (define-key vertico-map (kbd "C-S-k") #'vertico-previous-group)
-    (define-key vertico-map (kbd "C-r") #'consult-history))
+    (define-key vertico-map (kbd "C-r") #'consult-history)
 
-  (use-package vertico-directory
-    :after vertico
     ;; More convenient directory navigation commands
-    :init (bind-key "C-h" 'vertico-directory-up vertico-map
-                    (spacemacs//support-hjkl-navigation-p))
+    (define-key vertico-map  (kbd "C-h") 'vertico-directory-delete-char)
     ;; tidy shadowed file names
-    :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+    (add-hook 'rfn-eshadow-update-overlay  #'vertico-directory-tidy)
 
-  (use-package vertico-quick
-    :after vertico
-    :init
     (define-key vertico-map "\M-q" #'vertico-quick-insert)
-    (define-key vertico-map "\C-q" #'vertico-quick-exit))
+    (define-key vertico-map "\C-q" #'vertico-quick-exit)
 
-  (use-package vertico-repeat
-    :after vertico
-    :init
     (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
     (spacemacs/set-leader-keys
       "rl" 'vertico-repeat-previous
