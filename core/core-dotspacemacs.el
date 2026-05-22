@@ -353,8 +353,8 @@ pressing `<leader> m`. Set it to `nil` to disable it."
                                             :weight normal
                                             :width normal)
   "Default font or prioritized list of fonts. This setting has no effect when
-running Emacs in terminal. The font set here will be used for default and
-fixed-pitch faces. The `:size' can be specified as
+running Emacs in terminal. The font set here will be used for `default' and
+`fixed-pitch' faces. The `:size' can be specified as
 a non-negative integer (pixel size), or a floating-point (point size).
 Point size is recommended, because it's device independent. (default 10.0)"
   '(choice (cons string sexp)
@@ -728,7 +728,7 @@ number of recent files to show in each project."
   'spacemacs-dotspacemacs-init)
 
 (spacemacs|defc dotspacemacs-startup-buffer-multi-digit-delay 0.4
-  "The minimum delay in seconds between number key presses."
+  "The maximum delay in seconds between number key presses."
   'number
   'spacemacs-dotspacemacs-init)
 
@@ -910,6 +910,10 @@ Returns non nil if the layer has been effectively inserted."
     (setq dotspacemacs--user-config-elapsed-time
           (float-time (time-subtract (current-time) stime)))))
 
+;; TODO: A substantial portion of `spacemacs/init' is duplicated here.  Perhaps
+;; they could share the same underlying implementation, and thus make
+;; `dotspacemacs/sync-configuration-layers' more reliably synchronize all of the
+;; settings that are specified in the dotfile.
 (defun dotspacemacs/sync-configuration-layers (&optional arg)
   "Synchronize declared layers in dotfile with spacemacs.
 
@@ -932,6 +936,7 @@ Called with `C-u C-u' skips `dotspacemacs/user-config' _and_ preliminary tests."
                 (setq dotspacemacs-editing-style
                       (dotspacemacs//read-editing-style-config
                        dotspacemacs-editing-style))
+                (spacemacs//set-default-font-from-dotfile)
                 (dotspacemacs/call-user-env)
                 (configuration-layer/load)
                 (if (member arg '((4) (16)))
@@ -983,15 +988,6 @@ Ask for confirmation before copying the file if the destination already exists."
   (copy-file dotspacemacs-template-file dotspacemacs-filepath 1)
   (message "%s has been installed." dotspacemacs-filepath))
 
-(defvar ido-max-window-height)
-
-(defun dotspacemacs//ido-completing-read (prompt candidates)
-  "Call `ido-completing-read' with a CANDIDATES alist where the key is
-a display strng and the value is the actual value to return."
-  (let ((ido-max-window-height (1+ (length candidates))))
-    (cadr (assoc (ido-completing-read prompt (mapcar 'car candidates))
-                 candidates))))
-
 (defun dotspacemacs/maybe-install-dotfile ()
   "Install the dotfile if it does not exist."
   (unless (file-exists-p dotspacemacs-filepath)
@@ -1011,23 +1007,36 @@ If ARG is non nil then ask questions to the user before installing the dotfile."
            ;; editing style
            `(("dotspacemacs-editing-style 'vim"
               ,(format
-                "dotspacemacs-editing-style '%S"
-                (dotspacemacs//ido-completing-read
-                 "What is your preferred editing style? "
-                 '(("Among the stars aboard the Evil flagship (vim)"
-                    vim)
-                   ("On the planet Emacs in the Holy control tower (emacs)"
-                    emacs)))))
+                "dotspacemacs-editing-style '%s"
+                (cadr (read-multiple-choice
+                       "What is your preferred editing style?"
+                       '((?v "vim") (?e "emacs") (?h "hybrid"))
+                       (substitute-command-keys "\
+Choose your editing style.
+
+`vim': Recommended for users familiar with Vim, and the most popular choice.
+Use \\`SPC' as your leader key.
+
+`emacs': Key bindings compatible with vanilla Emacs.
+Use \\`M-m' as your leader key.
+
+`hybrid': Like Vim, but use Emacs-style key bindings in insert state.
+Use \\`SPC' as your leader key.
+") t))))
              ("dotspacemacs-distribution 'spacemacs"
               ,(format
-                "dotspacemacs-distribution '%S"
-                (dotspacemacs//ido-completing-read
-                 "What distribution of spacemacs would you like to start with? "
-                 `(("The standard distribution, recommended (spacemacs)"
-                    spacemacs)
-                   (,(concat "A minimalist distribution that you can build on "
-                             "(spacemacs-base)")
-                    spacemacs-base)))))))))
+                "dotspacemacs-distribution '%s"
+                (cadr (read-multiple-choice
+                       "What distribution of spacemacs would you like to start with?"
+                       `((?s "spacemacs")
+                         (?b "spacemacs-base"))
+                       (substitute-command-keys "\
+`spacemacs': The standard distribution.
+Recommended for most users.
+
+`spacemacs-base': A minimalist distribution that you can build on.
+Configures only the minimal packages for core Spacemacs functionality.
+") t))))))))
     (with-current-buffer (find-file-noselect dotspacemacs-template-file)
       (dolist (p preferences)
         (goto-char (point-min))
@@ -1165,14 +1174,14 @@ error recovery."
            (dotspacemacs/location)))
   ;; protect global values of these variables
   (dlet (dotspacemacs-additional-packages
-        dotspacemacs-configuration-layer-path
-        dotspacemacs-configuration-layers
-        dotspacemacs-excluded-packages
-        dotspacemacs-install-packages
-        ;; `passed-tests' and `total-tests' are expected to be dynamically bound
-        ;; when `spacemacs//test-list' is called.
-        (passed-tests 0)
-        (total-tests 0))
+         dotspacemacs-configuration-layer-path
+         dotspacemacs-configuration-layers
+         dotspacemacs-excluded-packages
+         dotspacemacs-install-packages
+         ;; `passed-tests' and `total-tests' are expected to be dynamically bound
+         ;; when `spacemacs//test-list' is called.
+         (passed-tests 0)
+         (total-tests 0))
     (load (dotspacemacs/location))
     (dotspacemacs/layers)
     (spacemacs//test-list 'stringp

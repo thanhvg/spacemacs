@@ -1539,7 +1539,7 @@ version of `widget-button-press' since `widget-button-click' doesn't work."
 (defun spacemacs-buffer/jump-to-number-startup-list-line ()
   "Jump to the startup list line with the typed number.
 
-The minimum delay in seconds between number key presses,
+The maximum delay in seconds between number key presses,
 can be adjusted with the variable:
 `dotspacemacs-startup-buffer-multi-digit-delay'."
   (interactive)

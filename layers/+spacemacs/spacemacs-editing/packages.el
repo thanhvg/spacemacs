@@ -353,12 +353,10 @@
 
 (defun spacemacs-editing/init-vimish-fold ()
   (use-package vimish-fold
-    :ensure
     :after evil))
 
 (defun spacemacs-editing/init-evil-vimish-fold ()
   (use-package evil-vimish-fold
-    :ensure
     :after vimish-fold
     :init
     (setq evil-vimish-fold-target-modes '(prog-mode conf-mode text-mode))

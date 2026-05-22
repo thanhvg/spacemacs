@@ -839,7 +839,6 @@ Headline^^            Visit entry^^               Filter^^                    Da
     :defer t
     :init
     (spacemacs/set-leader-keys-for-major-mode 'org-mode
-      ;; yank is a misnomer for this function which actually puts/pastes
       ;; ir = "insert rich"
       "ir" 'org-rich-yank)))
 

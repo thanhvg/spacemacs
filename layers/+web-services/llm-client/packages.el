@@ -41,7 +41,6 @@
   "Initialize the `ellama` package and set up keybindings."
   (use-package ellama
     :defer t
-    :ensure t
     :init
     (spacemacs/declare-prefix "$" "AI")
     (spacemacs/declare-prefix "$e" "Ellama")
@@ -51,7 +50,6 @@
   "Initialize the `gptel` package and set up keybindings."
   (use-package gptel
     :defer t
-    :ensure t
     :config
     (spacemacs/set-leader-keys-for-minor-mode 'gptel-mode
       "ge" 'gptel-end-of-response

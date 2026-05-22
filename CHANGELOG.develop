@@ -3623,6 +3623,10 @@ files (thanks to Daniel Nicolai)
 - Added support for multi-vterm as default terminal option
 - Added ~M-l~ for =eshell= mode and ~SPC m H~ for both =shell= and =eshell=
   modes for =consult-history= (thanks to Jaehyun Yeom)
+- Fixed =shell-pop= popup toggling failing with void-variable errors
+  on =shell-pop= =20260510= and later, which moved last-buffer and
+  last-window tracking from globals to window parameters
+  (thanks to Mariusz Klochowicz)
 **** Shell Scripts
 - Added new company-shell environment variable backend
   (thanks to Alexander-Miller)

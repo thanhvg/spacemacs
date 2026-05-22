@@ -276,9 +276,7 @@
       (evil-set-initial-state initial-shell-mode 'insert))
 
     (when (fboundp 'spacemacs/make-variable-layout-local)
-      (spacemacs/make-variable-layout-local 'shell-pop-last-shell-buffer-index 1
-                                            'shell-pop-last-shell-buffer-name ""
-                                            'shell-pop-last-buffer nil))
+      (spacemacs/make-variable-layout-local 'shell-pop-last-shell-buffer-index 1))
 
     (add-hook 'term-mode-hook 'ansi-term-handle-close)
 
@@ -289,9 +287,7 @@
       "atsm" 'spacemacs/shell-pop-multiterm
       "atst" 'spacemacs/shell-pop-ansi-term
       "atsT" 'spacemacs/shell-pop-term)
-    (spacemacs/declare-prefix "'" "open shell")
-    :config
-    (add-hook 'shell-pop-out-hook #'spacemacs//shell-pop-restore-window)))
+    (spacemacs/declare-prefix "'" "open shell")))
 
 (defun shell/init-term ()
   (spacemacs/register-repl 'term 'term)

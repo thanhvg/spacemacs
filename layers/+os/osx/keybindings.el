@@ -57,7 +57,7 @@
   (defun kbd-mac-command (keys)
     "Call `kbd' with a macOS-compatible Command-key (⌘) prefixed.
 KEYS should be a string suitable as input to `kbd'.
-`mac-commmand-modifier' determines which prefix will be added; it
+`mac-command-modifier' determines which prefix will be added; it
 should be set to one of `hyper', `super', or `alt'.  For example,
 if KEYS is the string `f', it will be prefixed as `H-f', `s-f',
 or `A-f' accordingly.  If KEYS is of the form `C-f', it likewise

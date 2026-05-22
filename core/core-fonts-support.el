@@ -34,10 +34,10 @@
 PLISTS has either the form (\"fontname\" :prop1 val1 :prop2 val2 ...)
 or is a list of such. The first font that can be found will be used.
 
-The return value is nil if no font was found, truthy otherwise."
+The return value is nil if no font was found, non-nil otherwise."
   (unless (listp (car plists))
     (setq plists (list plists)))
-  (catch 'break
+  (catch 'success
     (dolist (plist plists)
       (when (find-font (font-spec :name (car plist)))
         (let* ((font (car plist))
@@ -96,8 +96,18 @@ The return value is nil if no font was found, truthy otherwise."
                 ;; new version lighter (arrow block)
                 (set-fontset-font "fontset-default"
                                   '(#x2190 . #x21ff) fallback-spec2 nil 'prepend)))))
-        (throw 'break t)))
+        (throw 'success t)))
     nil))
+
+(defun spacemacs//set-default-font-from-dotfile ()
+  "Set the `default' face based on `dotspacemacs-default-font'."
+  (spacemacs|do-after-display-system-init
+    (unless (spacemacs/set-default-font dotspacemacs-default-font)
+      (spacemacs-buffer/warning
+       "Cannot find any of the specified fonts (%s)! Font settings may not be correct."
+       (if (listp (car dotspacemacs-default-font))
+           (mapconcat 'car dotspacemacs-default-font ", ")
+         (car dotspacemacs-default-font))))))
 
 (defun spacemacs/compute-mode-line-height ()
   "Return an adjusted mode-line height."

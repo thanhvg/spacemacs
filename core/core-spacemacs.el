@@ -101,8 +101,7 @@ Returns the directory path from load-hints where FILE is found."
   "Enable the `load-hints' support for Spacemacs.
 This helps Emacs locate files more efficiently by maintaining a mapping
 of directories to file basenames."
-  (setq package-enable-load-hints dotspacemacs-enable-load-hints
-        load-hints
+  (setq load-hints
         (mapcar
          (lambda (path)
            (when-let* (((file-directory-p path))
@@ -188,8 +187,6 @@ of directories to file basenames."
   (hidden-mode-line-mode)
   ;; Disable GUI elements (toolbars, scrollbars, etc.) for a cleaner look.
   (spacemacs//toggle-gui-elements 0)
-  ;; Setup vertical ido mode for the setup wizard.
-  (spacemacs//setup-ido-vertical-mode)
   ;; Set preferred coding system to UTF-8 to avoid prompts.
   (prefer-coding-system 'utf-8)
   ;; Extend use-package if installed.
@@ -240,14 +237,8 @@ of directories to file basenames."
     (defvar load-hints '()))
   ;; Load the default theme.
   (spacemacs/load-default-theme)
-  ;; Set the default font after display system is initialized.
-  (spacemacs|do-after-display-system-init
-    (unless (spacemacs/set-default-font dotspacemacs-default-font)
-      (spacemacs-buffer/warning
-       "Cannot find any of the specified fonts (%s)! Font settings may not be correct."
-       (if (listp (car dotspacemacs-default-font))
-           (mapconcat 'car dotspacemacs-default-font ", ")
-         (car dotspacemacs-default-font)))))
+  ;; Set the default font.
+  (spacemacs//set-default-font-from-dotfile)
   ;; Inhibit the default Emacs startup screen.
   (setq inhibit-startup-screen t)
   ;; Go to the Spacemacs buffer on startup.
@@ -270,22 +261,6 @@ of directories to file basenames."
     (spacemacs/load-spacemacs-env))
   ;; Install the dotfile if required.
   (dotspacemacs/maybe-install-dotfile))
-
-;; Setup ido-vertical-mode for the setup wizard.
-(defun spacemacs//setup-ido-vertical-mode ()
-  "Setup `ido-vertical-mode' for the setup wizard.
-Only activates after ido is loaded, for use in the dotfile setup wizard."
-  (with-eval-after-load 'ido
-    (require 'ido-vertical-mode)
-    (ido-vertical-mode t)
-    (add-hook
-     'ido-setup-hook
-     ;; Natural navigation keys for ido vertical mode.
-     (defun spacemacs//ido-vertical-natural-navigation ()
-       (define-key ido-completion-map (kbd "<up>") 'ido-prev-match)
-       (define-key ido-completion-map (kbd "<down>") 'ido-next-match)
-       (define-key ido-completion-map (kbd "<left>") 'ido-delete-backward-updir)
-       (define-key ido-completion-map (kbd "<right>") 'ido-exit-minibuffer)))))
 
 ;; Override the default startup echo area message.
 (defun display-startup-echo-area-message ()
