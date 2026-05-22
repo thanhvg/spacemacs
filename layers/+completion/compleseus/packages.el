@@ -425,18 +425,6 @@
     :config
     (define-key vertico-map (kbd "C-.") 'spacemacs/embark-select)
 
-    ;; vertico-quick
-    (define-key vertico-map "\M-q" #'vertico-quick-insert)
-    (define-key vertico-map "\C-q" #'vertico-quick-exit)
-
-    ;; vertico-repeat
-    (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
-    (spacemacs/set-leader-keys
-      "rl" 'vertico-repeat-previous
-      "rL" 'vertico-repeat-select
-      "sl" 'vertico-repeat-previous
-      "sL" 'vertico-repeat-select)
-
     (setq read-minibuffer-restore-windows nil)
     (keymap-global-set "M-S" #'vertico-suspend)
     (define-key minibuffer-local-map (kbd "M-j") #'spacemacs/split-window-dwim)
@@ -449,7 +437,31 @@
     (define-key vertico-map (kbd "C-k") #'vertico-previous)
     (define-key vertico-map (kbd "C-M-k") #'spacemacs/previous-candidate-preview)
     (define-key vertico-map (kbd "C-S-k") #'vertico-previous-group)
-    (define-key vertico-map (kbd "C-r") #'consult-history)))
+    (define-key vertico-map (kbd "C-r") #'consult-history))
+
+  (use-package vertico-directory
+    :after vertico
+    ;; More convenient directory navigation commands
+    :init (bind-key "C-h" 'vertico-directory-up vertico-map
+                    (spacemacs//support-hjkl-navigation-p))
+    ;; tidy shadowed file names
+    :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+  (use-package vertico-quick
+    :after vertico
+    :init
+    (define-key vertico-map "\M-q" #'vertico-quick-insert)
+    (define-key vertico-map "\C-q" #'vertico-quick-exit))
+
+  (use-package vertico-repeat
+    :after vertico
+    :init
+    (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
+    (spacemacs/set-leader-keys
+      "rl" 'vertico-repeat-previous
+      "rL" 'vertico-repeat-select
+      "sl" 'vertico-repeat-previous
+      "sL" 'vertico-repeat-select)))
 
 (defun compleseus/init-vertico-posframe ()
   (use-package vertico-posframe
@@ -464,14 +476,6 @@
             (right-fringe . 4)
             (undecorated . nil)))
     (vertico-posframe-mode 1)))
-
-(defun compleseus/init-vertico-directory ()
-  (use-package vertico-directory
-    ;; More convenient directory navigation commands
-    :bind (:map vertico-map
-                ("C-h" . vertico-directory-delete-char))
-    ;; Tidy shadowed file names
-    :hook (rfn-eshadow-update-overlay . vertico-directory-tidy)))
 
 (defun compleseus/init-compleseus-spacemacs-help ()
   (use-package compleseus-spacemacs-help
