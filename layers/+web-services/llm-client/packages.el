@@ -30,6 +30,10 @@
     (gptel-quick :toggle llm-client-enable-gptel
                  :location (recipe :fetcher github
                                    :repo "/karthink/gptel-quick" :files ("*.el")))
+    (gptel-agent
+     :location (recipe :fetcher github
+                       :repo "karthink/gptel-agent"
+                       :files (:defaults "agents")))
     gptel-magit
     minuet
     aider
@@ -227,3 +231,7 @@ Spacemacs leader key).  For example, `SPC y e r` calls
 (defun llm-client/init-gptel-magit ()
   (use-package gptel-magit
     :hook (magit-mode . gptel-magit-install)))
+
+(defun llm-client/init-gptel-agent ()
+  (use-package gptel-agent
+    :config (gptel-agent-update)))         ;Read files from agents directories
