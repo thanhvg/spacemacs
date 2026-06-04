@@ -25,6 +25,7 @@
 (defconst llm-client-packages
   '((ellama :toggle llm-client-enable-ellama)
     embark
+    eca
     (gptel :toggle llm-client-enable-gptel)
     (gptel-quick :toggle llm-client-enable-gptel
                  :location (recipe :fetcher github
@@ -193,3 +194,6 @@
 (defun llm-client/init-gptel-agent ()
   (use-package gptel-agent
     :config (gptel-agent-update)))         ;Read files from agents directories
+
+(defun llm-client/init-eca ()
+  (use-package eca))
