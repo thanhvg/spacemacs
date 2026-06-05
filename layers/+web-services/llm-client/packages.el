@@ -91,7 +91,9 @@
 (defun llm-client/pre-init-embark ()
   (spacemacs|use-package-add-hook embark
     :post-config
-    (keymap-set embark-general-map "?" #'gptel-quick)))
+    (keymap-set embark-general-map "?" #'gptel-quick)
+    (keymap-set embark-url-map "y" #'spacemacs/gptel-yt-summarize)
+    (keymap-set embark-region-map "y" #'spacemacs/gptel-summarize-region)))
 
 (defun llm-client/post-init-org ()
   "Set up Org-mode keybindings for GPTel."

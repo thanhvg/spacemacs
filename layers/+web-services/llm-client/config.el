@@ -11,3 +11,9 @@
   "If non-nil, enable the =ellama= package."
   :type 'boolean
   :group 'llm-client)
+
+
+(defcustom yt-summarize-languages '("en")
+  "Preferred transcript languages, tried in order."
+  :type '(repeat string)
+  :group 'llm-client)
