@@ -14,7 +14,7 @@
 ;; Package-Version: 4.0.0.50-git
 ;; Package-Requires: (
 ;;     (emacs  "26.1")
-;;     (compat "30.1"))
+;;     (compat "31.0"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -434,6 +434,21 @@ or snapshots are build.")
       (oset rcp version version)
       (oset rcp revdesc revdesc))))
 
+(cl-defmethod package-build--head ((rcp package-git-recipe))
+  (with-slots (commit branch) rcp
+    (or commit
+        (and branch (concat "origin/" branch))
+        "origin/HEAD")))
+
+(cl-defmethod package-build--head ((rcp package-hg-recipe))
+  ;; This isn't really HEAD, but the complicated argument "hg log"
+  ;; apparently needs, to show a simple list of the relevant commits.
+  (with-slots (commit branch) rcp
+    (format "sort(ancestors(%s), -rev)"
+            (or commit
+                (format "max(branch(%s))"
+                        (or branch "default"))))))
+
 (cl-defmethod package-build--select-commit ((rcp package-git-recipe) rev exact)
   (if-let* ((commit
              (car (apply #'process-lines
@@ -489,7 +504,7 @@ or snapshots are build.")
 (defun package-build--release-placeholder ()
   ;; Always use at least three zero components before the snapshot
   ;; component, even if `package-build-minimal-release-components' asks
-  ;; for fewer.  Subtract one because the separator is added elsewhwere.
+  ;; for fewer.  Subtract one because the separator is added elsewhere.
   (make-list (1- (max 3 package-build-minimal-release-components)) 0))
 
 ;;;; Tag
@@ -586,18 +601,22 @@ Return (COMMIT-HASH COMMITTER-DATE VERSION-STRING REVDESC) or nil."
   (process-lines "hg" "files" "--include" "**/*.el"))
 
 (cl-defmethod package-build--insert-version-header-log
-  ((_rcp package-git-recipe) lib)
+  ((rcp package-git-recipe) lib)
   (call-process "git" nil t nil
                 "log" "--first-parent" "--no-renames"
                 "--pretty=format:commit %H %cd" "--date=unix"
-                "-L" (format "/^;;* *\\(Package-\\)\\?Version:/,+1:%s" lib)))
+                "-L" (format "/^;;* *\\(Package-\\)\\?Version:/,+1:%s" lib)
+                (package-build--head rcp)))
 
 (cl-defmethod package-build--insert-version-header-log
-  ((_rcp package-hg-recipe) _lib)
+  ((rcp package-hg-recipe) lib)
   (call-process "hg" nil t nil
-                "log" "--first-parent"
-                "--template" "commit: {node} {date|hgdate}\n"
-                )) ; TODO What is the equivalent of Git's "-L"?
+                "log"
+                "--template" "commit {node} {date|hgdate}\n"
+                "--rev" (package-build--head rcp)
+                ;; Unlike Git's "-L" that prints the full diff for LIB,
+                ;; but that should be okay.
+                "-p" "--" lib))
 
 ;;;; Fallback
 
@@ -703,9 +722,8 @@ VERSION-STRING has the format \"%Y%m%d.%H%M\"."
 
 (cl-defmethod package-build--timestamp-version ((rcp package-git-recipe))
   (pcase-let*
-      (((eieio commit branch) rcp)
-       (branch (and branch (concat "origin/" branch)))
-       (rev (or commit branch "origin/HEAD"))
+      (((eieio commit) rcp)
+       (rev (package-build--head rcp))
        (`(,rev-hash ,rev-time) (package-build--select-commit rcp rev commit))
        (`(,tag-hash ,tag-time) (package-build-tag-version rcp)))
     ;; If the latest commit that touches a relevant file is an ancestor of
@@ -723,12 +741,8 @@ VERSION-STRING has the format \"%Y%m%d.%H%M\"."
       (list rev-hash rev-time))))
 
 (cl-defmethod package-build--timestamp-version ((rcp package-hg-recipe))
-  (pcase-let* (((eieio commit branch) rcp)
-               (rev (format "sort(ancestors(%s), -rev)"
-                            (or commit
-                                (format "max(branch(%s))"
-                                        (or branch "default"))))))
-    (package-build--select-commit rcp rev nil)))
+  ;; Someone who likes hg can volunteer to implement the merge-base logic.
+  (package-build--select-commit rcp (package-build--head rcp) nil))
 
 (define-obsolete-function-alias 'package-build-get-snapshot-version
   'package-build-snapshot-version "Package-Build 5.0.0")
@@ -1033,7 +1047,8 @@ Use a sandbox if `package-build--use-sandbox' is non-nil."
        (unless package-build--inhibit-fetch
          (let ((default-directory dir))
            (package-build--message "Updating %s" dir)
-           (package-build--call-process rcp "git" "fetch" "-f" "--tags" "origin")
+           (package-build--call-process
+            rcp "git" "fetch" "-f" "--tags" "--prune" "--prune-tags" "origin")
            ;; We might later checkout "origin/HEAD". Sadly "git fetch"
            ;; cannot be told to keep it up-to-date, so we have to make
            ;; a second request.
@@ -1174,7 +1189,7 @@ that is put in the tarball."
           (process-environment process-environment))
       (when (eq system-type 'darwin)
         ;; Files whose name begin with ._ are added to tarballs
-        ;; by, default, but at least we can turn that off.  See
+        ;; by default, but at least we can turn that off.  See
         ;; also https://superuser.com/a/260264.
         (setenv "COPYFILE_DISABLE" "true"))
       (process-file
@@ -2031,6 +2046,43 @@ a package."
   "Dump the build packages list to FILE as json."
   (with-temp-file file
     (insert (json-encode (package-build--archive-alist-for-json)))))
+
+;;; Webpage
+
+(defun package-build--format-webpage (file dir)
+  (when (file-exists-p file)
+    (with-temp-file (expand-file-name file dir)
+      (save-excursion (insert-file-contents file))
+      (while (re-search-forward "${\\([^}]+\\)}" nil t)
+        (cond
+          ((string-prefix-p "list-" (match-string 1))
+           (let* ((channel (substring (match-string 1) 5))
+                  (beg (match-beginning 0))
+                  (col (- beg (save-excursion (goto-char beg) (pos-bol))))
+                  (sep (concat "\n" (make-string col ?\s)))
+                  (cnt (expand-file-name
+                        "archive-contents"
+                        (if (equal dir channel) dir (concat dir "/" channel))))
+                  (sig (concat cnt ".sig"))
+                  (pkgs (package-build-archive-alist cnt))
+                  (signed (file-exists-p sig)))
+             (replace-match "")
+             (insert
+              (mapconcat
+               (lambda (pkg)
+                 (pcase-let* ((`(,pkg . [,ver ,_ ,desc ,_ ,alist]) pkg)
+                              (ver (package-version-join ver))
+                              (url (alist-get :url alist))
+                              (pre (format "%s/%s" channel pkg)))
+                   (concat
+                    (format "<li><a href=\"%s\">%s</a> — " url pkg)
+                    (format "<a href=\"%s-%s.tar\">%s</a> " pre ver ver)
+                    (if signed
+                        (format "(<a href=\"%s-%s.tar.sig\">sig</a>) " pre ver)
+                      "— ")
+                    (format "<a href=\"%s-readme.txt\">%s</a></li>" pre desc))))
+               pkgs sep))))
+          ((replace-match (or (getenv (match-string 1)) "") t t)))))))
 
 ;;; _
 

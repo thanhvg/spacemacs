@@ -73,6 +73,7 @@
     - [[#verb-mode-bindings][Verb-mode bindings]]
     - [[#verb-response-body-mode-bindings][Verb-response-body-mode bindings]]
     - [[#verb-response-headers-mode-bindings][Verb-response-headers-mode bindings]]
+  - [[#org-modern][Org-modern]]
   - [[#org-roam][Org-roam]]
   - [[#transclusion][Transclusion]]
 
@@ -572,7 +573,11 @@ To enable it by default, set the =org-enable-modern-support= to =t=:
    '((org :variables org-enable-modern-support t)))
 #+END_SRC
 
-To toggle its features, either call ~M-x org-modern-mode~ or ~ESC , T m~.
+To toggle its features in the current buffer, press either ~M-x
+org-modern-mode~ or ~, T m~.
+
+To toggle its features in all org buffers (and agenda buffers), press
+either ~M-x global-org-modern-mode~ or ~, T M~.
 
 Org-modern and valign (above) both provide visual enhancements for org
 tables (if =org-modern-table= is non-nil), and they are not compatible
@@ -715,7 +720,7 @@ for some of the most frequently used commands
 
 | Key binding   | Description                                       |
 |---------------+---------------------------------------------------|
-| ~M-RET M-RET~ | org-meta-return (dwim retrun)                     |
+| ~M-RET M-RET~ | org-meta-return (dwim return)                     |
 | ~M-h/l~       | org-meta-left/right (e.g. promote/demote heading) |
 
 *Normal state*
@@ -966,7 +971,7 @@ The evilified org agenda supports the following bindings:
 Use ~SPC m .~, ~M-SPC~ or ~s-M-SPC~ in an org agenda buffer to activate its
 transient state. The transient state aims to list the most useful org agenda
 commands and visually organize them by category. The commands associated with
-each binding are listed bellow.
+each binding are listed below.
 
 | Key binding | Description         | Command                           |
 |-------------+---------------------+-----------------------------------|
@@ -1191,6 +1196,11 @@ Key binding prefixes:
 |-------------+-----------------------------------------------------|
 | ~SPC m r q~ | Kill current response headers buffer and its window |
 
+** Org-modern
+| Key binding | Description                                         |
+|-------------+-----------------------------------------------------|
+| ~SPC m T m~ | Toggle org-modern in current buffer                 |
+| ~SPC m T M~ | Toggle org-modern in all org and org agenda buffers |
 ** Org-roam
 Key binding prefixes:
 - ~SPC a o r~ (anywhere)

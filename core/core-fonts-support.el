@@ -51,15 +51,7 @@ The return value is nil if no font was found, non-nil otherwise."
                fallback-font-name
                fallback-font-name2)
           (spacemacs-buffer/message "Setting font \"%s\"..." font)
-          ;; We set the INHIBIT-CUSTOMIZE parameter to t to tell set-frame-font
-          ;; not to fiddle with the default face in the user's Customization
-          ;; settings. We don't need Customization because our way of ensuring
-          ;; that the font is applied to future frames is to modify
-          ;; default-frame-alist, and Customization causes issues, see
-          ;; https://github.com/syl20bnr/spacemacs/issues/5353.
-          ;; INHIBIT-CUSTOMIZE is only present in recent emacs versions.
-          (set-frame-font fontspec nil t t)
-          (push `(font . ,(frame-parameter nil 'font)) default-frame-alist)
+          (set-face-attribute 'default nil :font fontspec)
 
           ;; Make sure that our font is used for fixed-pitch face as well
           (set-face-attribute 'fixed-pitch nil :family 'unspecified)
@@ -84,18 +76,21 @@ The return value is nil if no font was found, non-nil otherwise."
                      (fallback-spec2 (apply 'font-spec
                                             :name fallback-font-name2
                                             fallback-props)))
-                ;; window numbers (ding bang circled digits)
-                (set-fontset-font "fontset-default"
-                                  '(#x2776 . #x2793) fallback-spec nil 'prepend)
-                ;; mode-line circled letters (circled latin capital/small letters)
-                (set-fontset-font "fontset-default"
-                                  '(#x24b6 . #x24e9) fallback-spec nil 'prepend)
-                ;; mode-line additional characters (circled/squared mathematical operators)
-                (set-fontset-font "fontset-default"
-                                  '(#x2295 . #x22a1) fallback-spec nil 'prepend)
-                ;; new version lighter (arrow block)
-                (set-fontset-font "fontset-default"
-                                  '(#x2190 . #x21ff) fallback-spec2 nil 'prepend)))))
+                ;; Active fontset might be `fontset-default', `fontset-startup',
+                ;; or something else.
+                (let ((active-fontset (face-attribute 'default :fontset)))
+                  ;; window numbers (ding bang circled digits)
+                  (set-fontset-font active-fontset
+                                    '(#x2776 . #x2793) fallback-spec nil 'prepend)
+                  ;; mode-line circled letters (circled latin capital/small letters)
+                  (set-fontset-font active-fontset
+                                    '(#x24b6 . #x24e9) fallback-spec nil 'prepend)
+                  ;; mode-line additional characters (circled/squared mathematical operators)
+                  (set-fontset-font active-fontset
+                                    '(#x2295 . #x22a1) fallback-spec nil 'prepend)
+                  ;; new version lighter (arrow block)
+                  (set-fontset-font active-fontset
+                                    '(#x2190 . #x21ff) fallback-spec2 nil 'prepend))))))
         (throw 'success t)))
     nil))
 

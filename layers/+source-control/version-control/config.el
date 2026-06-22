@@ -24,14 +24,20 @@
 (defvar spacemacs--smerge-ts-full-hint-toggle nil
   "Display smerge transient-state documentation.")
 
-(spacemacs|defc version-control-global-margin t
-  "If non-nil, will show diff margins globally."
-  'boolean)
+(spacemacs|defc version-control-margin t
+  "Whether to display diff indicators in the margin or fringe.
+
+The git-gutter diff tool only supports showing indicators in the margin.
+
+The diff-hl diff tool shows indicators in the fringe for graphical
+frames and in the margin for TTY frames (which do not support the
+fringe)."
+  '(choice (const auto) (const global) boolean))
 
 (spacemacs|defc version-control-diff-tool 'diff-hl
   "Options are `diff-hl' (the preferred choice) or `git-gutter' to show
-version-control markers."
-  '(choice (const diff-hl) (const git-gutter) nil))
+version-control markers, `nil' to disable this feature."
+  '(choice (const diff-hl) (const git-gutter) (const nil)))
 
 (spacemacs|defc version-control-diff-side 'right
   "Side on which to show version-control markers.

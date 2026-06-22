@@ -52,12 +52,12 @@ You can choose the side on which the diff appears (by default it's the right sid
                     version-control-diff-side 'left)
 #+END_SRC
 
-To automatically enable diff margins in all buffers, set
-=version-control-global-margin=
+Diff margins are automatically enabled in all buffers, but they can be
+disabled if you only want to use other diff-hl features:
 
 #+BEGIN_SRC emacs-lisp
   '(version-control :variables
-                    version-control-global-margin t)
+                    version-control-margin nil)
 #+END_SRC
 
 ** Differences between margin packages
@@ -73,6 +73,12 @@ one over the other:
 | Extended VCS support (e.g. hg, svn) | X       | X          |
 | Stage hunks from buffer             |         | X          |
 | Dired support                       | X       |            |
+
+=diff-hl= supports both the margin (TTY frames) and the fringe (GUI
+frames).  =git-gutter-fringe= supports only the GUI/Fringe, while the
+=git-gutter= supports the TUI/Margin. Check the variable
+=version-control-margin= for how Spacemacs selects the margin
+features.
 
 * Key bindings
 VC commands:

@@ -7,16 +7,18 @@
   - [[#features][Features:]]
 - [[#install][Install]]
   - [[#layer][Layer]]
-  - [[#gptel-support][GPTel support]]
+  - [[#gptel-support][gptel support]]
+    - [[#gptel-agent-support][gptel-agent support]]
   - [[#ellama-support][Ellama support]]
 - [[#configuration][Configuration]]
 - [[#key-bindings][Key bindings]]
-  - [[#gptel][GPTel]]
+  - [[#gptel][gptel]]
+  - [[#gptel-agent][gptel-agent]]
   - [[#ellama][Ellama]]
     - [[#transient-menu][Transient menu]]
 
 * Description
-This layer enables usage of GPT Clients in Spacemacs using [[https://github.com/karthink/gptel][GPTel]] and [[https://github.com/s-kostyaev/ellama][Ellama]].
+This layer enables usage of GPT Clients in Spacemacs using [[https://github.com/karthink/gptel][gptel]] and [[https://github.com/s-kostyaev/ellama][Ellama]].
 
 ** Features:
 You will have access to the following tools:
@@ -41,24 +43,37 @@ To use this configuration layer, add it to your =~/.spacemacs=. You will need to
 add =llm-client= to the existing =dotspacemacs-configuration-layers= list in this
 file.
 
-** GPTel support
-GPTel is a Large Language Model chat client for Emacs, with support for multiple
-models and backends. GPTel allows you to interact with LLMs from anywhere in
+** gptel support
+gptel is a Large Language Model chat client for Emacs, with support for multiple
+models and backends. gptel allows you to interact with LLMs from anywhere in
 Emacs (any buffer, shell, minibuffer, wherever) and supports conversations and
 multiple independent sessions.
 
-Key features of GPTel include:
+Key features of gptel include:
 - Async and fast, streams responses.
 - LLM responses are in Markdown or Org markup.
 - Supports conversations and multiple independent sessions.
 - Save chats as regular Markdown/Org/Text files and resume them later.
 
-To enable GPTel support in your Spacemacs configuration, add the following to
+To enable gptel support in your Spacemacs configuration, add the following to
 your =dotspacemacs-configuration-layers= list:
 
 #+BEGIN_SRC emacs-lisp
   (setq-default dotspacemacs-configuration-layers
    '((llm-client :variables llm-client-enable-gptel t)))
+#+END_SRC
+
+*** gptel-agent support
+gptel, while capable of supporting agents, does not have out-of-the-box
+agentic capabilities. [[https://github.com/karthink/gptel-agent][gptel-agent]] is an agentic preset for gptel. Accordingly,
+gptel-agent will not work without gptel enabled.
+
+To enable gptel-agent support in your Spacemacs configuration, add the following to
+your =dotspacemacs-configuration-layers= list:
+
+#+BEGIN_SRC emacs-lisp
+  (setq-default dotspacemacs-configuration-layers
+   '((llm-client :variables llm-client-enable-gptel-agent t)))
 #+END_SRC
 
 ** Ellama support
@@ -85,20 +100,20 @@ your =dotspacemacs-configuration-layers= list:
 #+END_SRC
 
 * Configuration
-Refer to the official [[https://github.com/karthink/gptel][GPTel]] and [[https://github.com/s-kostyaev/ellama][ellama]] documentation for advanced configurations
+Refer to the official [[https://github.com/karthink/gptel][gptel]] and [[https://github.com/s-kostyaev/ellama][ellama]] documentation for advanced configurations
 and additional information.
 
 * Key bindings
 The layer provides several key bindings to interact with LLMs efficiently.
 
-** GPTel
+** gptel
 
 | Key binding | Command                  | Description                     |
 |-------------+--------------------------+---------------------------------|
-| ~SPC $ g g~ | gptel                    | Start a new GPTel session       |
-| ~SPC $ g s~ | gptel-send               | Send a message to GPTel         |
-| ~SPC $ g q~ | gptel-abort              | Abort any active GPTel process  |
-| ~SPC $ g m~ | gptel-menu               | Open the GPTel menu             |
+| ~SPC $ g g~ | gptel                    | Start a new gptel session       |
+| ~SPC $ g s~ | gptel-send               | Send a message to gptel         |
+| ~SPC $ g q~ | gptel-abort              | Abort any active gptel process  |
+| ~SPC $ g m~ | gptel-menu               | Open the gptel menu             |
 | ~SPC $ g c~ | gptel-add                | Add to context                  |
 | ~SPC $ g f~ | gptel-add-file           | Add a file to context           |
 | ~SPC $ g r~ | gptel-rewrite            | Rewrite or refactor text region |
@@ -111,6 +126,15 @@ In addition, this layer adds the following key bindings to =org-mode=
 |---------------+--------------------------+----------------------------|
 | ~SPC m $ g o~ | gptel-org-set-topic      | Set topic in Org-mode      |
 | ~SPC m $ g p~ | gptel-org-set-properties | Set properties in Org-mode |
+
+** gptel-agent
+
+In addition to the bindings offered by gptel, these bindings are unique to gptel-agent.
+
+| Key binding | Command            | Description                      |
+|-------------+--------------------+----------------------------------|
+| ~SPC $ g a~ | gptel-agent        | Start a new gptel session        |
+| ~SPC $ g u~ | gptel-agent-update | Updates the gptel-agent database |
 
 ** Ellama
 Ellama provides its own transient key binding menu, which is

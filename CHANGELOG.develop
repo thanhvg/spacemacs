@@ -34,6 +34,7 @@ the [[file:CHANGELOG.org][CHANGELOG.org]] file.
 * Release 0.300.x
 ** 0.300.0
 *** Hot new feature
+- Fixed typos
 - Remove obsolete hack erc-sasl
 - Remove =spacemacs/counsel-gtags-define-keys-for-mode= warnings
 - Add configuration layer for gleam-lang (thanks to Qynn Schwaab)
@@ -3700,6 +3701,8 @@ files (thanks to Daniel Nicolai)
 - Added ~SPC m g~ prefix: =goto= (thanks to duianto)
 - Added regional ~sqlfmt~ invocation, error handling, and formatting bindings
   (thanks to 0x6362)
+**** Python
+- Added ty support (thanks to ClarityStorm)
 **** Spell-checking
 - Added spell checking transient state (thanks to Francesc Elies Henar)
 - Update to flyspell-correct v0.5 (thanks to Boris Buliga)

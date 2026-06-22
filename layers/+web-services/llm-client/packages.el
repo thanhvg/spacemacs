@@ -31,6 +31,7 @@
                  :location (recipe :fetcher github
                                    :repo "/karthink/gptel-quick" :files ("*.el")))
     (gptel-agent
+     :toggle llm-client-enable-gptel-agent
      :location (recipe :fetcher github
                        :repo "karthink/gptel-agent"
                        :files (:defaults "agents")))
@@ -71,7 +72,7 @@
       "p"       #'gptel-context-previous
       "d"       #'gptel-context-flag-deletion)
     ;; set up keybindings
-    (spacemacs/declare-prefix "$g" "Gptel")
+    (spacemacs/declare-prefix "$g" "gptel")
     (spacemacs/set-leader-keys
       "$gd" 'spacemacs/gptel-add-code-doc		; code doc gen
       "$gg" 'gptel                          ; Start a new GPTel session
@@ -94,6 +95,22 @@
     (keymap-set embark-general-map "?" #'gptel-quick)
     (keymap-set embark-url-map "y" #'spacemacs/gptel-yt-summarize)
     (keymap-set embark-region-map "y" #'spacemacs/gptel-summarize-region)))
+
+
+(defun llm-client/init-gptel-agent ()
+  (use-package gptel-agent
+    :defer t
+    :init
+    ;; evilify gptel-context-buffer-mode-map
+    (evilified-state-evilify-map gptel-context-buffer-mode-map
+      :eval-after-load gptel-context
+      :mode gptel-context-buffer-mode)
+    ;; set up keybindings
+    (spacemacs/set-leader-keys
+      "$ga" 'gptel-agent                          ; Start a new gptel-agent session
+      "$gu" 'gptel-agent-update)                  ; Updates the gptel-agent database
+    ;; Config for =gptel-agent=
+    :config (gptel-agent-update)))         ;Read files from agents directories
 
 (defun llm-client/post-init-org ()
   "Set up Org-mode keybindings for GPTel."
@@ -193,9 +210,6 @@
   (use-package gptel-magit
     :hook (magit-mode . gptel-magit-install)))
 
-(defun llm-client/init-gptel-agent ()
-  (use-package gptel-agent
-    :config (gptel-agent-update)))         ;Read files from agents directories
 
 (defun llm-client/init-eca ()
   (use-package eca))

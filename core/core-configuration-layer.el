@@ -853,19 +853,19 @@ a new object."
           (and (configuration-layer/layer-used-p layer-name)
                (or excluded (oref obj excluded))))
     (if location
-      (if (and (listp location)
-               (eq (car location) 'recipe)
-               (eq (plist-get (cdr location) :fetcher) 'local))
-          (cond
-           (layer (let ((path (expand-file-name
-                               (format "%s%s"
-                                       (configuration-layer/get-layer-local-dir
-                                        layer-name)
-                                       pkg-name))))
-                    (oset
-                     obj location `(recipe :fetcher file :path ,path))))
-           ((eq 'dotfile layer-name) nil))
-        (oset obj location location))
+        (if (and (listp location)
+                 (eq (car location) 'recipe)
+                 (eq (plist-get (cdr location) :fetcher) 'local))
+            (cond
+             (layer (let ((path (expand-file-name
+                                 (format "%s%s"
+                                         (configuration-layer/get-layer-local-dir
+                                          layer-name)
+                                         pkg-name))))
+                      (oset
+                       obj location `(recipe :fetcher file :path ,path))))
+             ((eq 'dotfile layer-name) nil))
+          (oset obj location location))
       (when (and ownerp (package-built-in-p pkg-name))
         (oset obj location 'built-in)))
     ;; cannot override protected packages
@@ -1314,7 +1314,7 @@ USEDP if non-nil indicates that made packages are used packages."
 
 (defun configuration-layer//filter-distant-packages
     (packages usedp &optional predicate)
-  "Return the distant packages (ie to be intalled).
+  "Return the distant packages (ie to be installed).
 If USEDP is non nil then returns only the used packages; if it is nil then
 return both used and unused packages.
 PREDICATE is an additional expression that eval to a boolean."
@@ -1374,7 +1374,7 @@ Possible return values:
                (directory-file-name
                 (concat configuration-layer-directory path))))
         'category
-      ;; most frequent files encoutered in a layer are tested first
+      ;; most frequent files encountered in a layer are tested first
       (when (or (locate-file "packages" (list path) load-suffixes)
                 (locate-file "layers" (list path) load-suffixes)
                 (locate-file "config" (list path) load-suffixes)
@@ -1832,7 +1832,7 @@ RNAME is the name symbol of another existing layer."
           ;; example, if hypothetically, org (optionally) requires transient in
           ;; the future, we should take care to update transient before org.
           (let* (built-in bootstrap-pre remaining
-                 sorted-upkg-names)
+                          sorted-upkg-names)
             (dolist (pkg-name upkg-names)
               (let ((pkg (configuration-layer/get-package pkg-name)))
                 (push pkg-name
@@ -2340,20 +2340,20 @@ in the back-up directory."
        ((memq action '(nil t lambda))
         (when (eq dirs 'unset)
           (let ((rolldir configuration-layer-rollback-directory))
-            (when (file-exists-p rolldir)
-              (setq dirs
-                    (delq nil
-                          (mapcar
-                           (lambda (slot-dir)
-                             (when (and (file-directory-p (concat rolldir slot-dir))
-                                        (not (or (string= "." slot-dir) (string= ".." slot-dir))))
-                               (let ((p (length (cl-set-difference
-                                                 (directory-files (file-name-as-directory
-                                                                   (concat rolldir slot-dir)))
-                                                 '("." ".." "rollback-info")
-                                                 :test #'string=))))
-                                 (cons slot-dir p))))
-                           (directory-files rolldir)))))))
+            (setq dirs
+                  (and (file-exists-p rolldir)
+                       (delq nil
+                             (mapcar
+                              (lambda (slot-dir)
+                                (when (and (file-directory-p (concat rolldir slot-dir))
+                                           (not (or (string= "." slot-dir) (string= ".." slot-dir))))
+                                  (let ((p (length (cl-set-difference
+                                                    (directory-files (file-name-as-directory
+                                                                      (concat rolldir slot-dir)))
+                                                    '("." ".." "rollback-info")
+                                                    :test #'string=))))
+                                    (cons slot-dir p))))
+                              (directory-files rolldir)))))))
         (complete-with-action action dirs string predicate))))))
 
 (defun configuration-layer/rollback (slot-dir)
@@ -2627,7 +2627,7 @@ Return nil if MODE does not appear in `auto-mode-alist'."
         (spacemacs-buffer/insert-page-break)
         (let ((buffer-read-only nil))
           (spacemacs-buffer/append
-           ;; The messsage should less than 76 characters for tty frame
+           ;; The message should less than 76 characters for tty frame
            (format "\n%s packages loaded in %.3fs (%s)"
                    (cadr (assq 'total stats))
                    configuration-layer--spacemacs-startup-time
@@ -2936,7 +2936,7 @@ happened during the download."
     result))
 
 (defun configuration-layer//stable-elpa-disable-repository ()
-  "Remove stable ELPA repostiory from `package.el' archive.."
+  "Remove stable ELPA repository from `package.el' archive.."
   (setq configuration-layer-elpa-archives
         (cl-delete configuration-layer-stable-elpa-name
                    configuration-layer-elpa-archives

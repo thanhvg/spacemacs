@@ -23,11 +23,7 @@
 (defconst version-control-packages
   '(
     browse-at-remote
-    ;; Git-gutter+ is not longer maintained and will break with latest magit version
-    ;; therefore we switch to diff-hl for users which have configered git-gutter+ to avoid
-    ;; breaking there config.
-    (diff-hl            :toggle (or (eq 'diff-hl version-control-diff-tool)
-                                    (eq 'git-gutter+ version-control-diff-tool)))
+    (diff-hl :toggle (eq 'diff-hl version-control-diff-tool))
     diff-mode
     evil-collection
     evil-unimpaired
@@ -143,11 +139,8 @@
     :defer t
     :init
     (spacemacs/set-leader-keys "gv=" 'diff-hl-diff-goto-hunk)
-    (if version-control-global-margin
-        (progn
-          (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-          (run-with-idle-timer 1 nil 'global-diff-hl-mode))
-      (run-with-idle-timer 1 nil 'diff-hl-margin-mode))
+    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+    (run-with-idle-timer 1 nil 'global-diff-hl-mode)
     :config
     ;; gv-map is always available thanks to gv= setup in init
     (let ((gv-map (keymap-lookup

@@ -24,8 +24,8 @@
 
 
 (defun spacemacs/state-color-face (state)
-  "Return the symbol of the face for the given STATE."
-  (intern (format "spacemacs-%s-face" (symbol-name state))))
+  "Return the symbol of the face for the given STATE, defaults to `emacs'."
+  (intern (format "spacemacs-%s-face" (symbol-name (or state 'emacs)))))
 
 (defun spacemacs/state-color (state)
   "Return the color string associated to STATE."

@@ -248,7 +248,7 @@ to act on with `embark-act-all', and move to the next candidate."
     (company-finish (completing-read "Candidate: " company-candidates))))
 
 (defun spacemacs/consult-edit ()
-  "Export the consult buffer and make the buffer editable righ away."
+  "Export the consult buffer and make the buffer editable right away."
   (interactive)
   (require 'embark)
   (let ((embark-after-export-hook '(spacemacs/grep-change-to-wgrep-mode)))

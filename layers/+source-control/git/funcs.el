@@ -57,14 +57,14 @@
   "Allow the user to get a permalink via git-link in a git-timemachine buffer."
   (interactive)
   (let ((git-link-use-commit t))
-    (call-interactively 'git-link-commit)))
+    (call-interactively 'git-link)))
 
 (defun spacemacs/git-permalink-copy-url-only ()
   "Allow the user to get a permalink via git-link in a git-timemachine buffer."
   (interactive)
   (let (git-link-open-in-browser
         (git-link-use-commit t))
-    (call-interactively 'git-link-commit)))
+    (call-interactively 'git-link)))
 
 (defun spacemacs/git-link-copy-url-only ()
   "Only copy the generated link to the kill ring."

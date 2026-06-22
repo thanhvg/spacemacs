@@ -7,6 +7,11 @@
   :type 'boolean
   :group 'llm-client)
 
+(defcustom llm-client-enable-gptel-agent t
+  "If non-nil, enable the =gptel-agent= package for agentic capabilities in =gptel=."
+  :type 'boolean
+  :group 'llm-client)
+
 (defcustom llm-client-enable-ellama t
   "If non-nil, enable the =ellama= package."
   :type 'boolean
