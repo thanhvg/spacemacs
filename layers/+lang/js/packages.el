@@ -22,6 +22,7 @@
         npm-mode
         ;; org
         prettier-js
+        treesit-fold
         web-beautify))
 
 (defun js/post-init-add-node-modules-path ()
@@ -46,7 +47,7 @@
   (spacemacs/add-to-hooks #'treesit-fold-mode js-modes-hooks)
   (spacemacs|use-package-add-hook js-doc
     :post-init (dolist (mode js-modes)
-                   (spacemacs/node-js-doc-set-key-bindings mode))))
+                 (spacemacs/node-js-doc-set-key-bindings mode))))
 
 (defun js/init-js ()
   (put 'js-backend 'safe-local-variable 'symbolp)
@@ -54,7 +55,7 @@
 
 (defun js/post-init-nodejs-repl ()
   (dolist (mode js-modes)
-   (spacemacs/node-nodejs-repl-set-key-bindings mode)))
+    (spacemacs/node-nodejs-repl-set-key-bindings mode)))
 
 (defun js/init-typescript-ts-mode ())
 
@@ -75,3 +76,55 @@
   (when (eq js-fmt-tool 'web-beautify)
     (add-to-list 'spacemacs--web-beautify-modes
                  (cons 'js-ts-mode 'web-beautify-js))))
+
+(defun js/pre-init-treesit-fold ()
+  (spacemacs|use-package-add-hook treesit-fold
+    :post-config
+    (setf (alist-get
+           'typescript-ts-mode treesit-fold-range-alist)
+          '((export_clause . treesit-fold-range-seq)
+            (statement_block . treesit-fold-range-seq)
+            (object . treesit-fold-range-seq)
+            (array . treesit-fold-range-seq)
+            (comment . treesit-fold-range-c-like-comment)
+            (class_body . treesit-fold-range-seq)
+            (enum_body . treesit-fold-range-seq)
+            (named_imports . treesit-fold-range-seq)
+            (object_type . treesit-fold-range-seq)
+            ;; add
+            (import_statement . (lambda (node offset)
+                                  (spacemacs//treesit-get-continuous-region-of-same-node
+                                   node
+                                   "import_statement"
+                                   (cons 6 0))))))
+    (setf (alist-get
+           'tsx-ts-mode treesit-fold-range-alist)
+          '((export_clause . treesit-fold-range-seq)
+            (statement_block . treesit-fold-range-seq)
+            (object . treesit-fold-range-seq)
+            (array . treesit-fold-range-seq)
+            (comment . treesit-fold-range-c-like-comment)
+            (class_body . treesit-fold-range-seq)
+            (enum_body . treesit-fold-range-seq)
+            (named_imports . treesit-fold-range-seq)
+            (object_type . treesit-fold-range-seq)
+            ;; add
+            (import_statement . (lambda (node offset)
+                                  (spacemacs//treesit-get-continuous-region-of-same-node
+                                   node
+                                   "import_statement"
+                                   (cons 6 0))))))
+
+    (setf (alist-get
+           'js-ts-mode treesit-fold-range-alist)
+          `((export_clause . treesit-fold-range-seq)
+            (statement_block . treesit-fold-range-seq)
+            (object . treesit-fold-range-seq)
+            (array . treesit-fold-range-seq)
+            (comment . treesit-fold-range-c-like-comment)
+            ;; add
+            (import_statement . (lambda (node offset)
+                                  (spacemacs//treesit-get-continuous-region-of-same-node
+                                   node
+                                   "import_statement"
+                                   (cons 6 0))))))))
