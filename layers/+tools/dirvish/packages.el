@@ -23,7 +23,8 @@
 (defconst dirvish-packages
   '((dirvish :location (recipe
                         :fetcher github
-                        :repo  "alexluigit/dirvish"
+                        ;; :repo  "alexluigit/dirvish"
+                        :repo  "latiagertrutis/dirvish"
                         :files (:defaults "extensions/*.el")
                         ;; pin this because divish is still evolving fast
                         ;; there will be problem when dirvish rewrites their git history
