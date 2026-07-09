@@ -186,3 +186,61 @@ The window scope is determined by `avy-all-windows' (ARG negates it)."
         (setq last next))
       ;; Return range
       (treesit-fold--cons-add (cons (treesit-node-start first) (treesit-node-end last)) offset))))
+
+
+
+
+(defun spacemacs//treesit-fold-overlay-at (pos)
+  "Return the treesit-fold overlay at POS, if any."
+  (seq-find (lambda (ov) (eq (overlay-get ov 'creator) 'treesit-fold))
+            (overlays-at pos)))
+
+(defun spacemacs//treesit-fold-next-overlay-pos (pos)
+  "Return the position of the next treesit-fold overlay change after POS, or nil.
+     If POS is already inside a treesit-fold overlay, first skip past its end."
+  (let* ((limit (point-max))
+         (cur (or (spacemacs//treesit-fold-overlay-at pos)
+                  (spacemacs//treesit-fold-overlay-at (1+ pos))))
+         (next (if cur  (overlay-end cur) pos)))
+    (catch 'found
+      (while (< next limit)
+        (setq next (next-overlay-change next))
+        (when (>= next limit)
+          (throw 'found nil))
+        (when (spacemacs//treesit-fold-overlay-at next)
+          (throw 'found next)))
+      nil)))
+
+(defun spacemacs/treesit-fold-goto-next-overlay ()
+  "Move point to the start of the next overlay created by `treesit-fold'.
+     If point is currently inside such an overlay, it is skipped."
+  (interactive)
+  (let ((pos (spacemacs//treesit-fold-next-overlay-pos (point))))
+    (if pos
+        (goto-char pos)
+      (message "No next treesit-fold overlay found"))))
+
+(defun spacemacs//treesit-fold-prev-overlay-pos (pos)
+  "Return the position of the previous treesit-fold overlay change before POS, or nil.
+     If POS is already inside a treesit-fold overlay, first skip past its start."
+  (let* ((limit (point-min))
+         (cur (or (spacemacs//treesit-fold-overlay-at pos)
+                  (spacemacs//treesit-fold-overlay-at (1- pos))))
+         (prev (if cur (overlay-start cur) pos)))
+    (catch 'found
+      (while (> prev limit)
+        (setq prev (previous-overlay-change prev))
+        (when (<= prev limit)
+          (throw 'found nil))
+        (when (spacemacs//treesit-fold-overlay-at prev)
+          (throw 'found prev)))
+      nil)))
+
+(defun spacemacs/treesit-fold-goto-prev-overlay ()
+  "Move point to the start of the previous overlay created by `treesit-fold'.
+     If point is currently inside such an overlay, it is skipped."
+  (interactive)
+  (let ((pos (spacemacs//treesit-fold-prev-overlay-pos (point))))
+    (if pos
+        (goto-char pos)
+      (message "No previous treesit-fold overlay found"))))
