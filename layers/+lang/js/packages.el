@@ -77,6 +77,10 @@
     (add-to-list 'spacemacs--web-beautify-modes
                  (cons 'js-ts-mode 'web-beautify-js))))
 
+;; TODO this is clunky 
+;; consider mutating instead
+;;(push '(jsx_element . treesit-fold-range-seq)
+;;      (alist-get 'tsx-ts-mode treesit-fold-range-html))
 (defun js/pre-init-treesit-fold ()
   (spacemacs|use-package-add-hook treesit-fold
     :post-config
@@ -109,6 +113,7 @@
             (named_imports . treesit-fold-range-seq)
             (object_type . treesit-fold-range-seq)
             ;; add
+            (jsx_element . treesit-fold-range-html)
             (import_statement . (lambda (node offset)
                                   (spacemacs//treesit-get-continuous-region-of-same-node
                                    node
