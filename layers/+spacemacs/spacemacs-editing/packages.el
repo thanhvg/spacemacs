@@ -727,6 +727,7 @@ See variable `undo-fu-session-directory'." dir))
     :diminish "tf"
     :config
     (evil-define-key 'normal treesit-fold-mode-map
+      "zs" #'spacemacs/treesit-fold-close-all-but-point
       "zn" #'spacemacs/treesit-fold-goto-next-overlay
       "zp" #'spacemacs/treesit-fold-goto-prev-overlay)
     :commands (treesit-fold-close

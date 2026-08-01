@@ -244,3 +244,41 @@ The window scope is determined by `avy-all-windows' (ARG negates it)."
     (if pos
         (goto-char pos)
       (message "No previous treesit-fold overlay found"))))
+
+(defun spacemacs/treesit-fold-close-all-but-point ()
+  "Fold every foldable syntax node in the buffer except the ones needed
+to keep `point' visible.
+
+This is like `treesit-fold-close-all', but any fold whose range would
+hide `point' is left open (or reopened if it was already folded)."
+  (interactive)
+  (treesit-fold--ensure-ts
+   (let ((pos (point))
+         nodes)
+     ;; If `point' is currently inside an existing fold, open it first so
+     ;; it isn't left hidden by a stale overlay.
+     (dolist (ov (treesit-fold--overlays-in 'invisible 'treesit-fold))
+       (when (and (<= (overlay-start ov) pos) (<= pos (overlay-end ov)))
+         (delete-overlay ov)))
+     (let* ((treesit-fold-indicators-mode)  ; temporarily disable, refresh once at the end
+            (treesit-fold-on-fold-hook)
+            (root (treesit-buffer-root-node))
+            (patterns (seq-mapcat (lambda (fold-range) `((,(car fold-range)) @name))
+                                  (alist-get major-mode treesit-fold-range-alist)))
+            (query (treesit-query-compile (treesit-node-language root) patterns)))
+       (setq nodes (treesit-query-capture root query)
+             nodes (mapcar #'cdr nodes)
+             nodes (cl-remove-if
+                    (lambda (node)
+                      (or
+                       ;; Same exclusion as `treesit-fold-close-all': skip
+                       ;; nodes whose fold range is on a single line.
+                       (treesit-fold--node-range-on-same-line node)
+                       ;; Skip nodes whose fold range would swallow `point'.
+                       (when-let* ((range (treesit-fold--get-fold-range node)))
+                         (and (<= (car range) pos) (<= pos (cdr range))))))
+                    nodes))
+       (mapc #'treesit-fold-close nodes))
+     (when nodes
+       (run-hooks 'treesit-fold-on-fold-hook)
+       t))))
