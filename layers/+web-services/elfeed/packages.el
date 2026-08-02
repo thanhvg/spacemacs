@@ -35,17 +35,23 @@
       :mode elfeed-search-mode
       :eval-after-load elfeed-search
       :bindings
-      "c"  'elfeed-db-compact
+      "C"  'elfeed-db-compact
+      "c"  'elfeed-search-clear-filter
       "gr" 'elfeed-update
-      "gR" 'elfeed-search-update--force
+      "gR" 'elfeed-search-fetch
+      "gt" 'elfeed-tree
       "gu" 'elfeed-unjam
       "o"  'elfeed-load-opml)
+    (evilified-state-evilify-map elfeed-tree-mode-map
+      :mode elfeed-tree-mode
+      :eval-after-load elfeed-tree
+      :bindings
+      (kbd "RET") 'elfeed-tree-search)
     (evilified-state-evilify-map elfeed-show-mode-map
       :mode elfeed-show-mode
       :eval-after-load elfeed-show
       :bindings
-      (kbd "C-j") 'elfeed-show-next
-      (kbd "C-k") 'elfeed-show-prev)
+      "B" 'spacemacs/elfeed-open-with-eww)
     (evil-define-key 'visual elfeed-search-mode-map
       "+"  'elfeed-search-tag-all
       "-"  'elfeed-search-untag-all
@@ -57,6 +63,12 @@
     :post-config
     (progn
       (elfeed-goodies/setup)
+      (evilified-state-evilify-map elfeed-show-mode-map
+        :mode elfeed-show-mode
+        :eval-after-load elfeed-show
+        :bindings
+        (kbd "C-j") 'elfeed-goodies/split-show-next
+        (kbd "C-k") 'elfeed-goodies/split-show-prev)
       (evil-define-key 'evilified elfeed-show-mode-map
         "o" 'elfeed-goodies/show-ace-link))))
 
