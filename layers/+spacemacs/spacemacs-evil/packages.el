@@ -357,6 +357,11 @@
 
 (defun spacemacs-evil/init-hideshow ()
   (add-hook 'prog-mode-hook 'spacemacs//enable-hs-minor-mode)
+  (evil-define-key 'normal hs-minor-mode-map
+    "z1" #'hs-hide-level-at-depth-1
+    "z2" #'hs-hide-level-at-depth-2
+    "z3" #'hs-hide-level-at-depth-3
+    "zs" #'hs-close-all-but-point)
   (with-eval-after-load 'hideshow
     (spacemacs|hide-lighter hs-minor-mode)))
 
