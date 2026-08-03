@@ -282,3 +282,61 @@ hide `point' is left open (or reopened if it was already folded)."
      (when nodes
        (run-hooks 'treesit-fold-on-fold-hook)
        t))))
+
+;;
+;; (@* "Fold by level" )
+;;
+
+(defun spacemacs//treesit-fold--node-fold-depth (node mode-ranges)
+  "Return the foldable-nesting depth of NODE.
+
+Depth counts NODE itself (if foldable) plus every ancestor of NODE that
+is a registered foldable type in MODE-RANGES and whose range isn't
+confined to a single line.  The outermost foldable node has depth 1."
+  (let ((depth 0)
+        (cur node))
+    (while cur
+      (when (and (alist-get (intern (treesit-node-type cur)) mode-ranges)
+                 (not (treesit-fold--node-range-on-same-line cur)))
+        (setq depth (1+ depth)))
+      (setq cur (treesit-node-parent cur)))
+    depth))
+
+(defun spacemacs/treesit-fold-close-level (level)
+  "Fold all foldable nodes at fold-depth LEVEL, VS Code `Fold Level' style.
+
+LEVEL 1 folds only the outermost foldable nodes.  LEVEL 2 folds nodes
+nested one foldable-level deeper (parents of those are left open), and
+so on up to LEVEL 9.  LEVEL 0 unfolds everything (equivalent to
+`treesit-fold-open-all').
+
+Interactively, prompts for LEVEL (0-9)."
+  (interactive "nFold level (0-9): ")
+  (treesit-fold--ensure-ts
+    ;; Always start from a clean slate, same as VS Code: pressing a level
+    ;; re-derives the fold state from scratch rather than layering on top
+    ;; of whatever is currently folded.
+    (treesit-fold-open-all)
+    (when (> level 0)
+      (let* ((mode-ranges (alist-get major-mode treesit-fold-range-alist))
+             (root (treesit-buffer-root-node))
+             (patterns (seq-mapcat (lambda (fold-range) `((,(car fold-range)) @name))
+                                   mode-ranges))
+             (query (treesit-query-compile (treesit-node-language root) patterns))
+             (nodes (mapcar #'cdr (treesit-query-capture root query)))
+             (nodes (cl-remove-if #'treesit-fold--node-range-on-same-line nodes))
+             (target-nodes
+              (cl-remove-if-not
+               (lambda (node)
+                 (= (spacemacs//treesit-fold--node-fold-depth node mode-ranges) level))
+               nodes)))
+        (mapc #'treesit-fold-close target-nodes)
+        (when target-nodes
+          (run-hooks 'treesit-fold-on-fold-hook)
+          t)))))
+
+(dotimes (i 10)
+  (defalias (intern (format "spacemacs/treesit-fold-close-level-%d" i))
+    (lambda () (interactive) (spacemacs/treesit-fold-close-level i))
+    (format "Fold to level %d (VS Code `Fold Level %d' equivalent)." i i)))
+
