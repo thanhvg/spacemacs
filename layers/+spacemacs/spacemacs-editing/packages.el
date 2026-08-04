@@ -726,6 +726,12 @@ See variable `undo-fu-session-directory'." dir))
   (use-package treesit-fold
     :diminish "tf"
     :config
+    ;; add the new commands to the existing after-command advice list so
+    ;; indicators refresh consistently with the other commands:
+    (let ((commands '(spacemacs/treesit-fold-close-all-but-point
+                      spacemacs/treesit-fold-close-level)))
+      (dolist (command commands)
+        (advice-add command :after #'treesit-fold--after-command)))
     (evil-define-key 'normal treesit-fold-mode-map
       "z1" #'spacemacs/treesit-fold-close-level-1
       "z2" #'spacemacs/treesit-fold-close-level-2
