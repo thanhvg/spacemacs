@@ -32,17 +32,13 @@
 ;;; Code:
 
 (defconst browser-controllers-packages
-  '((browsel :location (recipe
+  '((browser-gt :location (recipe
                         :fetcher github
-                        :repo "dmgerman/browsel"))))
+                        :repo "dmgerman/browser-gt"))))
 
-(defun browser-controllers/init-browsel ()
-  (use-package browsel
-    :config
-    (require 'browsel-www)         ; SAVE_PAGE
-    (require 'browsel-chatgpt)     ; CHATGPT
-    (require 'browsel-youtube)     ; YOUTUBE + YOUTUBE_TRANSCRIPT
-    (require 'browsel-babel)       ; org-babel browsel-js blocks
-    (require 'browsel-tab-manager) ; M-x browsel-tab-manager
-    (require 'browsel-url-handler) ; browsel-browse-url + browsel-url-routes
-    (browsel-start)))
+(defun browser-controllers/init-browser-gt ()
+  (use-package browser-gt
+    :init
+    (spacemacs/set-leader-keys
+      "abs" 'spacemacs/browser-gt-start
+      "abS" 'browser-gt-stop)))

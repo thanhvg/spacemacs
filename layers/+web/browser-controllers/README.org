@@ -1,4 +1,4 @@
-#+TITLE: browsel layer
+#+TITLE: browser controllers layer
 # Document tags are separated with "|" char
 # The example below contains 2 tags: "layer" and "web service"
 # Avaliable tags are listed in <spacemacs_root>/.ci/spacedoc-cfg.edn
@@ -6,7 +6,7 @@
 #+TAGS: layer|web service
 
 # The maximum height of the logo should be 200 pixels.
-[[img/browsel.png]]
+[[img/browser-gt.png]]
 
 # TOC links should be GitHub style anchors.
 * Table of Contents                                        :TOC_4_gh:noexport:
@@ -26,7 +26,7 @@ This layer adds support for something.
 
 * Install
 To use this configuration layer, add it to your =~/.spacemacs=. You will need to
-add =browsel= to the existing =dotspacemacs-configuration-layers= list in this
+add =browser-gt= to the existing =dotspacemacs-configuration-layers= list in this
 file.
 
 * Key bindings
