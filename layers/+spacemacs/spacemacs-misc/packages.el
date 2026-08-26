@@ -27,7 +27,8 @@
         dumb-jump
         deadgrep
         grep
-        (timeout :location (recipe :fetcher github
+        (timeout :toggle (version< emacs-version "31")
+                 :location (recipe :fetcher github
                                    :repo "/karthink/timeout" :files ("*.el")))
         wgrep))
 

@@ -28,6 +28,8 @@
     (debug :location built-in)
     (edebug :location built-in)
     eldoc
+    (elisp-mode :toggle (version< "31" emacs-version)
+                :location built-in)
     elisp-def
     elisp-demos
     elisp-slime-nav
@@ -50,12 +52,18 @@
     overseer
     rainbow-identifiers
     semantic
-    (semel :location (recipe
-                          :fetcher github
-                          :repo "eshelyaron/semel"))
+    (semel :toggle (version< emacs-version "31")
+           :location (recipe
+                      :fetcher github
+                      :repo "eshelyaron/semel"))
     smartparens
     srefactor
     emr))
+
+(defun emacs-lisp/init-elisp-mode ()
+  (setq elisp-fontify-semantically t)
+  (set-face-attribute 'elisp-variable-at-point nil :inherit 'highlight)
+  (add-hook 'emacs-lisp-mode-hook #'cursor-sensor-mode))
 
 (defun emacs-lisp/init-ielm ()
   (use-package ielm
