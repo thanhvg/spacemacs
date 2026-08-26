@@ -194,7 +194,7 @@ is read-only: it never creates or touches an overlay."
                 ;; TARGET is elsewhere: fold this block in its entirety.
                 (progn
                   (goto-char match-beg)
-                  (hs-hide-block-at-point t)
+                  (hs-hide-block-at-point)
                   (goto-char q))))))))))
 
 (defun hs-close-all-but-point ()
@@ -239,7 +239,7 @@ to keep `point' visible.  Analogous to
                   ;; (and everything nested inside it goes with it).
                   (progn
                     (goto-char match-beg)
-                    (hs-hide-block-at-point t)
+                    (hs-hide-block-at-point)
                     (goto-char q))
                 ;; Not there yet: leave this block open and descend.
                 (progn
