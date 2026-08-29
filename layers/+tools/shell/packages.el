@@ -386,19 +386,24 @@
   (use-package ghostel
     :defer t
     :commands (ghostel ghostel-other-window)
+    :bind (("C-x m" . ghostel)
+           :map project-prefix-map
+           ("m" . ghostel-project)
+           ("M" . ghostel-project-list-buffers))
     :init
     (make-shell-pop-command "ghostel" ghostel)
     (spacemacs/set-leader-keys "atsg" 'spacemacs/shell-pop-ghostel)
     (spacemacs/register-repl 'ghostel 'ghostel)
     :config
+    (add-to-list 'project-switch-commands '(ghostel-project "Ghostel") t)
+    (add-to-list 'project-switch-commands '(ghostel-project-list-buffers "Ghostel buffers") t)
+    (add-to-list 'ghostel-eval-cmds '("magit-status-setup-buffer" magit-status-setup-buffer))
     (setq ghostel-shell shell-default-term-shell)
     (add-hook 'ghostel-mode-hook 'spacemacs/disable-hl-line-mode)
     (with-eval-after-load 'centered-cursor-mode
       (add-hook 'ghostel-mode-hook 'spacemacs//inhibit-global-centered-cursor-mode))
     (spacemacs/set-leader-keys-for-major-mode 'ghostel-mode
       "c" 'multighostel
-      "n" 'ghostel-next
-      "N" 'ghostel-previous
       "p" 'ghostel-previous)))
 
 (defun shell/init-evil-ghostel ()
