@@ -1,0 +1,35 @@
+#+TITLE: Just layer
+
+#+TAGS: layer|tool
+
+* Table of Contents                     :TOC_5_gh:noexport:
+- [[#description][Description]]
+  - [[#features][Features:]]
+- [[#install][Install]]
+- [[#shortcuts][Shortcuts]]
+
+* Description
+This layer adds [[https://just.systems/][just]] support.
+
+** Features:
+- Adds [[https://github.com/psibi/justl.el][justl]] and sets up ~SPC p j/J~.
+- Adds [[https://github.com/leon-barrett/just-ts-mode.el][just-ts-mode]] for syntax highlighting
+
+* Install
+To use this configuration layer, add it to your =~/.spacemacs=. You will need to
+add =just= to the existing =dotspacemacs-configuration-layers= list in this file.
+
+#+BEGIN_SRC elisp
+  (defun dotspacemacs/layers ()
+    dotspacemacs-configuration-layers '(just))
+#+END_SRC
+
+* Shortcuts
+
+| Shortcut    | Binding                     |
+|-------------+-----------------------------|
+| ~SPC p j~   | ~justl-exec-recipe-in-dir~  |
+|-------------+-----------------------------|
+| ~SPC p J j~ | ~justl-exec-recipe-in-dir~  |
+| ~SPC p J J~ | ~justl-exec-default-recipe~ |
+| ~SPC p J l~ | ~justl~                     |

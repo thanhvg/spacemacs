@@ -22,19 +22,21 @@
 
 
 (defconst nixos-packages
-  '((company-nixos-options :requires (company nixos-options))
+  '(company
+    (company-nixos-options :requires (company nixos-options))
     flycheck
     (helm-nixos-options :requires (helm nixos-options))
     nix-mode
     nixos-options))
 
 (defun nixos/post-init-company ()
-  (let ((backends '(company-capf)))
-    (when (configuration-layer/package-used-p 'company-nixos-options)
-      (add-to-list 'backends 'company-nixos-options t))
-    (eval `(spacemacs|add-company-backends
-            :backends ,backends
-            :modes nix-mode))))
+  (when (configuration-layer/package-used-p 'company-nixos-options)
+    (spacemacs|add-company-backends
+      :backends company-nixos-options
+      :modes nix-mode))
+  (spacemacs|add-company-backends
+    :backends company-capf
+    :modes nix-mode))
 
 (defun nixos/init-company-nixos-options ()
   (use-package company-nixos-options
@@ -50,17 +52,15 @@
 (defun nixos/init-nix-mode ()
   (use-package nix-mode
     :defer t
-    :mode "\\.nix\\'"
     :init
     (add-hook 'nix-mode-hook #'spacemacs//nix-setup-backend)
     (add-to-list 'spacemacs-indent-sensitive-modes 'nix-mode)
     (spacemacs/set-leader-keys-for-major-mode 'nix-mode
       "==" 'nix-format-buffer
       "f"  'nix-flake)
-    (when nixos-format-on-save
-      (add-hook 'before-save-hook 'nix-format-before-save))
     :config
-    (electric-indent-mode -1)))
+    (when nixos-format-on-save
+      (add-hook 'nix-mode-hook #'nix-format-on-save-mode))))
 
 (defun nixos/init-nixos-options ()
   (use-package nixos-options :defer t))

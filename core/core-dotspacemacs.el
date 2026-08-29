@@ -989,8 +989,12 @@ Ask for confirmation before copying the file if the destination already exists."
   (message "%s has been installed." dotspacemacs-filepath))
 
 (defun dotspacemacs/maybe-install-dotfile ()
-  "Install the dotfile if it does not exist."
-  (unless (file-exists-p dotspacemacs-filepath)
+  "Install the dotfile if it does not exist and we are meant to use one.
+Do nothing when Spacemacs was started with `--no-dotspacemacs' or
+`--default-dotspacemacs', since in that case we never read
+`dotspacemacs-filepath' and so have no reason to create it."
+  (unless (or (memq spacemacs-load-dotspacemacs '(nil template))
+              (file-exists-p dotspacemacs-filepath))
     (spacemacs-buffer/set-mode-line "Dotfile wizard installer" t)
     (when (dotspacemacs/install 'with-wizard)
       (configuration-layer/load))))

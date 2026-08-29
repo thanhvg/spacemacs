@@ -82,7 +82,6 @@
       "sR" 'spacemacs/sml-prog-proc-send-region-and-focus
       "ss" 'run-sml
       "s=" 'spacemacs/sml-format-buffer)
-    (define-key sml-mode-map (kbd "RET") 'reindent-then-newline-and-indent)
     (define-key sml-mode-map (kbd "M-SPC") 'sml-electric-space)
     (define-key sml-mode-map (kbd "|") 'sml-electric-pipe)))
 

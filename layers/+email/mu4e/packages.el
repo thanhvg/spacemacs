@@ -89,8 +89,8 @@
       mu4e-view-mode-map
       :mode mu4e-view-mode
       :bindings
-      (kbd "C-j") 'mu4e-view-headers-next
-      (kbd "C-k") 'mu4e-view-headers-prev
+      (kbd "C-j") 'mu4e-headers-next
+      (kbd "C-k") 'mu4e-headers-prev
       (kbd "J")   'mu4e/view-mark-thread-read
       (kbd "gu")  'mu4e-view-go-to-url)
 

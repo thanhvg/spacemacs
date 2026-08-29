@@ -19,7 +19,7 @@ This layer adds support for the [[https://fountain.io/][fountain]] screenwriting
 
 ** Features:
 - Fountain files support via [[https://github.com/rnkn/fountain-mode/][fountain-mode]]
-- Confortable writing layout via [[https://github.com/rnkn/olivetti/][olivetti-mode]]
+- Comfortable writing layout via [[https://github.com/rnkn/olivetti/][olivetti-mode]]
 
 * Install
 To use this configuration layer, add it to your =~/.spacemacs=. You will need to

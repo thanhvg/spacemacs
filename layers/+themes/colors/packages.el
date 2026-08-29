@@ -105,7 +105,7 @@
       :documentation "Colorize all identifiers."
       :evil-leader "tCa")
     (with-eval-after-load 'rainbow-identifiers
-      (define-global-minor-mode global-rainbow-identifiers-mode
+      (define-globalized-minor-mode global-rainbow-identifiers-mode
         rainbow-identifiers-mode colors//rainbow-identifiers-mode-maybe))
     (spacemacs|add-toggle global-rainbow-identifiers-mode
       :status global-rainbow-identifiers-mode

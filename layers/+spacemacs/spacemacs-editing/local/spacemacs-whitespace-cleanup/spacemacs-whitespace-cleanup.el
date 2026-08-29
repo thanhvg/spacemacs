@@ -45,7 +45,7 @@ of the cleanup."
         (ws-butler-mode -1))
     (remove-hook 'before-save-hook 'spacemacs-whitespace-cleanup/clean-up t)))
 
-(define-global-minor-mode global-spacemacs-whitespace-cleanup-mode
+(define-globalized-minor-mode global-spacemacs-whitespace-cleanup-mode
   spacemacs-whitespace-cleanup-mode
   spacemacs-whitespace-cleanup-mode
   :group 'spacemacs

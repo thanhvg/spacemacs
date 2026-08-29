@@ -669,7 +669,7 @@ The Spacemacs user maybe feel it's slow during startup or slow to opening a
 seperately, while a Spacemacs-base distribution maybe installes more than 100
 packages, and the ~load-path~ will has more than 100 entries with packages
 paths on the head, emacs builtin paths on the tail. Then a simple
-src_elisp{(require 'org)} will trigger the emacs walks through the ~load-path~
+~(require 'org)~ will trigger the emacs walks through the ~load-path~
 from the head to the tail to seach =org.dll=, =org.dll.gz=, =org.elc=,
 =org.elc.gz=, =org.el=, =org.el.gz=, that will be more than 600 (100*6)
 attemptions to open the desired files, but Windows system slow on the open-file

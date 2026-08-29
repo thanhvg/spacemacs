@@ -31,7 +31,6 @@
                projectile-dired
                projectile-find-dir
                projectile-find-file
-               projectile-find-tag
                projectile-test-project
                projectile-grep
                projectile-invalidate-cache
@@ -40,7 +39,6 @@
                projectile-project-p
                projectile-project-root
                projectile-recentf
-               projectile-regenerate-tags
                projectile-replace
                projectile-replace-regexp
                projectile-run-async-shell-command-in-root
@@ -62,7 +60,9 @@
           projectile-cache-file (concat spacemacs-cache-directory
                                         "projectile.cache")
           projectile-known-projects-file (concat spacemacs-cache-directory
-                                                 "projectile-bookmarks.eld"))
+                                                 "projectile-bookmarks.eld")
+          projectile-frecency-file (concat spacemacs-cache-directory
+                                           "projectile-frecency.eld"))
     (spacemacs/set-leader-keys
       ;; File path
       "fyC" 'spacemacs/projectile-copy-file-path-with-line-column
@@ -83,8 +83,6 @@
       "pf" 'projectile-find-file
       "pF" 'projectile-find-file-dwim
       "pE" 'projectile-find-references
-      "pg" 'projectile-find-tag
-      "pG" 'projectile-regenerate-tags
       "pi" 'projectile-install-project
       "pI" 'projectile-invalidate-cache
       "pk" 'projectile-kill-buffers

@@ -154,6 +154,7 @@ behavior (for instance it support C-r pasting)."
   (dolist (buffer (buffer-list))
     (with-current-buffer buffer
       (cond
+       ((not evil-local-mode))
        ((eq 'hybrid style)
         (if (memq major-mode evil-evilified-state-modes)
             (evil-evilified-state)
@@ -167,3 +168,4 @@ behavior (for instance it support C-r pasting)."
          (t (evil-normal-state))))))))
 
 (provide 'hybrid-mode)
+;;; hybrid-mode.el ends here

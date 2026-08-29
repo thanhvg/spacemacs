@@ -51,31 +51,7 @@
 
 (defun ess/init-ess ()
   (use-package ess
-    :mode (("\\.sp\\'"           . S-mode)
-           ("/R/.*\\.q\\'"       . R-mode)
-           ("\\.[qsS]\\'"        . S-mode)
-           ("\\.ssc\\'"          . S-mode)
-           ("\\.SSC\\'"          . S-mode)
-           ("\\.[rR]\\'"         . R-mode)
-           ("\\.[rR]nw\\'"       . Rnw-mode)
-           ("\\.[sS]nw\\'"       . Snw-mode)
-           ("\\.[rR]profile\\'"  . R-mode)
-           ("NAMESPACE\\'"       . R-mode)
-           ("CITATION\\'"        . R-mode)
-           ("\\.omg\\'"          . omegahat-mode)
-           ("\\.hat\\'"          . omegahat-mode)
-           ("\\.lsp\\'"          . XLS-mode)
-           ("\\.do\\'"           . STA-mode)
-           ("\\.ado\\'"          . STA-mode)
-           ("\\.[Ss][Aa][Ss]\\'" . SAS-mode)
-           ("\\.[Ss]t\\'"        . S-transcript-mode)
-           ("\\.Sout"            . S-transcript-mode)
-           ("\\.[Rr]out"         . R-transcript-mode)
-           ("\\.Rd\\'"           . Rd-mode)
-           ("\\.[Bb][Uu][Gg]\\'" . ess-bugs-mode)
-           ("\\.[Bb][Oo][Gg]\\'" . ess-bugs-mode)
-           ("\\.[Bb][Mm][Dd]\\'" . ess-bugs-mode))
-    :commands (R stata julia SAS ess-julia-mode)
+    :defer t
     :init
     (setq ess-use-company nil
           ess-offset-continued 'straight

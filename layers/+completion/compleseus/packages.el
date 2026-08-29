@@ -373,17 +373,13 @@
 (defun compleseus/init-vertico ()
   (use-package vertico
     :init
-    ;; Add prompt indicator to `completing-read-multiple'.
-    ;; (defun crm-indicator (args)
-    ;;   (cons (concat "[CRM] " (car args)) (cdr args)))
+    ;; In Emacs <31, add prompt indicator to `completing-read-multiple'.  In
+    ;; Emacs 31+, `crm-prompt' already suffices to inform the user that the
+    ;; prompt is a `completing-read-multiple'.
     (defun crm-indicator (args)
-      (cons (format "[CRM%s] %s"
-                    (replace-regexp-in-string
-                     "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-                     crm-separator)
-                    (car args))
-            (cdr args)))
-    (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+      (cons (concat "[CRM] " (car args)) (cdr args)))
+    (unless (boundp 'crm-prompt)
+      (advice-add #'completing-read-multiple :filter-args #'crm-indicator))
     ;; Grow and shrink minibuffer
     ;;(setq resize-mini-windows t)
     ;; Do not allow the cursor in the minibuffer prompt

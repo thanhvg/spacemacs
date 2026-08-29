@@ -21,8 +21,9 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-EMACS_DIR = $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-TEST_NAME = `basename $(TEST_DIR) | tr a-z A-Z`
+EMACS_DIR = $(shell dirname "$(realpath $(lastword $(MAKEFILE_LIST)))" \
+	| sed 's/ /\\ /g')
+TEST_NAME = `basename "$(TEST_DIR)" | tr a-z A-Z`
 
 all: test
 

@@ -107,8 +107,6 @@
 
 ;; instantly display current keystrokes in mini buffer
 (setq echo-keystrokes 0.02)
-;; auto-indent on RET
-(define-key global-map (kbd "RET") 'newline-and-indent)
 
 ;; improve delete-other-windows
 (define-key global-map (kbd "C-x 1") 'spacemacs/toggle-maximize-window)
