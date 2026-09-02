@@ -72,7 +72,7 @@
                    (replace-query (format "(%d replace)" total))
                    (replace (format "(%d/%d)" here total)))))
             status))))
-    (when (eq (spacemacs/get-mode-line-theme-name) 'spacemacs)
+    (when (memq (spacemacs/get-mode-line-theme-name) '(spacemacs all-the-icons custom))
       (setq anzu-mode-line-update-function 'spacemacs/anzu-update-mode-line
             anzu-cons-mode-line-p nil))))
 
