@@ -37,8 +37,6 @@
                        :files (:defaults "agents")))
     gptel-magit
     minuet
-    aider
-    aidermacs
     org
     window-purpose))
 
@@ -138,31 +136,6 @@
         (when purpose-mode-was-enabled
           (purpose-mode 1)))))
   (advice-add 'gptel :around #'llm-client/disable-purpose-mode-around-for-gptel))
-
-(defun llm-client/init-aidermacs ()
-  (use-package aidermacs
-    :config
-    (spacemacs/set-leader-keys
-      "aa" 'aidermacs-transient-menu)))
-
-(defun llm-client/init-aider ()
-  (use-package aider
-    :config
-    ;; (setq aider-args '("--model" "sonnet" "--no-auto-accept-architect"))
-    ;; (setenv "ANTHROPIC_API_KEY" anthropic-api-key)
-    ;; Or gemini model
-    ;; (setq aider-args '("--no-gitignore" "--no-auto-commits" "--no-show-model-warnings" "--model" "gemini/gemini-2.0-flash"))
-    ;; (setq aider-args '("--model" "gemini"))
-    ;; (setenv "GEMINI_API_KEY" <your-gemini-api-key>)
-    ;; Or chatgpt model
-    ;; (setq aider-args '("--model" "o4-mini"))
-    ;; (setenv "OPENAI_API_KEY" <your-openai-api-key>)
-    ;; Or use your personal config file
-    ;; (setq aider-args `("--config" ,(expand-file-name "~/.aider.conf.yml")))
-    ;; ;;
-    ;; Optional: Set a key binding for the transient menu
-    ;; or use aider-transient-menu-2cols / aider-transient-menu-1col, for narrow screen
-    (global-set-key (kbd "C-c SPC") 'aider-transient-menu)))
 
 (defun llm-client/init-minuet ()
   (use-package minuet
