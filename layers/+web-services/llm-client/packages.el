@@ -36,6 +36,7 @@
                        :repo "karthink/gptel-agent"
                        :files (:defaults "agents")))
     gptel-magit
+    gptel-inline
     minuet
     org
     window-purpose))
@@ -183,6 +184,12 @@
   (use-package gptel-magit
     :hook (magit-mode . gptel-magit-install)))
 
+(defun llm-client/init-gptel-inline ()
+  (use-package gptel-inline
+    :init
+    (spacemacs/set-leader-keys
+      "$gi" 'gptel-inline)
+    :after gptel))
 
 (defun llm-client/init-eca ()
   (use-package eca))
