@@ -45,3 +45,13 @@ Will work on both org-mode and any mode that accepts plain html."
         (kbd "M-j") 'markdown-move-down
         (kbd "M-k") 'markdown-move-up
         (kbd "M-l") 'markdown-demote))))
+
+(defun spacemacs/org-to-markdown-region (start end)
+  "Convert Org formatted text in region (START, END) to Markdown.
+
+This command requires that pandoc (man page `pandoc(1)') be
+installed."
+  (interactive "r")
+  (shell-command-on-region
+   start end
+   "pandoc -f org -t markdown --wrap=preserve" t t))

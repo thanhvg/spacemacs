@@ -141,6 +141,9 @@
         "iT"  'markdown-insert-table
         ;; Element removal
         "k"   'markdown-kill-thing-at-point
+
+        "mo" 'spacemacs/org-to-markdown-region
+
         ;; List editing
         "li"  'markdown-insert-list-item
         ;; Toggles

@@ -166,5 +166,14 @@ This can be helpful if the link points at a image file. Remove the description w
       (insert (org-link-make-string-for-buffer link "")))))
 
 
-  
+
+;; http://yummymelon.com/devnull/converting-a-markdown-region-to-org-revisited.html
+  (defun spacemacs/markdown-to-org-region (start end)
+    "Convert Markdown formatted text in region (START, END) to Org.
+
+This command requires that pandoc (man page `pandoc(1)') be installed."
+    (interactive "r")
+    (shell-command-on-region
+     start end
+     "pandoc -f markdown -t org --wrap=preserve" t t))
 

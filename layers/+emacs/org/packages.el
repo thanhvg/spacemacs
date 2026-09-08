@@ -325,6 +325,8 @@ Will work on both org-mode and any mode that accepts plain html."
       "ss" 'org-sparse-tree
       "sS" 'org-sort
 
+      "mm" 'spacemacs/markdown-to-org-region
+
       ;; tables
       "ta" 'org-table-align
       "tb" 'org-table-blank-field
