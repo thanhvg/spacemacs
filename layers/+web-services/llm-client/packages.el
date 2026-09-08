@@ -35,9 +35,17 @@
      :location (recipe :fetcher github
                        :repo "karthink/gptel-agent"
                        :files (:defaults "agents")))
-    gptel-magit
-    gptel-inline
-    macher
+    (gptel-annotate
+     :toggle llm-client-enable-gptel-agent
+     :location (recipe :fetcher github
+                       :repo "karthink/gptel-annotate"))
+    (gptel-preset-collection
+     :toggle llm-client-enable-gptel-agent
+     :location (recipe :fetcher github
+                       :repo "karthink/gptel-preset-collection"))
+    (gptel-magit :toggle llm-client-enable-gptel-agent)
+    (gptel-inline :toggle llm-client-enable-gptel-agent)
+    (macher :toggle llm-client-enable-gptel-agent)
     minuet
     org
     window-purpose))
@@ -231,3 +239,11 @@
     ;;    (display-buffer-in-side-window)
     ;;    (side . right)))
     ))
+
+(defun llm-client/init-gptel-annotate ()
+  (use-package gptel-annotate
+    :after gptel))
+
+(defun llm-client/init-gptel-preset-collection ()
+  (use-package gptel-preset-collection
+    :after gptel))
