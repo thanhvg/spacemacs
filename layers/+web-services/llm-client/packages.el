@@ -37,6 +37,7 @@
                        :files (:defaults "agents")))
     gptel-magit
     gptel-inline
+    macher
     minuet
     org
     window-purpose))
@@ -193,3 +194,40 @@
 
 (defun llm-client/init-eca ()
   (use-package eca))
+
+(defun llm-client/init-macher ()
+  (use-package macher
+    :custom
+    ;; The org UI has structured conversations and nice content folding.
+    (macher-action-buffer-ui 'org)
+
+    :hook
+    ;; Set up action buffer behavior to your liking.  Alternately, do
+    ;; this more generally in your `gptel-mode-hook'.
+    (macher-action-buffer-setup
+     . (lambda ()
+         ;; Auto-scroll responses.
+         (setq-local window-point-insertion-type t)
+         ;; Wrap lines.
+         (visual-line-mode 1)))
+
+    :config
+    ;; Recommended - register macher tools and presets with gptel.
+    (macher-install)
+
+    ;; Recommended - enable macher infrastructure for tools/prompts in
+    ;; any buffer.  (Actions and presets will still work without this.)
+    (macher-enable)
+
+    ;; Adjust buffer positioning to taste.
+    ;; (add-to-list
+    ;;  'display-buffer-alist
+    ;;  '("\\*macher:.*\\*"
+    ;;    (display-buffer-in-side-window)
+    ;;    (side . bottom)))
+    ;; (add-to-list
+    ;;  'display-buffer-alist
+    ;;  '("\\*macher-patch:.*\\*"
+    ;;    (display-buffer-in-side-window)
+    ;;    (side . right)))
+    ))
