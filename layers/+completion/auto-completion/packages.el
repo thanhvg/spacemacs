@@ -24,20 +24,24 @@
 (defconst auto-completion-packages
       '(
         ;; corfu and friends
-        corfu
-        cape 
+        (corfu :toggle (eq auto-completion-front-end 'corfu))
+        (cape :toggle (eq auto-completion-front-end 'corfu))
         ;; corfu-history
         ;; corfu-popupinfo
 
         auto-yasnippet
-        company
-        (company-posframe :toggle auto-completion-use-company-posframe)
-        (company-box :toggle auto-completion-use-company-box)
-        (company-quickhelp :toggle auto-completion-enable-help-tooltip)
-        (company-statistics :toggle auto-completion-enable-sort-by-usage)
+        (company :toggle (eq auto-completion-front-end 'company))
+        (company-posframe :toggle (and (eq auto-completion-front-end 'company)
+                                        auto-completion-use-company-posframe))
+        (company-box :toggle (and (eq auto-completion-front-end 'company)
+                                   auto-completion-use-company-box))
+        (company-quickhelp :toggle (and (eq auto-completion-front-end 'company)
+                                         auto-completion-enable-help-tooltip))
+        (company-statistics :toggle (and (eq auto-completion-front-end 'company)
+                                          auto-completion-enable-sort-by-usage))
         counsel
         (eacl :requires ivy)
-        (helm-company :requires helm)
+        (helm-company :requires helm :toggle (eq auto-completion-front-end 'company))
         (helm-c-yasnippet :requires helm)
         hippie-exp
         (ivy-yasnippet :requires ivy)

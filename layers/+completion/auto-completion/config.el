@@ -32,7 +32,10 @@ Backends in this list will always be active in these modes, as well as any
 backends added by individual spacemacs layers.")
 
 (defvar auto-completion-front-end 'company
-  "Which auto-completion front end to use.")
+  "Which auto-completion front end to use.
+Possible values are `company' or `corfu'. `company' and `corfu' are
+mutually exclusive: only the package matching this value will be
+loaded.")
 
 (defvar auto-completion-return-key-behavior 'complete
   "What the RET key should do when auto-completion menu is active.

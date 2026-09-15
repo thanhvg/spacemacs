@@ -61,10 +61,20 @@
     (if lsp-use-upstream-bindings
         (spacemacs/lsp-bind-upstream-keys)
       (spacemacs/lsp-bind-keys))
-    (setq lsp-completion-provider (if (or (equal :all lsp-manage-backends-manually)
-                                          (member major-mode lsp-manage-backends-manually))
-                                      :none
-                                    :capf))
+    (if (eq auto-completion-front-end 'corfu)
+        ;; corfu completes via the standard `completion-at-point-functions'
+        ;; mechanism, so lsp-mode should not try to manage company backends.
+        (progn
+          (setq lsp-completion-provider :none)
+          (defun spacemacs//lsp-corfu-setup-completion ()
+            "Set `lsp-capf' completion style, preferring `orderless' when available."
+            (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+                  (if (featurep 'orderless) '(orderless) completion-styles)))
+          (add-hook 'lsp-completion-mode-hook #'spacemacs//lsp-corfu-setup-completion))
+      (setq lsp-completion-provider (if (or (equal :all lsp-manage-backends-manually)
+                                            (member major-mode lsp-manage-backends-manually))
+                                        :none
+                                      :capf)))
     ;; This sets the lsp indentation for all modes derived from web-mode.
     (add-to-list 'lsp--formatting-indent-alist '(web-mode . web-mode-markup-indent-offset))
     (setq lsp-keep-workspace-alive nil)

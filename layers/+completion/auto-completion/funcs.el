@@ -27,19 +27,19 @@
   :status
   (if (eq 'company auto-completion-front-end)
       (bound-and-true-p company-mode)
-    (bound-and-true-p auto-complete-mode))
+    (bound-and-true-p corfu-mode))
   :on
   (progn
     (if (eq 'company auto-completion-front-end)
         (company-mode)
-      (auto-complete-mode))
+      (corfu-mode))
     (message "Enabled auto-completion (using %S)."
              auto-completion-front-end))
   :off
   (progn
     (if (eq 'company auto-completion-front-end)
         (company-mode -1)
-      (auto-complete-mode -1))
+      (corfu-mode -1))
     (message "Disabled auto-completion."))
   :documentation "Enable auto-completion."
   :evil-leader "ta")
