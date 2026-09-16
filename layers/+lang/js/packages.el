@@ -20,8 +20,6 @@
         (typescript-ts-mode :location built-in)
         js-doc
         nodejs-repl
-        npm-mode
-        ;; org
         prettier-js
         treesit-fold
         web-beautify))
@@ -68,9 +66,6 @@
 ;;   (spacemacs|use-package-add-hook org
 ;;     :post-config (add-to-list 'org-babel-load-languages '(js . t))))
 
-
-(defun js/post-init-npm-mode ()
-  (spacemacs/add-to-hooks #'npm-mode js-modes-hooks))
 
 (defun js/pre-init-prettier-js ()
   (when (eq js-fmt-tool 'prettier)
