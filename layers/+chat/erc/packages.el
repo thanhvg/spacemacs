@@ -24,6 +24,7 @@
 (defconst erc-packages
   '(
     company
+    corfu
     company-emoji
     emoji-cheat-sheet-plus
     erc
@@ -46,6 +47,9 @@
 
 (defun erc/post-init-company ()
   (spacemacs|add-company-backends :backends company-capf :modes erc-mode))
+
+(defun erc/post-init-corfu ()
+  (add-hook 'erc-mode-hook #'corfu-mode))
 
 (defun erc/post-init-company-emoji ()
   (spacemacs|add-company-backends :backends company-emoji :modes erc-mode))

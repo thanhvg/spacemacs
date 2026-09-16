@@ -24,6 +24,7 @@
 (defconst nim-packages
   '(
     company
+    corfu
     flycheck
     (flycheck-nim :location (recipe :fetcher github
                                     :repo "smile13241324/flycheck-nim")
@@ -32,6 +33,10 @@
 
 (defun nim/post-init-company ()
   (spacemacs//nim-setup-company))
+
+(defun nim/post-init-corfu ()
+  (add-hook 'nim-mode-hook #'corfu-mode)
+  (add-hook 'nimscript-mode-hook #'corfu-mode))
 
 (defun nim/post-init-flycheck ()
   (spacemacs/enable-flycheck 'nim-mode)

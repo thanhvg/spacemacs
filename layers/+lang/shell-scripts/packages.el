@@ -24,6 +24,7 @@
 (defconst shell-scripts-packages
   '(
     company
+    corfu
     (company-shell :requires company)
     fish-mode
     flycheck
@@ -36,6 +37,10 @@
 
 (defun shell-scripts/post-init-company ()
   (spacemacs//shell-scripts-setup-company))
+
+(defun shell-scripts/post-init-corfu ()
+  (add-hook 'fish-mode-hook #'corfu-mode)
+  (add-hook 'sh-mode-hook #'corfu-mode))
 
 (defun shell-scripts/post-init-flycheck ()
   (spacemacs/enable-flycheck 'sh-mode))

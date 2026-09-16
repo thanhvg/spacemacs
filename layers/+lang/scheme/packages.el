@@ -23,6 +23,7 @@
 
 (defconst scheme-packages
   '(company
+    corfu
     evil-cleverparens
     geiser
     ggtags
@@ -41,6 +42,9 @@
 (defun scheme/post-init-company ()
   ;; Geiser provides completion as long as company mode is loaded.
   (spacemacs|add-company-backends :modes scheme-mode :backends company-capf))
+
+(defun scheme/post-init-corfu ()
+  (add-hook 'scheme-mode-hook #'corfu-mode))
 
 (defun scheme/pre-init-evil-cleverparens ()
   (spacemacs|use-package-add-hook evil-cleverparens

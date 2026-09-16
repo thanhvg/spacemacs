@@ -24,6 +24,7 @@
 (setq erlang-packages
       '(
         company
+        corfu
         erlang
         dap-mode
         ggtags
@@ -33,6 +34,9 @@
 (defun erlang/post-init-company ()
   ;; backend specific
   (add-hook 'erlang-mode-local-vars-hook #'spacemacs//erlang-setup-company))
+
+(defun erlang/post-init-corfu ()
+  (add-hook 'erlang-mode-hook #'corfu-mode))
 
 (defun erlang/init-erlang ()
   (use-package erlang

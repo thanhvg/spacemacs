@@ -25,6 +25,7 @@
   '(
     (comint :location built-in)
     company
+    corfu
     company-native-complete
     comint-mime
     consult
@@ -90,6 +91,10 @@
       ;; terminal often are
       (add-hook 'eshell-mode-hook
                 'spacemacs//eshell-switch-company-frontend))))
+
+(defun shell/post-init-corfu ()
+  (add-hook 'shell-mode-hook #'corfu-mode)
+  (add-hook 'eshell-mode-hook #'corfu-mode))
 
 (defun shell/init-esh-help ()
   (use-package esh-help

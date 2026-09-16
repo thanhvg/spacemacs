@@ -24,6 +24,7 @@
 (setq sql-packages
       '(
         company
+        corfu
         (ejc-sql :location (recipe
                             :fetcher github
                             :repo "dvzubarev/ejc-sql"
@@ -158,6 +159,14 @@
               (require 'ejc-company)
               (push 'ejc-company-backend company-backends)
               (company-mode t))))
+
+(defun sql/post-init-corfu ()
+  (add-hook 'sql-mode-hook #'corfu-mode)
+  ;; NOTE: `ejc-sql' completions come from a company-only backend
+  ;; (`ejc-company-backend'), so corfu won't be able to surface them
+  ;; without wrapping it via `cape-company-to-capf'; this just turns
+  ;; corfu on so native/capf completions still work in this buffer.
+  (add-hook 'ejc-sql-minor-mode-hook #'corfu-mode))
 
 (defun sql/pre-init-org ()
   (spacemacs|use-package-add-hook org

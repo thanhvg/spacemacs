@@ -24,6 +24,7 @@
 (defconst fsharp-packages
   '(
     company
+    corfu
     (eglot-fsharp :toggle (eq fsharp-backend 'eglot))
     flycheck
     fsharp-mode
@@ -31,6 +32,9 @@
 
 (defun fsharp/post-init-company ()
   (spacemacs//fsharp-setup-company))
+
+(defun fsharp/post-init-corfu ()
+  (add-hook 'fsharp-mode-hook #'corfu-mode))
 
 (defun fsharp/post-init-flycheck ()
   (spacemacs/enable-flycheck 'fsharp-mode))

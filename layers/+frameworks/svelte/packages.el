@@ -24,6 +24,7 @@
   '(web-mode
     add-node-modules-path
     company
+    corfu
     evil-matchit
     flycheck
     prettier-js
@@ -43,6 +44,9 @@
 
 (defun svelte/post-init-company ()
   (add-hook 'svelte-mode-local-vars-hook #'spacemacs//svelte-setup-company))
+
+(defun svelte/post-init-corfu ()
+  (add-hook 'svelte-mode-hook #'corfu-mode))
 
 (defun svelte/post-init-evil-matchit ()
   (evilmi-load-plugin-rules '(svelte-mode) '(template simple html))

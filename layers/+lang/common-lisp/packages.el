@@ -29,6 +29,7 @@
     evil-cleverparens
     evil-collection
     company
+    corfu
     ggtags
     helm
     org
@@ -95,6 +96,11 @@
 (defun common-lisp/post-init-company ()
   (spacemacs|add-company-backends :backends (company-slime company-dabbrev-code)
                                   :modes slime-mode slime-repl-mode sldb-mode))
+
+(defun common-lisp/post-init-corfu ()
+  (add-hook 'slime-mode-hook #'corfu-mode)
+  (add-hook 'slime-repl-mode-hook #'corfu-mode)
+  (add-hook 'sldb-mode-hook #'corfu-mode))
 
 (defun common-lisp/init-slime-company ())
 

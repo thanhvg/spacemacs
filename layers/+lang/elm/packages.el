@@ -24,6 +24,7 @@
 (defconst elm-packages
   '(
     company
+    corfu
     elm-mode
     elm-test-runner
     flycheck
@@ -33,6 +34,9 @@
 
 (defun elm/post-init-company ()
   (spacemacs//elm-setup-company))
+
+(defun elm/post-init-corfu ()
+  (add-hook 'elm-mode-hook #'corfu-mode))
 
 (defun elm/post-init-flycheck ()
   (spacemacs/enable-flycheck 'elm-mode))

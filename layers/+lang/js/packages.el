@@ -13,6 +13,7 @@
       '(
         add-node-modules-path
         company
+        corfu
         evil-matchit
         flycheck
         (js :location built-in)
@@ -32,6 +33,10 @@
 (defun js/post-init-company ()
   (dolist (hook js-modes-local-vars-hooks)
     (add-hook hook #'spacemacs/js-setup-company)))
+
+(defun js/post-init-corfu ()
+  (dolist (hook js-modes-hooks)
+    (add-hook hook #'corfu-mode)))
 
 (defun js/post-init-evil-matchit ()
   (spacemacs/add-to-hooks #'turn-on-evil-matchit-mode js-modes-hooks))

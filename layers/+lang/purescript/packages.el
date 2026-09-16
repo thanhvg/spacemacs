@@ -25,6 +25,7 @@
       '(
         add-node-modules-path
         company
+        corfu
         flycheck
         purescript-mode
         psci
@@ -37,6 +38,9 @@
 
 (defun purescript/post-init-company ()
   (spacemacs//purescript-setup-company))
+
+(defun purescript/post-init-corfu ()
+  (add-hook 'purescript-mode-hook #'corfu-mode))
 
 (defun purescript/post-init-flycheck ()
   (spacemacs/enable-flycheck 'purescript-mode))

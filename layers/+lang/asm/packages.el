@@ -26,6 +26,7 @@
         ;; package names go here
         asm-mode
         company
+        corfu
         electric-indent-mode
         ggtags
         nasm-mode
@@ -70,6 +71,10 @@
 
 (defun asm/post-init-company ()
   (spacemacs|add-company-backends :modes asm-mode nasm-mode))
+
+(defun asm/post-init-corfu ()
+  (add-hook 'asm-mode-hook #'corfu-mode)
+  (add-hook 'nasm-mode-hook #'corfu-mode))
 
 (defun asm/post-init-ggtags ()
   (add-hook 'asm-mode-local-vars-hook #'spacemacs/ggtags-mode-enable))

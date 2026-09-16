@@ -24,6 +24,7 @@
 (setq racket-packages
       '(
         company
+        corfu
         company-quickhelp
         ggtags
         evil-cleverparens
@@ -35,6 +36,12 @@
   ;; because racket-mode handle everything for us when company
   ;; is loaded.
   (add-hook 'racket-mode-hook 'company-mode))
+
+(defun racket/post-init-corfu ()
+  ;; same as `racket/post-init-company': racket-mode handles everything for
+  ;; us via `completion-at-point-functions', so all that's needed is to turn
+  ;; `corfu-mode' on.
+  (add-hook 'racket-mode-hook #'corfu-mode))
 
 (defun racket/post-init-company-quickhelp ()
   ;; Bug exists in Racket company backend that opens docs in new window when

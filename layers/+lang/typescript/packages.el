@@ -25,6 +25,7 @@
       '(
         add-node-modules-path
         company
+        corfu
         eldoc
         emmet-mode
         flycheck
@@ -44,6 +45,11 @@
   (spacemacs/add-to-hooks #'spacemacs//typescript-setup-company
                           '(typescript-mode-local-vars-hook
                             typescript-tsx-mode-local-vars-hook)))
+
+(defun typescript/post-init-corfu ()
+  (spacemacs/add-to-hooks #'corfu-mode
+                          '(typescript-mode-hook
+                            typescript-tsx-mode-hook)))
 
 (defun typescript/post-init-eldoc ()
   (spacemacs/add-to-hooks #'spacemacs//typescript-setup-eldoc

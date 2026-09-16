@@ -24,6 +24,7 @@
 (defconst rcirc-packages
   '(
     company
+    corfu
     company-emoji
     emoji-cheat-sheet-plus
     emojify
@@ -45,6 +46,9 @@
 
 (defun rcirc/post-init-company ()
   (spacemacs|add-company-backends :backends company-capf :modes rcirc-mode))
+
+(defun rcirc/post-init-corfu ()
+  (add-hook 'rcirc-mode-hook #'corfu-mode))
 
 (defun rcirc/post-init-company-emoji ()
   (spacemacs|add-company-backends :backends company-emoji :modes rcirc-mode))

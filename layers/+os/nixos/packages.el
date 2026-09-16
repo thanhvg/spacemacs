@@ -23,6 +23,7 @@
 
 (defconst nixos-packages
   '(company
+    corfu
     (company-nixos-options :requires (company nixos-options))
     flycheck
     (helm-nixos-options :requires (helm nixos-options))
@@ -37,6 +38,9 @@
   (spacemacs|add-company-backends
     :backends company-capf
     :modes nix-mode))
+
+(defun nixos/post-init-corfu ()
+  (add-hook 'nix-mode-hook #'corfu-mode))
 
 (defun nixos/init-company-nixos-options ()
   (use-package company-nixos-options

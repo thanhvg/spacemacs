@@ -24,6 +24,7 @@
 (defconst raku-packages
   '(
     company
+    corfu
     evil
     flycheck
     (flycheck-raku :requires flycheck)
@@ -34,6 +35,9 @@
   (spacemacs|add-company-backends
     :backends company-capf
     :modes raku-mode))
+
+(defun raku/post-init-corfu ()
+  (add-hook 'raku-mode-hook #'corfu-mode))
 
 (defun raku/post-init-evil ()
   (add-to-list 'spacemacs-jump-handlers-raku-mode 'evil-jump-to-tag))

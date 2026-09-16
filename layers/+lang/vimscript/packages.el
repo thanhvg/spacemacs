@@ -24,6 +24,7 @@
 (defconst vimscript-packages
   '(
     company
+    corfu
     flycheck
     vimrc-mode
     ggtags
@@ -31,6 +32,9 @@
 
 (defun vimscript/post-init-company ()
   (spacemacs//vimscript-setup-company))
+
+(defun vimscript/post-init-corfu ()
+  (add-hook 'vimrc-mode-hook #'corfu-mode))
 
 (defun vimscript/post-init-flycheck ()
   (spacemacs/enable-flycheck 'vimrc-mode))

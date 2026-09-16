@@ -24,6 +24,7 @@
 (defconst perl5-packages
   '(
     company
+    corfu
     (company-plsense :requires company)
     (cperl-mode :location built-in)
     flycheck
@@ -39,6 +40,9 @@
 
 (defun perl5/post-init-company ()
   (spacemacs//perl5-setup-company))
+
+(defun perl5/post-init-corfu ()
+  (add-hook 'cperl-mode-hook #'corfu-mode))
 
 (defun perl5/init-company-plsense ()
   (use-package company-plsense

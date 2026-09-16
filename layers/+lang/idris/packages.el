@@ -24,6 +24,7 @@
 (setq idris-packages
       '(
         company
+        corfu
         idris-mode
         golden-ratio
         popwin
@@ -33,6 +34,10 @@
   (spacemacs|add-company-backends
     :backends company-capf
     :modes idris-mode idris-repl-mode))
+
+(defun idris/post-init-corfu ()
+  (add-hook 'idris-mode-hook #'corfu-mode)
+  (add-hook 'idris-repl-mode-hook #'corfu-mode))
 
 (defun idris/init-idris-mode ()
   (use-package idris-mode

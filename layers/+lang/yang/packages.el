@@ -23,11 +23,15 @@
 
 
 (setq yang-packages '(company
+                      corfu
                       flycheck
                       yang-mode))
 
 (defun yang/post-init-company ()
   (spacemacs|add-company-backends :modes yang-mode))
+
+(defun yang/post-init-corfu ()
+  (add-hook 'yang-mode-hook #'corfu-mode))
 
 (defun yang/post-init-flycheck ()
   (flycheck-define-command-checker 'yang-pyang

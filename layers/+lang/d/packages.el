@@ -26,6 +26,7 @@
 (setq d-packages
       '(
         company
+        corfu
         (company-dcd :requires company)
         d-mode
         flycheck
@@ -37,6 +38,9 @@
   ;; Need to convince company that this C-derived mode is a code mode.
   (with-eval-after-load 'company-dabbrev-code
     (add-to-list 'company-dabbrev-code-modes 'd-mode)))
+
+(defun d/post-init-corfu ()
+  (add-hook 'd-mode-hook #'corfu-mode))
 
 (defun d/init-company-dcd ()
   (use-package company-dcd

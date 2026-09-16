@@ -24,6 +24,7 @@
 (defconst go-packages
   '(
     company
+    corfu
     dap-mode
     (company-go :requires company
                 :toggle (eq go-backend 'go-ts-mode))
@@ -53,6 +54,10 @@
 
 (defun go/post-init-company ()
   (add-hook 'go-mode-local-vars-hook #'spacemacs//go-setup-company))
+
+(defun go/post-init-corfu ()
+  (add-hook 'go-ts-mode-hook #'corfu-mode)
+  (add-hook 'go-mode-hook #'corfu-mode))
 
 (defun go/pre-init-dap-mode ()
   (when (eq go-backend 'lsp)

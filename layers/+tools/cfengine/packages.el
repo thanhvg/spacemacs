@@ -25,6 +25,7 @@
   '(
     (cfengine3-mode :location built-in)
     company
+    corfu
     eldoc
     flycheck
     (ob-cfengine3 :requires org)
@@ -41,6 +42,9 @@
 
 (defun cfengine/post-init-company ()
   (spacemacs|add-company-backends :modes cfengine3-mode))
+
+(defun cfengine/post-init-corfu ()
+  (add-hook 'cfengine3-mode-hook #'corfu-mode))
 
 (defun cfengine/post-init-eldoc ()
   (add-hook 'cfengine3-mode-hook 'eldoc-mode))

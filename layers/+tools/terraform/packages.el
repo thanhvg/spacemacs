@@ -24,12 +24,16 @@
 (setq terraform-packages
       '(
         company
+        corfu
         (company-terraform :requires company)
         terraform-mode
         ))
 
 (defun terraform/post-init-company ()
   (spacemacs//terraform-setup-company))
+
+(defun terraform/post-init-corfu ()
+  (add-hook 'terraform-mode-hook #'corfu-mode))
 
 (defun terraform/init-company-terraform ()
   (use-package company-terraform

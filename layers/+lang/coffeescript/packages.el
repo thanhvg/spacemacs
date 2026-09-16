@@ -26,6 +26,7 @@
         add-node-modules-path
         coffee-mode
         company
+        corfu
         flycheck
         ob-coffeescript
         ))
@@ -57,6 +58,9 @@
   (spacemacs|add-company-backends
     :backends company-capf
     :modes coffee-mode))
+
+(defun coffeescript/post-init-corfu ()
+  (add-hook 'coffee-mode-hook #'corfu-mode))
 
 (defun coffeescript/post-init-flycheck ()
   (spacemacs/enable-flycheck 'coffee-mode))

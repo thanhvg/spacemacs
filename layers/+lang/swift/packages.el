@@ -24,6 +24,7 @@
 (defconst swift-packages
   '(
     company
+    corfu
     flycheck
     (lsp-sourcekit :requires lsp-mode :toggle (eq swift-backend 'lsp))
     swift-mode))
@@ -37,6 +38,9 @@
 
 (defun swift/post-init-company ()
   (add-hook 'swift-mode-local-vars-hook 'spacemacs//swift-setup-company))
+
+(defun swift/post-init-corfu ()
+  (add-hook 'swift-mode-hook #'corfu-mode))
 
 (defun swift/post-init-flycheck ()
   (spacemacs/enable-flycheck 'swift-mode))

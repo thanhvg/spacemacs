@@ -24,6 +24,7 @@
   '(web-mode
     add-node-modules-path
     company
+    corfu
     evil-matchit
     flycheck
     prettier-js
@@ -49,6 +50,9 @@
 
 (defun vue/post-init-company ()
   (add-hook 'vue-mode-local-vars-hook #'spacemacs//vue-setup-company))
+
+(defun vue/post-init-corfu ()
+  (add-hook 'vue-mode-hook #'corfu-mode))
 
 (defun vue/post-init-evil-matchit ()
   (evilmi-load-plugin-rules '(vue-mode) '(template simple html))

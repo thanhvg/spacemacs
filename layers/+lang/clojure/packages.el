@@ -30,6 +30,7 @@
     clojure-mode
     (clojure-snippets :toggle (configuration-layer/layer-used-p 'auto-completion))
     company
+    corfu
     eldoc
     evil-cleverparens
     flycheck
@@ -480,6 +481,15 @@
   (spacemacs|add-company-backends
     :backends company-capf
     :modes clojure-mode clojurec-mode clojurescript-mode clojurex-mode cider-clojure-interaction-mode cider-mode cider-repl-mode))
+
+(defun clojure/post-init-corfu ()
+  (add-hook 'clojure-mode-hook #'corfu-mode)
+  (add-hook 'clojurec-mode-hook #'corfu-mode)
+  (add-hook 'clojurescript-mode-hook #'corfu-mode)
+  (add-hook 'clojurex-mode-hook #'corfu-mode)
+  (add-hook 'cider-clojure-interaction-mode-hook #'corfu-mode)
+  (add-hook 'cider-mode-hook #'corfu-mode)
+  (add-hook 'cider-repl-mode-hook #'corfu-mode))
 
 (defun clojure/post-init-ggtags ()
   (add-hook 'clojure-mode-local-vars-hook #'spacemacs/ggtags-mode-enable))

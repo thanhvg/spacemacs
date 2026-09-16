@@ -24,6 +24,7 @@
 (setq hy-packages
       '(
         company
+        corfu
         evil-cleverparens
         hy-mode
         ob-hy
@@ -38,6 +39,10 @@
   (spacemacs|add-company-backends
     :backends company-hy
     :modes hy-mode inferior-hy-mode))
+
+(defun hy/post-init-corfu ()
+  (add-hook 'hy-mode-hook #'corfu-mode)
+  (add-hook 'inferior-hy-mode-hook #'corfu-mode))
 
 (defun hy/pre-init-evil-cleverparens ()
   (spacemacs|use-package-add-hook evil-cleverparens

@@ -22,12 +22,16 @@
 
 
 (defconst yaml-packages '(company
+                          corfu
                           flycheck
                           yaml-mode))
 
 (defun yaml/post-init-company ()
   (unless yaml-enable-lsp
     (spacemacs|add-company-backends :modes yaml-mode)))
+
+(defun yaml/post-init-corfu ()
+  (add-hook 'yaml-mode-hook #'corfu-mode))
 
 (defun yaml/post-init-flycheck ()
   (spacemacs/enable-flycheck 'yaml-mode))

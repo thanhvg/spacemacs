@@ -23,6 +23,7 @@
 
 (defconst reasonml-packages
   '(company
+    corfu
     evil-matchit
     flycheck
     flycheck-ocaml
@@ -36,6 +37,9 @@
     (spacemacs|add-company-backends
       :backends merlin-company-backend
       :modes reason-mode)))
+
+(defun reasonml/post-init-corfu ()
+  (add-hook 'reason-mode-hook #'corfu-mode))
 
 (defun reasonml/post-init-evil-matchit ()
   (evilmi-load-plugin-rules '(reason-mode) '(template simple html))

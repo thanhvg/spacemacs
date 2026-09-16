@@ -25,6 +25,7 @@
   '(
     (alchemist :toggle (eq elixir-backend 'alchemist))
     company
+    corfu
     dap-mode
     elixir-mode
     evil-matchit
@@ -154,6 +155,10 @@
 (defun elixir/post-init-company ()
   ;; backend specific
   (add-hook 'elixir-mode-local-vars-hook #'spacemacs//elixir-setup-company))
+
+(defun elixir/post-init-corfu ()
+  (add-hook 'elixir-mode-hook #'corfu-mode)
+  (add-hook 'alchemist-iex-mode-hook #'corfu-mode))
 
 (defun elixir/pre-init-dap-mode ()
   (when (eq elixir-backend 'lsp) (add-to-list 'spacemacs--dap-supported-modes 'elixir-mode))

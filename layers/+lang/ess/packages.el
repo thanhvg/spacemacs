@@ -24,6 +24,7 @@
 (defconst ess-packages
   '(
     company
+    corfu
     flycheck
     ess
     ess-R-data-view
@@ -45,6 +46,12 @@
     (spacemacs|add-company-backends
       :backends (company-R-library company-R-args company-R-objects :separate)
       :modes ess-r-mode)))
+
+(defun ess/post-init-corfu ()
+  (add-hook 'ess-julia-mode-hook #'corfu-mode)
+  (add-hook 'inferior-ess-julia-mode-hook #'corfu-mode)
+  (add-hook 'inferior-ess-r-mode-hook #'corfu-mode)
+  (add-hook 'ess-r-mode-hook #'corfu-mode))
 
 (defun ess/post-init-flycheck ()
   (spacemacs/enable-flycheck 'ess-r-mode))

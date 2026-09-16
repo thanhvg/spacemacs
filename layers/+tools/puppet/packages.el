@@ -24,6 +24,7 @@
 (setq puppet-packages
   '(
     company
+    corfu
     flycheck
     puppet-mode
     ))
@@ -47,6 +48,9 @@
 
 (defun puppet/post-init-company ()
   (spacemacs|add-company-backends :modes puppet-mode))
+
+(defun puppet/post-init-corfu ()
+  (add-hook 'puppet-mode-hook #'corfu-mode))
 
 (defun puppet/post-init-flycheck ()
   (spacemacs/enable-flycheck 'puppet-mode))

@@ -27,6 +27,7 @@
     (auctex-latexmk :location (recipe :fetcher github :repo "smile13241324/auctex-latexmk")
                     :toggle (string= "LatexMk" latex-build-command))
     company
+    corfu
     math-symbol-lists
     (company-math :requires company math-symbol-lists)
     (company-auctex :requires company)
@@ -46,6 +47,9 @@
 
 (defun latex/post-init-company ()
   (spacemacs//latex-setup-company))
+
+(defun latex/post-init-corfu ()
+  (add-hook 'LaTeX-mode-hook #'corfu-mode))
 
 (defun latex/init-auctex ()
   (use-package tex

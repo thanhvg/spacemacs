@@ -23,6 +23,7 @@
 
 (defconst graphql-packages
   '(company
+    corfu
     prettier-js
     graphql-mode))
 
@@ -43,6 +44,9 @@
   (spacemacs|add-company-backends
     :backends company-dabbrev
     :modes graphql-mode))
+
+(defun graphql/post-init-corfu ()
+  (add-hook 'graphql-mode-hook #'corfu-mode))
 
 (defun graphql/pre-init-prettier-js ()
   (add-to-list 'spacemacs--prettier-modes 'graphql-mode))

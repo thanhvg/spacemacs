@@ -26,6 +26,7 @@
     (blacken :toggle (eq 'black python-formatter))
     (code-cells :toggle (not (configuration-layer/layer-used-p 'ipython-notebook)))
     company
+    corfu
     cython-mode
     dap-mode
     eldoc
@@ -115,6 +116,11 @@
     (spacemacs|add-company-backends
       :backends company-capf
       :modes pip-requirements-mode)))
+
+(defun python/post-init-corfu ()
+  (add-hook 'inferior-python-mode-hook #'corfu-mode)
+  (add-hook 'pip-requirements-mode-hook #'corfu-mode)
+  (add-hook 'python-mode-hook #'corfu-mode))
 
 (defun python/init-company-anaconda ()
   (use-package company-anaconda

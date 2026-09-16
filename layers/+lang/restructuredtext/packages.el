@@ -24,6 +24,7 @@
 (defconst restructuredtext-packages
   '(
     company
+    corfu
     ;; Disabled due to package is not longer maintained
     ;; (auto-complete-rst :requires auto-complete)
     (rst :location built-in)
@@ -46,6 +47,9 @@
 
 (defun restructuredtext/post-init-company ()
   (spacemacs|add-company-backends :backends company-capf :modes rst-mode))
+
+(defun restructuredtext/post-init-corfu ()
+  (add-hook 'rst-mode-hook #'corfu-mode))
 
 (defun restructuredtext/post-init-flyspell ()
   (spell-checking/add-flyspell-hook 'rst-mode-hook))

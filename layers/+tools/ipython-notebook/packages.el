@@ -21,7 +21,7 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-(setq ipython-notebook-packages '(ein company))
+(setq ipython-notebook-packages '(ein company corfu))
 
 (defun ipython-notebook/init-ein ()
   (use-package ein
@@ -86,6 +86,9 @@
 
 (defun ipython-notebook/post-init-company ()
   (add-hook 'ein:notebook-mode-hook #'spacemacs//ein-setup-company))
+
+(defun ipython-notebook/post-init-corfu ()
+  (add-hook 'ein:notebook-mode-hook #'corfu-mode))
 
 (defun ipython-notebook/max-by-prefix (alist)
   (seq-reduce (lambda (lst1 lst2) (if (> (cl-second lst1)

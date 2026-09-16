@@ -25,6 +25,7 @@
   '(
     add-node-modules-path
     company
+    corfu
     dap-mode
     evil-matchit
     flycheck
@@ -50,6 +51,9 @@
 
 (defun javascript/post-init-company ()
   (add-hook 'js2-mode-local-vars-hook #'spacemacs//javascript-setup-company))
+
+(defun javascript/post-init-corfu ()
+  (add-hook 'js2-mode-hook #'corfu-mode))
 
 (defun javascript/pre-init-dap-mode ()
   (when (eq javascript-backend 'lsp)

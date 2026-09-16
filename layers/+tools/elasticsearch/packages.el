@@ -24,6 +24,7 @@
 (defconst elasticsearch-packages
   '(
     company
+    corfu
     org
     es-mode
     ))
@@ -35,6 +36,9 @@
 
 (defun elasticsearch/post-init-company ()
   (spacemacs|add-company-backends :backends es-company-backend :modes es-mode))
+
+(defun elasticsearch/post-init-corfu ()
+  (add-hook 'es-mode-hook #'corfu-mode))
 
 (defun elasticsearch/pre-init-org ()
   (spacemacs|use-package-add-hook org

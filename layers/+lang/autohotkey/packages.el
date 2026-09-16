@@ -25,6 +25,7 @@
 (setq autohotkey-packages
       '(
         company
+        corfu
         ahk-mode
         ))
 
@@ -51,3 +52,6 @@
     :backends company-capf
     :modes ahk-mode
     :variables company-tooltip-align-annotations t))
+
+(defun autohotkey/post-init-corfu ()
+  (add-hook 'ahk-mode-hook #'corfu-mode))

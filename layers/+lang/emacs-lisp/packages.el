@@ -25,6 +25,7 @@
   '(
     auto-compile
     company
+    corfu
     (debug :location built-in)
     (edebug :location built-in)
     eldoc
@@ -96,6 +97,10 @@
                                   :modes emacs-lisp-mode)
   (spacemacs|add-company-backends :backends (company-files company-capf)
                                   :modes ielm-mode))
+
+(defun emacs-lisp/post-init-corfu ()
+  (add-hook 'emacs-lisp-mode-hook #'corfu-mode)
+  (add-hook 'ielm-mode-hook #'corfu-mode))
 
 (defun emacs-lisp/init-debug ()
   (use-package debug

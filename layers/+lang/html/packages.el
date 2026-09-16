@@ -25,6 +25,7 @@
       '(
         add-node-modules-path
         company
+        corfu
         (company-web :requires company)
         css-mode
         emmet-mode
@@ -61,6 +62,12 @@
     (spacemacs|add-company-backends
       :backends company-css
       :modes css-mode)))
+
+(defun html/post-init-corfu ()
+  (add-hook 'css-mode-hook #'corfu-mode)
+  (add-hook 'web-mode-hook #'corfu-mode)
+  (add-hook 'pug-mode-hook #'corfu-mode)
+  (add-hook 'slim-mode-hook #'corfu-mode))
 
 (defun html/init-company-web ()
   (use-package company-web

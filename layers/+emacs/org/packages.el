@@ -24,6 +24,7 @@
 (defconst org-packages
   '(
     company
+    corfu
     company-emoji
     (edraw-org
      :toggle nil ;; disabled because advice around org link slow org mode
@@ -79,6 +80,9 @@
 
 (defun org/post-init-company ()
   (spacemacs|add-company-backends :modes org-mode))
+
+(defun org/post-init-corfu ()
+  (add-hook 'org-mode-hook #'corfu-mode))
 
 (defun org/post-init-company-emoji ()
   (spacemacs|add-company-backends :backends company-emoji :modes org-mode))

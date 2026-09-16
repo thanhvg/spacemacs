@@ -24,6 +24,7 @@
 (defconst markdown-packages
   '(
     company
+    corfu
     company-emoji
     edit-indirect
     emoji-cheat-sheet-plus
@@ -39,6 +40,10 @@
     (eval `(spacemacs|add-company-backends
              :backends company-capf
              :modes ,mode))))
+
+(defun markdown/post-init-corfu ()
+  (dolist (mode markdown--key-bindings-modes)
+    (add-hook (intern (format "%S-hook" mode)) #'corfu-mode)))
 
 (defun markdown/post-init-company-emoji ()
   (dolist (mode markdown--key-bindings-modes)

@@ -27,6 +27,7 @@
     (helm-notmuch :requires helm)
     (consult-notmuch :requires consult)
     company
+    corfu
     notmuch
     org
     persp-mode
@@ -160,6 +161,9 @@
 
 (defun notmuch/post-init-company ()
   (spacemacs|add-company-backends :backends notmuch-company :modes notmuch-message-mode))
+
+(defun notmuch/post-init-corfu ()
+  (add-hook 'notmuch-message-mode-hook #'corfu-mode))
 
 (defun notmuch/pre-init-org ()
   (spacemacs|use-package-add-hook org

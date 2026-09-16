@@ -67,9 +67,15 @@
         (progn
           (setq lsp-completion-provider :none)
           (defun spacemacs//lsp-corfu-setup-completion ()
-            "Set `lsp-capf' completion style, preferring `orderless' when available."
+            "Set `lsp-capf' completion style, preferring `orderless' when
+available, and turn `corfu-mode' on the same way `lsp-mode' would turn
+`company-mode' on when it manages its own backends. Only enabling (and
+never disabling) here means this plays nicely with any `post-init-corfu'
+hook a language layer may already have set on the major mode hook."
             (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-                  (if (featurep 'orderless) '(orderless) completion-styles)))
+                  (if (featurep 'orderless) '(orderless) completion-styles))
+            (when lsp-completion-mode
+              (corfu-mode 1)))
           (add-hook 'lsp-completion-mode-hook #'spacemacs//lsp-corfu-setup-completion))
       (setq lsp-completion-provider (if (or (equal :all lsp-manage-backends-manually)
                                             (member major-mode lsp-manage-backends-manually))

@@ -26,6 +26,7 @@
                              :repo "veelenga/ameba.el"
                              :files ("ameba.el")))
     company
+    corfu
     crystal-mode
     flycheck
     (flycheck-crystal :requires flycheck)
@@ -35,6 +36,9 @@
 
 (defun crystal/post-init-company ()
   (spacemacs//crystal-setup-company))
+
+(defun crystal/post-init-corfu ()
+  (add-hook 'crystal-mode-hook #'corfu-mode))
 
 (defun crystal/init-ameba ()
   (use-package ameba

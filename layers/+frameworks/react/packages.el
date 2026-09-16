@@ -25,6 +25,7 @@
   '(
     add-node-modules-path
     company
+    corfu
     emmet-mode
     evil-matchit
     evil-collection
@@ -44,6 +45,9 @@
 
 (defun react/post-init-company ()
   (add-hook 'rjsx-mode-local-vars-hook #'spacemacs//react-setup-company))
+
+(defun react/post-init-corfu ()
+  (add-hook 'rjsx-mode-hook #'corfu-mode))
 
 (defun react/post-init-emmet-mode ()
   (add-hook 'rjsx-mode-hook 'spacemacs/react-emmet-mode))

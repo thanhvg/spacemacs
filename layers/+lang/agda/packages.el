@@ -25,11 +25,15 @@
       '(
         (agda :location local)
         company
+        corfu
         golden-ratio))
 
 
 (defun agda/post-init-company ()
   (spacemacs|add-company-backends :backends company-capf :modes agda2-mode))
+
+(defun agda/post-init-corfu ()
+  (add-hook 'agda2-mode-hook #'corfu-mode))
 
 (defun agda/init-agda ()
   (if (and (eq 'use-helper agda-mode-path)

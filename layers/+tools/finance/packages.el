@@ -23,6 +23,7 @@
 
 (defconst finance-packages
   '(company
+    corfu
     flycheck
     (flycheck-ledger :requires flycheck)
     ledger-mode
@@ -36,6 +37,10 @@
   (spacemacs|add-company-backends
     :backends hledger-company
     :modes hledger-mode))
+
+(defun finance/post-init-corfu ()
+  (add-hook 'ledger-mode-hook #'corfu-mode)
+  (add-hook 'hledger-mode-hook #'corfu-mode))
 
 (defun finance/post-init-flycheck ()
   (spacemacs/enable-flycheck 'ledger-mode))

@@ -25,6 +25,7 @@
       '(
         cmm-mode
         company
+        corfu
         (company-cabal :requires company)
 
         ;; dante completion backend
@@ -56,6 +57,10 @@
   (add-hook 'haskell-literate-mode-local-vars-hook #'spacemacs-haskell//setup-company)
   ;; renamed as of 04/2020, delete in due course
   (add-hook 'literate-haskell-mode-local-vars-hook #'spacemacs-haskell//setup-company))
+
+(defun haskell/post-init-corfu ()
+  (add-hook 'haskell-cabal-mode-hook #'corfu-mode)
+  (add-hook 'haskell-mode-hook #'corfu-mode))
 
 (defun haskell/init-company-cabal ()
   (use-package company-cabal

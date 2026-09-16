@@ -25,6 +25,7 @@
     (cmake-ide :toggle cmake-enable-cmake-ide-support)
     cmake-mode
     company
+    corfu
     (helm-ctest :requires helm)))
 
 (defun cmake/init-cmake-ide ()
@@ -52,6 +53,9 @@
 
 (defun cmake/post-init-company ()
   (spacemacs//cmake-setup-company))
+
+(defun cmake/post-init-corfu ()
+  (add-hook 'cmake-mode-hook #'corfu-mode))
 
 (defun cmake/init-helm-ctest ()
   (use-package helm-ctest

@@ -24,6 +24,7 @@
 (defconst json-packages
   '(
     company
+    corfu
     add-node-modules-path
     flycheck
     json-mode
@@ -35,6 +36,9 @@
 
 (defun json/post-init-company ()
   (spacemacs//json-setup-company))
+
+(defun json/post-init-corfu ()
+  (add-hook 'json-mode-hook #'corfu-mode))
 
 (defun json/post-init-add-node-modules-path ()
   (add-hook 'json-mode-hook #'add-node-modules-path))

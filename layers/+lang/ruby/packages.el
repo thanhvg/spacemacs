@@ -29,6 +29,7 @@
                         :repo "emacsattic/bundler"))
     (chruby :toggle (eq ruby-version-manager 'chruby))
     company
+    corfu
     dap-mode
     (enh-ruby-mode :toggle ruby-enable-enh-ruby-mode)
     evil-matchit
@@ -78,6 +79,10 @@
 
 (defun ruby/post-init-company ()
   (add-hook 'ruby-mode-local-vars-hook #'spacemacs//ruby-setup-company))
+
+(defun ruby/post-init-corfu ()
+  (add-hook 'ruby-mode-hook #'corfu-mode)
+  (add-hook 'enh-ruby-mode-hook #'corfu-mode))
 
 (defun ruby/pre-init-dap-mode ()
   (when (eq ruby-backend 'lsp)

@@ -24,6 +24,7 @@
 (defconst kotlin-packages
   '(
     company
+    corfu
     flycheck
     (flycheck-kotlin :requires flycheck)
     ggtags
@@ -31,6 +32,9 @@
 
 (defun kotlin/post-init-company ()
   (spacemacs//kotlin-setup-company))
+
+(defun kotlin/post-init-corfu ()
+  (add-hook 'kotlin-mode-hook #'corfu-mode))
 
 (defun kotlin/post-init-flycheck ()
   (spacemacs/enable-flycheck 'kotlin-mode))

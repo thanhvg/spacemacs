@@ -24,6 +24,7 @@
 (defconst systemd-packages
   '(
     company
+    corfu
     flycheck
     systemd
     journalctl-mode)
@@ -33,6 +34,9 @@
   (spacemacs|add-company-backends
     :backends systemd-company-backend
     :modes systemd-mode))
+
+(defun systemd/post-init-corfu ()
+  (add-hook 'systemd-mode-hook #'corfu-mode))
 
 (defun systemd/post-init-flycheck ()
   (spacemacs/enable-flycheck 'systemd-mode))

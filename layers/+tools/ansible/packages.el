@@ -24,6 +24,7 @@
       '(ansible
         ansible-doc
         company
+        corfu
         (company-ansible :requires company)
         jinja2-mode
         yaml-mode))
@@ -65,6 +66,9 @@
   ;; Tracking here:
   ;; https://github.com/k1LoW/emacs-ansible/issues/2
   (defvar ac-user-dictionary-files nil))
+
+(defun ansible/post-init-corfu ()
+  (add-hook 'ansible-hook #'corfu-mode))
 
 (defun ansible/init-company-ansible ()
   (use-package company-ansible

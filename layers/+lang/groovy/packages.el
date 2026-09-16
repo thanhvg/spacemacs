@@ -24,6 +24,7 @@
 (defconst groovy-packages
   '(
     company
+    corfu
     flycheck
     groovy-imports
     groovy-mode
@@ -31,6 +32,9 @@
 
 (defun groovy/post-init-company ()
   (add-hook 'groovy-mode-local-vars-hook 'spacemacs//groovy-setup-company))
+
+(defun groovy/post-init-corfu ()
+  (add-hook 'groovy-mode-hook #'corfu-mode))
 
 (defun groovy/post-init-flycheck ()
   (spacemacs/enable-flycheck 'groovy-mode))

@@ -24,6 +24,7 @@
 (defconst lua-packages
   '(
     company
+    corfu
     (company-lua :requires company :toggle (eq lua-backend 'lua-mode))
     flycheck
     ggtags
@@ -62,6 +63,9 @@
 
 (defun lua/post-init-company ()
   (add-hook 'lua-mode-local-vars-hook #'spacemacs//lua-setup-company))
+
+(defun lua/post-init-corfu ()
+  (add-hook 'lua-mode-hook #'corfu-mode))
 
 (defun lua/init-company-lua ()
   (use-package company-lua

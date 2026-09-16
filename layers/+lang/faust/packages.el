@@ -26,12 +26,16 @@
 (defconst faust-packages
   '(
     company
+    corfu
     faust-mode
     yasnippet
     ))
 
 (defun faust/post-init-company ()
   (spacemacs|add-company-backends :modes faust-mode))
+
+(defun faust/post-init-corfu ()
+  (add-hook 'faust-mode-hook #'corfu-mode))
 
 (defun faust/init-faust-mode ()
   (use-package faust-mode
