@@ -25,10 +25,7 @@
       '(
         company
         corfu
-        (ejc-sql :location (recipe
-                            :fetcher github
-                            :repo "dvzubarev/ejc-sql"
-                            :files (:defaults "project.clj" "src" "snippets")))
+        ejc-sql 
         org
         sql
         (sql-indent :location elpa :toggle sql-auto-indent)
@@ -134,13 +131,8 @@
     :commands ejc-create-connection
     :init
     (setq clomacs-httpd-default-port 1979) ; Use a port other than 8080.
-    (add-hook 'ejc-sql-minor-mode-hook
-              (lambda ()
-                (ejc-eldoc-setup)))
+    (add-hook 'ejc-sql-minor-mode-hook #'ejc-eldoc-setup)
     :config
-    (add-hook 'ejc-sql-minor-mode-hook
-              (lambda ()
-                (ejc-eldoc-setup)))
     (define-key ejc-command-map
                 (kbd "q")
                 #'ejc-quit-connection)
@@ -162,10 +154,7 @@
 
 (defun sql/post-init-corfu ()
   (add-hook 'sql-mode-hook #'corfu-mode)
-  ;; NOTE: `ejc-sql' completions come from a company-only backend
-  ;; (`ejc-company-backend'), so corfu won't be able to surface them
-  ;; without wrapping it via `cape-company-to-capf'; this just turns
-  ;; corfu on so native/capf completions still work in this buffer.
+  (add-hook 'ejc-sql-minor-mode-hook #'ejc-capf-setup)
   (add-hook 'ejc-sql-minor-mode-hook #'corfu-mode))
 
 (defun sql/pre-init-org ()
