@@ -517,10 +517,10 @@ Will work on both org-mode and any mode that accepts plain html."
 (defun org/init-org-agenda ()
   (use-package org-agenda
     :defer t
+    :config
+    (require 'org-habit)
     :init
     (setq org-agenda-restore-windows-after-quit t)
-    (with-eval-after-load 'org
-      (add-to-list 'org-modules 'org-habit))
     (dolist (prefix `(("mC" . ,(org-clocks-prefix))
                       ("md" . "dates")
                       ("mi" . "insert")
