@@ -13,6 +13,7 @@
   - [[#vc-directory-buffer-commands][VC Directory buffer commands]]
   - [[#commit-message-editing-buffer][Commit message editing buffer]]
   - [[#diff-mode][Diff mode]]
+  - [[#log-edit-buffer][Log Edit buffer]]
   - [[#log-view-buffer][Log view buffer]]
   - [[#annotation-buffer][Annotation buffer]]
   - [[#version-control-transient-state][Version Control Transient-state]]
@@ -164,6 +165,16 @@ A transient buffer is also defined, start it with ~SPC m .~ or ~, .~
 | ~J~         | Next file     |
 | ~k~         | Previous hunk |
 | ~K~         | Previous file |
+
+** Log Edit buffer
+
+| Key binding    | Description                          |
+|----------------+--------------------------------------|
+| ~, ,~ or ~, c~ | Commit with message                  |
+| ~, k~ or ~, a~ | Abort commit (saving message)        |
+| ~, d~          | Show diff to be committed            |
+| ~, f~          | Show files to be committed           |
+| ~, w~          | Generate ChangeLog entries from diff |
 
 ** Log view buffer
 

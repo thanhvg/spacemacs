@@ -101,6 +101,11 @@ default."
   (global-set-key (kbd-mac-command "8") 'spacemacs/winum-select-window-8)
   (global-set-key (kbd-mac-command "9") 'spacemacs/winum-select-window-9)
 
+  ;; tab manipulation with command key
+  (global-set-key (kbd-mac-command "t") #'tab-new)
+  (global-set-key (kbd-mac-command "{") #'tab-previous)
+  (global-set-key (kbd-mac-command "}") #'tab-next)
+
   (global-set-key (kbd-mac-command "Z") 'evil-redo)
   (global-set-key (kbd-mac-command "C-f") 'spacemacs/toggle-frame-fullscreen)
   (global-set-key (kbd "M-s-h") 'ns-do-hide-others)

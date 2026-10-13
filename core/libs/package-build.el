@@ -11,10 +11,10 @@
 ;; Homepage: https://github.com/melpa/package-build
 ;; Keywords: maint tools
 
-;; Package-Version: 5.0.1
+;; Package-Version: 5.1.0
 ;; Package-Requires: (
-;;     (emacs  "26.1")
-;;     (compat "31.0"))
+;;     (emacs  "29.1")
+;;     (compat "31.1"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -46,9 +46,7 @@
 
 (require 'cl-lib)
 (require 'compat nil t)
-(require 'format-spec)
 (require 'pcase)
-(require 'subr-x)
 
 (require 'package)
 (require 'lisp-mnt)
@@ -331,7 +329,7 @@ being run for a particular package."
   (declare (indent defun))
   (let ((message (apply #'format-message format-string args)))
     (package-build--log package message)
-    (signal 'package-build-error message)))
+    (signal 'package-build-error (list message))))
 
 (defun package-build--log (package message)
   (with-temp-buffer
@@ -1118,21 +1116,7 @@ that is put in the tarball."
                  (and (file-exists-p file)
                       (lm-commentary file)))))
     (with-temp-buffer
-      (if (>= emacs-major-version 28)
-          (insert commentary)
-        ;; Taken from 28.0's `lm-commentary'.
-        (insert
-         (replace-regexp-in-string       ; Get rid of...
-          "[[:blank:]]*$" ""             ; trailing white-space
-          (replace-regexp-in-string
-           (format "%s\\|%s\\|%s"
-                   ;; commentary header
-                   (concat "^;;;[[:blank:]]*\\("
-                           lm-commentary-header
-                           "\\):[[:blank:]\n]*")
-                   "^;;[[:blank:]]?"     ; double semicolon prefix
-                   "[[:blank:]\n]*\\'")  ; trailing new-lines
-           "" commentary))))
+      (insert commentary)
       (unless (or (bobp) (= (char-before) ?\n))
         (insert ?\n))
       ;; We write the file even if it is empty, which is perhaps
@@ -1293,17 +1277,14 @@ is the same as the value of `export_file_name'."
 
 (defun package-build--authors (&optional file)
   (lm-with-file file
-    ;; 28.1; specifically 5809728bc502d58f4fe96e98b472c569da3d8879.
-    (funcall (if (< emacs-major-version 28) #'mapcar #'mapcan)
-             #'lm-crack-address
-             (lm-header-multiline "authors?"))))
+    (mapcan #'lm-crack-address
+            (lm-header-multiline "authors?"))))
 
 (defun package-build--maintainers (&optional file)
   (lm-with-file file
-    (funcall (if (< emacs-major-version 28) #'mapcar #'mapcan)
-             #'lm-crack-address
-             (or (lm-header-multiline "maintainers?")
-                 (lm-header-multiline "authors?")))))
+    (mapcan #'lm-crack-address
+            (or (lm-header-multiline "maintainers?")
+                (lm-header-multiline "authors?")))))
 
 ;;; Files Spec
 
@@ -1431,7 +1412,7 @@ or all exclude rules (with the `:exclude' keyword removed)."
                 (concat subdir (car entry) "/")))))
           spec))
 
-(defun package-build--copy-package-files (files target-dir)
+(defun package-build--copy-package-files (rcp files target-dir)
   "Copy FILES from `default-directory' to TARGET-DIR.
 FILES is a list of (SOURCE . DEST) relative filepath pairs."
   (package-build--message
@@ -1441,14 +1422,18 @@ FILES is a list of (SOURCE . DEST) relative filepath pairs."
     (let ((src* (expand-file-name src))
           (dst* (expand-file-name dst target-dir)))
       (make-directory (file-name-directory dst*) t)
-      (cond ((file-regular-p src*)
+      (cond ((not (file-in-directory-p src* default-directory))
+             (package-build--error rcp
+               "Symlink %s points outside package repository" src))
+            ((file-regular-p src*)
              (package-build--message
               "  %s %s -> %s" (if (equal src dst) " " "!") src dst)
              (copy-file src* dst*))
             ((file-directory-p src*)
              (package-build--message
               "  %s %s => %s" (if (equal src dst) " " "!") src dst)
-             (copy-directory src* dst*))))))
+             (copy-directory src* dst*))
+            ((package-build--message "File %s has unexpected type" src))))))
 
 (defun package-build--spec-globs (rcp)
   "Return a list of vcs arguments to match the files specified in RCP."
@@ -1480,12 +1465,10 @@ FILES is a list of (SOURCE . DEST) relative filepath pairs."
                  (mapcan #'toargs globs))
                 ((and `(:rename ,src ,dest)
                       (guard (and (stringp src) (stringp dest))))
-                 dest ; Silence byte-compiler of Emacs < 28.1.
                  (toargs src))
                 ((and `(,dir . ,globs)
                       (guard (stringp dir))
                       (guard (cl-every #'stringp globs)))
-                 dir ; Silence byte-compiler of Emacs < 28.1.
                  (mapcan #'toargs globs))))
             (let ((spec (or (oref rcp files) package-build-default-files-spec)))
               (if (eq (car spec) :defaults)
@@ -1593,7 +1576,7 @@ in `package-build-archive-dir'."
     (unless package-build--inhibit-build
       (unwind-protect
           (progn
-            (package-build--copy-package-files files target)
+            (package-build--copy-package-files rcp files target)
             (package-build--set-version-headers rcp target)
             (package-build--write-pkg-file rcp target)
             (package-build--generate-info-files rcp files target)

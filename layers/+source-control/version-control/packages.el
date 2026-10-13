@@ -29,6 +29,7 @@
     evil-unimpaired
     (git-gutter         :toggle (eq 'git-gutter version-control-diff-tool))
     (git-gutter-fringe  :toggle (eq 'git-gutter version-control-diff-tool))
+    log-edit
     (smerge-mode :location built-in)
     (vc :location built-in)))
 
@@ -194,6 +195,26 @@
         (require 'git-gutter-fringe)))
     (setq git-gutter-fr:side (if (eq version-control-diff-side 'left)
                                  'left-fringe 'right-fringe))))
+
+(defun version-control/init-log-edit ()
+  (use-package log-edit
+    :defer t
+    :config
+    (spacemacs/set-leader-keys-for-major-mode 'log-edit-mode
+      "," #'log-edit-done
+      "c" #'log-edit-done
+      "a" #'log-edit-kill-buffer
+      "k" #'log-edit-kill-buffer
+
+      "d" #'log-edit-show-diff
+      "f" #'log-edit-show-files
+      "w" #'log-edit-generate-changelog-from-diff)
+    ;; FIXME: `spacemacs/inherit-leader-keys-from-parent-mode' should not be
+    ;; required; leader keys should just be inherited by default.
+    (with-eval-after-load 'vc-git
+      (spacemacs/inherit-leader-keys-from-parent-mode 'vc-git-log-edit-mode))
+    (with-eval-after-load 'vc-hg
+      (spacemacs/inherit-leader-keys-from-parent-mode 'vc-hg-log-edit-mode))))
 
 (defun version-control/init-smerge-mode ()
   (use-package smerge-mode

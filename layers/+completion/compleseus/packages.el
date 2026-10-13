@@ -360,13 +360,37 @@
         (let ((completion-styles '(basic partial-completion)))
           (apply orig-fun args))))
 
-    ;; should be all in with orderless other wise the results are inconsistent.
-    ;; (setq completion-styles '(basic partial-completion orderless)
-    (setq completion-styles '(orderless)
-          completion-category-defaults nil
+    ;; The separator `&' is only useful for in-buffer completion with company,
+    ;; where a space cannot be used. Note that `&' conflicts with annotation
+    ;; matching (see `orderless-affix-dispatch-alist') in the minibuffer.
+    (define-advice company-capf (:around (orig-fun &rest args) spacemacs//set-orderless-component-separator)
+      (if (and (stringp company-prefix)
+               (> (length company-prefix) 0)
+               (eq (aref company-prefix 0) ?&))
+          ;; Strings that start with `&' should not trigger orderless. Most likely the
+          ;; user wants to type something like &optional or &rest, where orderless
+          ;; just incurs unnecessary typing delays.
+          (apply orig-fun args)
+        (let ((orderless-component-separator "&"))
+          (apply orig-fun args))))
+
+    ;; should be all in with orderless otherwise the results are inconsistent.
+    ;; the available styles are registered in `completion-styles-alist`.
+    (setq completion-styles '(orderless basic)
           ;; we need to have 'basic here first in order to support tramp connections...
           ;; see `completion-styles`.
           completion-category-overrides '((file (styles basic partial-completion))))
+    ;; Only override built-in categories, from the default value of
+    ;; `completion-category-defaults'.  Do not second-guess site- or
+    ;; package-specific categories.
+    (dolist (category '(buffer
+                        unicode-name
+                        project-file
+                        xref-location
+                        info-menu
+                        symbol-help))
+      (add-to-list 'completion-category-overrides
+                   (list category '(styles))))
     :config
     (add-to-list 'orderless-style-dispatchers #'orderless-kwd-dispatch)))
 
@@ -378,8 +402,9 @@
     ;; prompt is a `completing-read-multiple'.
     (defun crm-indicator (args)
       (cons (concat "[CRM] " (car args)) (cdr args)))
-    (unless (boundp 'crm-prompt)
-      (advice-add #'completing-read-multiple :filter-args #'crm-indicator))
+    (with-eval-after-load 'crm
+      (unless (boundp 'crm-prompt)
+        (advice-add #'completing-read-multiple :filter-args #'crm-indicator)))
     ;; Grow and shrink minibuffer
     ;;(setq resize-mini-windows t)
     ;; Do not allow the cursor in the minibuffer prompt
@@ -409,6 +434,26 @@
 
     :config
     (define-key vertico-map (kbd "C-.") 'spacemacs/embark-select)
+    (when (spacemacs//support-hjkl-navigation-p)
+      (define-key vertico-map (kbd "C-j") #'vertico-next)
+      (define-key vertico-map (kbd "C-k") #'vertico-previous)
+      (define-key vertico-map (kbd "C-S-j") #'vertico-next-group)
+      (define-key vertico-map (kbd "C-S-k") #'vertico-previous-group)
+      (define-key vertico-map (kbd "C-M-j") #'spacemacs/next-candidate-preview)
+      (define-key vertico-map (kbd "C-M-k") #'spacemacs/previous-candidate-preview)
+      (with-eval-after-load 'vertico-reverse
+        (define-key vertico-reverse-map (kbd "C-j") #'vertico-previous)
+        (define-key vertico-reverse-map (kbd "C-k") #'vertico-next)
+        (define-key vertico-reverse-map (kbd "C-S-j") #'vertico-previous-group)
+        (define-key vertico-reverse-map (kbd "C-S-k") #'vertico-next-group)
+        (define-key vertico-reverse-map (kbd "C-M-j")
+                    #'spacemacs/previous-candidate-preview)
+        (define-key vertico-reverse-map (kbd "C-M-k")
+                    #'spacemacs/next-candidate-preview))
+      (define-key vertico-map (kbd "C-l") #'vertico-insert)
+      (define-key vertico-map (kbd "C-SPC") #'spacemacs/embark-preview)
+      (define-key vertico-map (kbd "C-r") #'consult-history)
+      (define-key vertico-map (kbd "M-P") #'spacemacs/consult-toggle-preview)))
 
     (setq read-minibuffer-restore-windows nil)
     (keymap-global-set "M-S" #'vertico-suspend)
@@ -423,9 +468,10 @@
     (define-key vertico-map (kbd "C-M-k") #'spacemacs/previous-candidate-preview)
     (define-key vertico-map (kbd "C-S-k") #'vertico-previous-group)
     (define-key vertico-map (kbd "C-r") #'consult-history)
-
-    ;; More convenient directory navigation commands
     (define-key vertico-map  (kbd "C-h") 'vertico-directory-delete-char)
+    (define-key vertico-map (kbd "M-DEL") #'vertico-directory-delete-word)
+    (bind-key "C-h" 'vertico-directory-up vertico-map
+              (spacemacs//support-hjkl-navigation-p))
     ;; tidy shadowed file names
     (add-hook 'rfn-eshadow-update-overlay  #'vertico-directory-tidy)
 
@@ -437,7 +483,7 @@
       "rl" 'vertico-repeat-previous
       "rL" 'vertico-repeat-select
       "sl" 'vertico-repeat-previous
-      "sL" 'vertico-repeat-select)))
+      "sL" 'vertico-repeat-select))
 
 (defun compleseus/init-vertico-posframe ()
   (use-package vertico-posframe
