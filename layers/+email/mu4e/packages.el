@@ -25,6 +25,11 @@
   '((mu4e :location site)
     (mu4e-alert :toggle (or mu4e-enable-notifications mu4e-enable-mode-line))
     (helm-mu :requires helm)
+    (consult-mu :requires consult
+                :location (recipe
+                           :fetcher github
+                           :repo "armindarvish/consult-mu"
+                           :files (:defaults "extras/*.el")))
     org
     persp-mode
     window-purpose))
@@ -181,3 +186,7 @@
     (purpose-set-extension-configuration
      :mu4e-layer
      (purpose-conf :mode-purposes modes))))
+
+(defun mu4e/init-consult-mu ()
+  (use-package consult-mu
+    :after (mu4e consult)))
