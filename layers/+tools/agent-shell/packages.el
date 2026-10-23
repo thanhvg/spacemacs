@@ -35,4 +35,9 @@
     :init
     (spacemacs/set-leader-keys
       "aaa" 'agent-shell
-      "aab" 'spacemacs/agent-shell-switch-to-buffer)))
+      "aab" 'spacemacs/agent-shell-switch-to-buffer
+      "aar" 'agent-shell-send-region
+      "aaR" 'agent-shell-send-region-to
+      "aas" 'agent-shell-send-dwim
+      "aaf" 'agent-shell-send-file
+      "aaF" 'agent-shell-send-file-to)))
