@@ -177,3 +177,40 @@ This command requires that pandoc (man page `pandoc(1)') be installed."
      start end
      "pandoc -f markdown -t org --wrap=preserve" t t))
 
+
+(defun spacemacs/org-drill-to-org-fc (&optional remove-drill-tag)
+  "Convert every entry tagged :drill: in the current buffer into an org-fc card.
+
+Runs `org-fc-type-normal-init' on each entry.  Entries that are already
+org-fc cards (tagged :fc:) are skipped.  With a prefix argument
+REMOVE-DRILL-TAG, the :drill: tag is removed after conversion."
+  (interactive "P")
+  (let ((markers '())
+        (converted 0)
+        (skipped 0))
+    ;; Collect markers first so that editing the buffer
+    ;; (adding drawers, changing tags) doesn't disturb the iteration.
+    (org-map-entries
+     (lambda ()
+       ;; Only entries that carry the tag themselves, not by inheritance.
+       (when (member "drill" (org-get-tags nil t))
+         (push (point-marker) markers)))
+     "drill")
+    (save-excursion
+      (dolist (m (nreverse markers))
+        (goto-char m)
+        (org-back-to-heading t)
+        (if (member "fc" (org-get-tags nil t))
+            (cl-incf skipped)
+          (condition-case err
+              (progn
+                (org-fc-type-normal-init)
+                (when remove-drill-tag
+                  (org-toggle-tag "drill" 'off))
+                (cl-incf converted))
+            (error
+             (message "org-fc conversion failed at line %d: %s"
+                      (line-number-at-pos) (error-message-string err)))))
+        (set-marker m nil)))
+    (message "org-fc: converted %d entries, skipped %d already-converted"
+             converted skipped)))

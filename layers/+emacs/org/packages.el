@@ -1151,6 +1151,7 @@ Headline^^            Visit entry^^               Filter^^                    Da
     :init
     (spacemacs/set-leader-keys-for-major-mode 'org-mode
       "Fi" 'org-fc-type-normal-init
+      "FI" 'spacemacs/org-drill-to-org-fc
       "Fc" 'org-fc-type-cloze-init
       "Fd" 'org-fc-type-double-init
       "Fd" 'org-fc-dashboard
