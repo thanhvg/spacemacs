@@ -114,6 +114,7 @@
                                additional
                                ,@(when org-want-todo-bindings '(todo))))
     :config
+    (evil-org-set-key-theme evil-org-key-theme)
     (spacemacs|hide-lighter evil-org-mode)))
 
 (defun org/post-init-evil-surround ()
