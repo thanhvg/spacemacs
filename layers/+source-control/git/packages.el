@@ -51,7 +51,11 @@
     (orgit :requires org)
     (orgit-forge :requires (org forge))
     persp-mode
-    smeargle))
+    (diff-review :location
+                 (recipe :fetcher github
+                         :repo "xiaoxinghu/diff-review"
+                         :files ("*.el"))))
+    smeargle)
 
 (defun git/init-difftastic ()
   (use-package difftastic
@@ -383,3 +387,32 @@
     :post-config
     (add-to-list 'persp-filter-save-buffers-functions
                  'spacemacs//magit-buffer-p)))
+
+(defun git/init-diff-review ()
+  (use-package diff-review
+    :defer t
+    :commands (diff-review-branch
+               diff-review-find-file
+               diff-review-magit-commits)
+    :init
+    (spacemacs/declare-prefix "gV" "review")
+    (spacemacs/set-leader-keys
+      "gVb" 'diff-review-branch
+      "gVf" 'diff-review-find-file
+      "gVc" 'diff-review-magit-commits)
+    (with-eval-after-load 'magit
+      (diff-review-magit-mode)
+      (add-hook 'magit-status-sections-hook #'diff-review-magit-insert-worktrees t)
+      (transient-append-suffix 'magit-diff 'magit-stash-show
+        '("v" "Review" diff-review-magit-commits)))
+    :config
+    (with-eval-after-load 'evil
+      (evil-define-minor-mode-key 'normal 'diff-review-file-mode
+        "]c" #'diff-review-next-hunk
+        "[c" #'diff-review-previous-hunk
+        "zv" #'diff-review-viewed-and-next
+        "zf" #'diff-review-toggle-focus
+        "zd" #'diff-review-toggle-inline-removed
+        "gc" #'diff-review-comment
+        "gl" #'diff-review-overview
+        "gq" #'diff-review-quit))))
