@@ -315,13 +315,10 @@
       (kbd "C-k") 'cider-repl-previous-input
       (kbd "RET") 'cider-repl-return)
 
-    (if (package-installed-p 'company)
+    (when (eql auto-completion-front-end 'company)
         (evil-define-key 'insert cider-repl-mode-map
           (kbd "C-j") 'spacemacs//clj-repl-wrap-c-j
-          (kbd "C-k") 'spacemacs//clj-repl-wrap-c-k)
-      (evil-define-key 'insert cider-repl-mode-map
-        (kbd "C-j") 'cider-repl-next-input
-        (kbd "C-k") 'cider-repl-previous-input))
+          (kbd "C-k") 'spacemacs//clj-repl-wrap-c-k))
 
     (evil-define-key 'insert cider-repl-mode-map
       (kbd "C-<return>") 'cider-repl-newline-and-indent
