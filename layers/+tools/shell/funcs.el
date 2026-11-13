@@ -51,15 +51,6 @@ view; to pop-up a full width buffer, use
   (interactive)
   (setq-local global-hl-line-mode nil))
 
-(defun spacemacs/init-eshell-xterm-color ()
-  "Initialize xterm coloring for eshell"
-  (setq-local xterm-color-preserve-properties t)
-  (make-local-variable 'eshell-preoutput-filter-functions)
-  (add-hook 'eshell-preoutput-filter-functions 'xterm-color-filter)
-  (setq-local eshell-output-filter-functions
-              (remove 'eshell-handle-ansi-color
-                      eshell-output-filter-functions)))
-
 (defun ansi-term-handle-close ()
   "Close current term buffer when `exit' from term buffer."
   (when (ignore-errors (get-buffer-process (current-buffer)))
@@ -295,6 +286,15 @@ is achieved by adding the relevant text properties."
               (centered-cursor-mode 0))
             :append
             :local))
+
+(defun spacemacs/ghostel-switch-buffer ()
+  "Switch between the multi-vterm buffers."
+  (interactive)
+  (pop-to-buffer-same-window
+   (completing-read "Ghostel buffer: "
+                    (mapcar 'buffer-name
+                            (remq (current-buffer) (ghostel-buffer-list)))
+                    nil t)))
 
 (defun spacemacs//vterm-make-history-candidates ()
   (with-temp-buffer

@@ -25,7 +25,6 @@
 (defconst docker-packages
   '(evil-collection
     docker
-    (docker-tramp :toggle (version< emacs-version "29.0.50"))
     dockerfile-mode
     flycheck))
 
@@ -38,10 +37,6 @@
     :defer t
     :init
     (spacemacs/set-leader-keys "atd" #'docker)))
-
-(defun docker/init-docker-tramp ()
-  (use-package docker-tramp
-    :defer t))
 
 (defun docker/init-dockerfile-mode ()
   (use-package dockerfile-mode

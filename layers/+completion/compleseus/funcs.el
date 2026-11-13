@@ -251,7 +251,13 @@ to act on with `embark-act-all', and move to the next candidate."
   "Export the consult buffer and make the buffer editable right away."
   (interactive)
   (require 'embark)
-  (let ((embark-after-export-hook '(spacemacs/grep-change-to-wgrep-mode)))
+  (let ((embark-after-export-hook
+         (list (lambda ()
+                 (cond
+                  ((derived-mode-p 'grep-mode)
+                   (spacemacs/grep-change-to-wgrep-mode))
+                  ((derived-mode-p 'occur-mode)
+                   (occur-edit-mode)))))))
     (embark-export)))
 
 (defvar compleseus--previous-preview-keys nil
